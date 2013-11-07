@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="Bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="ApiOAuthProvider">
+            <directory>./reports</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+	  <whitelist processUncoveredFilesFromWhitelist="true">
+	      <directory suffix=".php">../ApiOAuthProvider</directory>
+	      <exclude>
+              <directory suffix=".php">./</directory>
+          </exclude>
+	  </whitelist>
+	</filter>
+</phpunit>
