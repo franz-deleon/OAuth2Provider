@@ -1,0 +1,33 @@
+{
+    "name": "franz-deleon/fdl-oauth-provider",
+    "type": "library",
+    "description": "ZF2 OAuth2 Provider module",
+    "keywords": [
+        "Gateway Manager",
+        "Zend Framework",
+        "zf2"
+    ],
+    "homepage": "https://github.com/franz-deleon/FdlOAuthProvider",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Franz de Leon",
+            "email": "franz_dl@yahoo.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": ">=2.2.0",
+        "doctrine/doctrine-orm-module": "dev-master",
+        "bshaffer/oauth2-server-php": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "ApiOAuthProvider": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
