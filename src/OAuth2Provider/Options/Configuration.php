@@ -15,7 +15,7 @@ class Configuration extends AbstractOptions
      * Server list
      * @var array
      */
-    protected $server;
+    protected $servers;
 
     /**
      * The Default controller strategy to use
@@ -45,17 +45,17 @@ class Configuration extends AbstractOptions
 	/**
      * @return the $server
      */
-    public function getServer()
+    public function getServers()
     {
-        return $this->server;
+        return $this->servers;
     }
 
 	/**
      * @param field_type $server
      */
-    public function setServer($server)
+    public function setServers($servers)
     {
-        $this->server = $server;
+        $this->servers = $servers;
         return $this;
     }
 
