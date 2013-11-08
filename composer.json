@@ -1,5 +1,5 @@
 {
-    "name": "franz-deleon/fdl-oauth-provider",
+    "name": "franz-deleon/fdl-oauth2-provider",
     "type": "library",
     "description": "ZF2 OAuth2 Provider module",
     "keywords": [
@@ -7,7 +7,7 @@
         "Zend Framework",
         "zf2"
     ],
-    "homepage": "https://github.com/franz-deleon/FdlOAuthProvider",
+    "homepage": "https://github.com/franz-deleon/FdlOAuth2Provider",
     "license": "MIT",
     "authors": [
         {
@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-0": {
-            "ApiOAuthProvider": "src/"
+            "OAuth2Provider": "src/"
         },
         "classmap": [
             "./Module.php"

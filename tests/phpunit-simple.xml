@@ -2,13 +2,13 @@
 
 <phpunit bootstrap="Bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="ApiOAuthProvider">
+        <testsuite name="OAuth2Provider">
             <directory>./reports</directory>
         </testsuite>
     </testsuites>
     <filter>
 	  <whitelist processUncoveredFilesFromWhitelist="true">
-	      <directory suffix=".php">../ApiOAuthProvider</directory>
+	      <directory suffix=".php">../OAuth2Provider</directory>
 	      <exclude>
               <directory suffix=".php">./</directory>
           </exclude>

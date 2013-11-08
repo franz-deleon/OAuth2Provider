@@ -1,5 +1,5 @@
 <?php
-namespace ApiOAuthProvider;
+namespace OAuth2Provider;
 
 class Module
 {
@@ -35,7 +35,7 @@ class Module
     {
         return array(
             'factories' => array(
-                'OAuthController' => 'ApiOAuthProvider\Service\Factory\ControllerFactory',
+                'OAuthController' => 'OAuth2Provider\Service\Factory\ControllerFactory',
             ),
         );
     }
@@ -44,18 +44,18 @@ class Module
     {
         return array(
             'invokables' => array(
-                //'ApiOAuthProvider\StorageAdapter\ClientCredentials' => __NAMESPACE__ . '\StorageAdapter\ClientCredentials',
+                //'OAuth2Provider\StorageAdapter\ClientCredentials' => __NAMESPACE__ . '\StorageAdapter\ClientCredentials',
             ),
             'factories' => array(
-                'ApiOAuthProvider\Options\Configuration'             => 'ApiOAuthProvider\Service\Factory\ConfigurationFactory',
-                'ApiOAuthProvider\Service\Factory\MainServerFactory' => 'ApiOAuthProvider\Service\Factory\MainServerFactory',
-                //'ApiOAuthProvider\Server' => 'ApiOAuthProvider\StorageAdapter\ServerFactory',
+                'OAuth2Provider\Options\Configuration'             => 'OAuth2Provider\Service\Factory\ConfigurationFactory',
+                'OAuth2Provider\Service\Factory\MainServerFactory' => 'OAuth2Provider\Service\Factory\MainServerFactory',
+                //'OAuth2Provider\Server' => 'OAuth2Provider\StorageAdapter\ServerFactory',
             ),
             'abstract_factories' => array(
-                'ApiOAuthProvider\Service\AbstractFactory\ServerAbstractFactory',
+                'OAuth2Provider\Service\AbstractFactory\ServerAbstractFactory',
             ),
             'aliases' => array(
-                'apioauthprovider.server.main' => 'ApiOAuthProvider\Service\Factory\MainServerFactory',
+                'oauth2provider.server.main' => 'OAuth2Provider\Service\Factory\MainServerFactory',
             ),
         );
     }

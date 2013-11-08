@@ -1,7 +1,7 @@
 <?php
 return array(
     'routes' => array(
-        'apioauthprovider' => array(
+        'oauth2provider' => array(
             'type' => 'literal',
             'options' => array(
                 'route' => '/oauth',

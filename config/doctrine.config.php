@@ -6,13 +6,13 @@ return array(
             'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
             'cache' => 'array',
             'paths' => array(
-                realpath(__DIR__ . '/../src/ApiOAuthProvider/Model/Entity'),
+                realpath(__DIR__ . '/../src/OAuth2Provider/Model/Entity'),
             ),
         ),
         'yaml_driver' => array(
             'class' => 'Doctrine\ORM\Mapping\Driver\YamlDriver',
             'paths' => array(
-                realpath(__DIR__ . '/../src/ApiOAuthProvider/Model/Yaml'),
+                realpath(__DIR__ . '/../src/OAuth2Provider/Model/Yaml'),
             ),
         ),
 
@@ -21,8 +21,8 @@ return array(
         'orm_default' => array(
             'drivers' => array(
                 // register `my_annotation_driver` for any entity under namespace `My\Namespace`
-                'ApiOAuthProvider\Model\Entity' => 'annotation_driver',
-                //'ApiOAuthProvider\Yaml' => 'yaml_driver',
+                'OAuth2Provider\Model\Entity' => 'annotation_driver',
+                //'OAuth2Provider\Yaml' => 'yaml_driver',
             )
         )
     )

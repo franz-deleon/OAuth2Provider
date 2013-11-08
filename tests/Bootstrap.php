@@ -1,5 +1,5 @@
 <?php
-namespace ApiOAuthProviderTests;
+namespace OAuth2ProviderTests;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
