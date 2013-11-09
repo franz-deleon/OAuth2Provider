@@ -1,0 +1,51 @@
+<?php
+namespace OAuth2Provider\Service\Factory;
+
+use OAuth2Provider\Exception;
+use OAuth2Provider\Lib\Utilities;
+
+use Zend\ServiceManager;
+
+class StorageFactory implements ServiceManager\FactoryInterface
+{
+    /**
+     * Valid storage name keys
+     * @var array
+     */
+    protected $storageNames = array(
+        'access_token',
+        'authorization_code',
+        'client_credentials',
+        'client',
+        'refresh_token',
+        'user_credentials',
+        'jwt_bearer',
+        'scope',
+    );
+
+    /**
+     * Initialize an OAuth storage object
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed
+     */
+    public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
+    {
+        $storageNames = $this->storageNames;
+        return function ($storage, $storageName, $serverKey) use ($serviceLocator, $storageNames) {
+            if (!in_array($storageName, $storageNames)) {
+                throw new Exception\InvalidConfigException(sprintf(
+                    "Class '%s': the storage config '%s' is not valid",
+                    __METHOD__,
+                    $storageName
+                ));
+            }
+
+            $storageObj = Utilities::createClass($storage, $serviceLocator, "Class '" . get_class($storage) . "' does not exist.");
+            $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
+            $storageContainer[$serverKey][$storageName] = $storageObj;
+
+            return $storageObj;
+        };
+    }
+}

@@ -12,7 +12,12 @@ class ServerConfigurations extends AbstractOptions
     /**
      * @var array;
      */
-    protected $storage = array();
+    protected $storages = array();
+
+    /**
+     * @var array
+     */
+    protected $config = array();
 
     /**
      * @var array;
@@ -44,20 +49,37 @@ class ServerConfigurations extends AbstractOptions
      */
     protected $serverClass = 'OAuth2\Server';
 
+
+	/**
+     * @return the $config
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+	/**
+     * @param multitype: $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
 	/**
      * @return the $storage
      */
-    public function getStorage()
+    public function getStorages()
     {
-        return $this->storage;
+        return $this->storages;
     }
 
 	/**
      * @param multitype: $storage
      */
-    public function setStorage(array $storage)
+    public function setStorages(array $storages)
     {
-        $this->storage = $storage;
+        $this->storages = $storages;
     }
 
 	/**

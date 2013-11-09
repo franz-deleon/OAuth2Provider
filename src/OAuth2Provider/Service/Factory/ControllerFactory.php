@@ -23,7 +23,7 @@ class ControllerFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        $configuration = $serviceLocator->getServiceLocator()->get('OAuth2Provider\Options\Configuration');
+        $configuration = $serviceLocator->getServiceLocator()->get('OAuth2Provider/Options/Configuration');
         $controller    = $configuration->getController();
 
         // check for valid controller

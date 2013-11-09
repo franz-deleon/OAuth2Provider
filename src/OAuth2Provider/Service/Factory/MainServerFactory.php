@@ -17,7 +17,7 @@ class MainServerFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        $configuration = $serviceLocator->get('OAuth2Provider\Options\Configuration');
+        $configuration = $serviceLocator->get('OAuth2Provider/Options/Configuration');
 
         // initialize the main server via the abstract server factory;
         return $serviceLocator->get($configuration->getMainServer());

@@ -24,13 +24,6 @@ class Module
         );
     }
 
-    public function getModuleDependencies()
-    {
-        return array(
-            'DoctrineORMModule'
-        );
-    }
-
     public function getControllerConfig()
     {
         return array(
@@ -44,18 +37,20 @@ class Module
     {
         return array(
             'invokables' => array(
-                //'OAuth2Provider\StorageAdapter\ClientCredentials' => __NAMESPACE__ . '\StorageAdapter\ClientCredentials',
+                'OAuth2Provider/Containers/StorageContainer' => 'OAuth2Provider\Containers\StorageContainer',
+                'OAuth2Provider/Containers/GrantTypeContainer' => 'OAuth2Provider\Containers\GrantTypeContainer',
             ),
             'factories' => array(
-                'OAuth2Provider\Options\Configuration'             => 'OAuth2Provider\Service\Factory\ConfigurationFactory',
-                'OAuth2Provider\Service\Factory\MainServerFactory' => 'OAuth2Provider\Service\Factory\MainServerFactory',
-                //'OAuth2Provider\Server' => 'OAuth2Provider\StorageAdapter\ServerFactory',
+                'OAuth2Provider/Options/Configuration' => 'OAuth2Provider\Service\Factory\ConfigurationFactory',
+                'OAuth2Provider/Service/MainServerFactory' => 'OAuth2Provider\Service\Factory\MainServerFactory',
+                'OAuth2Provider/Service/StorageFactory' => 'OAuth2Provider\Service\Factory\StorageFactory',
+                'OAuth2Provider/Service/GrantTypeFactory' => 'OAuth2Provider\Service\Factory\GrantTypeFactory',
             ),
             'abstract_factories' => array(
                 'OAuth2Provider\Service\AbstractFactory\ServerAbstractFactory',
             ),
             'aliases' => array(
-                'oauth2provider.server.main' => 'OAuth2Provider\Service\Factory\MainServerFactory',
+                'oauth2provider.server.main' => 'OAuth2Provider/Service/MainServerFactory',
             ),
         );
     }

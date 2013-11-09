@@ -47,9 +47,9 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
             'myconfig' => array(),
         );
 
-        $configMock = $this->getMock('stdClass', array('getServer'));
+        $configMock = $this->getMock('stdClass', array('getServers'));
         $configMock->expects($this->once())
-            ->method('getServer')
+            ->method('getServers')
             ->will($this->returnValue($config));
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -69,9 +69,9 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
             'myconfig' => array(),
         );
 
-        $configMock = $this->getMock('stdClass', array('getServer'));
+        $configMock = $this->getMock('stdClass', array('getServers'));
         $configMock->expects($this->once())
-            ->method('getServer')
+            ->method('getServers')
             ->will($this->returnValue($config));
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);

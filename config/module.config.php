@@ -6,6 +6,5 @@ return array(
         ),
     ),
     'api_oauth_provider' => include_once __DIR__ . '/OAuth2provider.config.php',
-    'doctrine'           => include_once __DIR__ . '/doctrine.config.php',
     'router'             => include_once __DIR__ . '/routes.config.php',
 );

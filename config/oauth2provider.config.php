@@ -1,82 +1,33 @@
 <?php
 return array(
     /**
-     * Storages
-     * OAuth 2 Storage list and configurations
-     */
-    'storage' => array(
-        'access_token' => array(
-
-        ),
-        'authorization_code' => array(
-
-        ),
-        'client_credentials' => array(
-
-        ),
-        'client' => array(
-
-        ),
-        'jwt_bearer' => array(
-
-        ),
-        'memory' => array(
-
-        ),
-        'mongo' => array(
-
-        ),
-        'pdo' => array(
-
-        ),
-        'redis' => array(
-
-        ),
-        'refresh_token' => array(
-
-        ),
-        'scope' => array(
-
-        ),
-        'user_credentials' => array(
-
-        ),
-    ),
-
-    /**
-     * Grant Types
-     * OAuth 2 Grant Type list and configurations
-     */
-    'grant_type' => array(
-        'authorization_code' => array(
-
-        ),
-        'client_credentials' => array(
-
-        ),
-        'jwt_bearer' => array(
-
-        ),
-        'refresh_token' => array(
-
-        ),
-        'user_credentials' => array(
-
-        ),
-    ),
-
-    /**
      * Servers
+     *
+     * Grant Type keys:
+     * 1. authorization_code
+     * 2. client_credentials
+     * 3. jwt_bearer
+     * 4. refresh_token
+     * 5. user_credentials
      *
      * OAuth 2 server list and configurations
      */
     'servers' => array(
         'default' => array(
-            'storage' => array(
-
+            'storages' => array(
+                'user_credentials' => new \stdClass(),
+                'authorization_code' => new \stdClass(),
             ),
             'grant_types' => array(
-
+                //'user_credentials' => 'OAuth2\GrantType\UserCredentials',
+                'OAuth2Provider\UserCreds',
+                'OAuth2\GrantType\UserCredentials',
+                array(
+                    'class' => 'OAuth2Provider\GrantType\UserCredentials',
+                    'params' => array(
+                        'storage' => 'user_credentials',
+                    ),
+                ),
             ),
         ),
     ),
