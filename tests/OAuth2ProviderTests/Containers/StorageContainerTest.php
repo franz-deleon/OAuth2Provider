@@ -50,7 +50,7 @@ class StorageContainerTest extends \PHPUnit_Framework_TestCase
         $this->StorageContainer['server1']['storage1'] = 'ss1';
         $this->StorageContainer['server1']['storage2'] = 'ss2';
 
-        $r = $this->StorageContainer->getServerStorages('server1');
+        $r = $this->StorageContainer->getServerContents('server1');
         $this->assertSame($expected, $r);
     }
 
@@ -62,10 +62,10 @@ class StorageContainerTest extends \PHPUnit_Framework_TestCase
         $this->StorageContainer['server1']['storage1'] = 'ss1';
         $this->StorageContainer['server1']['storage2'] = 'ss2';
 
-        $r = $this->StorageContainer->getServerStorageInKey('server1', 'storage1');
+        $r = $this->StorageContainer->getServerContentsFromKey('server1', 'storage1');
         $this->assertEquals('ss1', $r);
 
-        $r = $this->StorageContainer->getServerStorageInKey('server1', 'storage2');
+        $r = $this->StorageContainer->getServerContentsFromKey('server1', 'storage2');
         $this->assertEquals('ss2', $r);
     }
 }

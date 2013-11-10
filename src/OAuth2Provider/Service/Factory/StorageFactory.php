@@ -32,20 +32,23 @@ class StorageFactory implements ServiceManager\FactoryInterface
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
         $storageNames = $this->storageNames;
-        return function ($storage, $storageName, $serverKey) use ($serviceLocator, $storageNames) {
-            if (!in_array($storageName, $storageNames)) {
-                throw new Exception\InvalidConfigException(sprintf(
-                    "Class '%s': the storage config '%s' is not valid",
-                    __METHOD__,
-                    $storageName
-                ));
+        return function ($storages, $serverKey) use ($serviceLocator, $storageNames) {
+
+            $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
+            foreach ($storages as $storageName => $storage) {
+                if (!in_array($storageName, $storageNames)) {
+                    throw new Exception\InvalidConfigException(sprintf(
+                        "Class '%s': the storage config '%s' is not valid",
+                        __METHOD__,
+                        $storageName
+                    ));
+                }
+
+                $storageObj = Utilities::createClass($storage, $serviceLocator, "Class '" . get_class($storage) . "' does not exist.");
+                $storageContainer[$serverKey][$storageName] = $storageObj;
             }
 
-            $storageObj = Utilities::createClass($storage, $serviceLocator, "Class '" . get_class($storage) . "' does not exist.");
-            $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
-            $storageContainer[$serverKey][$storageName] = $storageObj;
-
-            return $storageObj;
+            return $storageContainer;
         };
     }
 }

@@ -20,10 +20,10 @@ return array(
             ),
             'grant_types' => array(
                 //'user_credentials' => 'OAuth2\GrantType\UserCredentials',
-                'OAuth2Provider\UserCreds',
-                'OAuth2\GrantType\UserCredentials',
+                //'OAuth2Provider\UserCreds',
+                //'OAuth2\GrantType\UserCredentials',
                 array(
-                    'class' => 'OAuth2Provider\GrantType\UserCredentials',
+                    'class' => 'OAuth2\GrantType\UserCredentials',
                     'params' => array(
                         'storage' => 'user_credentials',
                     ),

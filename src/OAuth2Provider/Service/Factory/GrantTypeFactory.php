@@ -2,23 +2,29 @@
 namespace OAuth2Provider\Service\Factory;
 
 use OAuth2Provider\Exception;
-use OAuth2Provider\Lib\Utilities;
 
 use OAuth2\GrantType\GrantTypeInterface;
 
 use Zend\ServiceManager;
-use OAuth2Provider\Exception\InvalidClassException;
 
 class GrantTypeFactory implements ServiceManager\FactoryInterface
 {
+    /**
+     * List of available strategies
+     * @var string
+     */
     protected $availableStrategy = array(
-        'authorization_code' => 'OAuth2Provider\Service\Factory\GrantTypeStrategy\AuthorizationCodeFactory',
-        'client_credentials' => 'OAuth2Provider\Service\Factory\GrantTypeStrategy\ClientCredentialsFactory',
-        'jwt_bearer'         => 'OAuth2Provider\Service\Factory\GrantTypeStrategy\JwtBearerFactory',
-        'refresh_token'      => 'OAuth2Provider\Service\Factory\GrantTypeStrategy\RefreshTokenFactory' ,
-        'user_credentials'   => 'OAuth2Provider\Service\Factory\GrantTypeStrategy\UserCredentialsFactory',
+        'authorization_code' => 'OAuth2Provider/GrantTypeStrategy/AuthorizationCode',
+        'client_credentials' => 'OAuth2Provider/GrantTypeStrategy/ClientCredentials',
+        'jwt_bearer'         => 'OAuth2Provider/GrantTypeStrategy/JwtBearer',
+        'refresh_token'      => 'OAuth2Provider/GrantTypeStrategy/RefreshToken' ,
+        'user_credentials'   => 'OAuth2Provider/GrantTypeStrategy/UserCredentials',
     );
 
+    /**
+     * Concrete FQNS implementation of grant types taken from OAuthServer
+     * @var array
+     */
     protected $concreteClasses = array(
         'authorization_code' => 'OAuth2\GrantType\AuthorizationCode',
         'client_credentials' => 'OAuth2\GrantType\ClientCredentials',
@@ -38,9 +44,11 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
         $strategies = $this->availableStrategy;
         $concreteClasses = $this->concreteClasses;
 
-        return function ($grantType, $grantTypeName, $serverKey) use ($serviceLocator, $strategies, $concreteClasses) {
+        return function ($grantTypes, $serverKey) use ($serviceLocator, $strategies, $concreteClasses) {
+            $grantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
 
-            if (!is_object($grantType)) {
+            foreach ($grantTypes as $grantTypeName => $grantType) {
+
                 if (is_array($grantType)) {
                     if (!isset($grantType['class'])) {
                         throw new Exception\InvalidServerException(sprintf(
@@ -48,63 +56,67 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                             __METHOD__
                         ));
                     }
-                    $class = $grantType['class'];
+                    $class  = $grantType['class'];
+                    $params = isset($grantType['params']) ? $grantType['params'] : null;
                 } elseif (is_string($grantType)) {
-                    $class = $grantType;
+                    $class  = $grantType;
+                    $params = null;
+                } else {
+                    $class  = null;
+                    $params = null;
                 }
 
-                if ($serviceLocator->has($class)) {
-                    $grantType = $serviceLocator->get($class);
-                } else {
-                    /** maps the grant type to a strategy **/
-                    // a strategy key is available
-                    if (isset($strategies[$grantTypeName])) {
-                        $strategy = $strategies[$grantTypeName];
+                if (isset($class)) {
+                    if ($serviceLocator->has($class)) {
+                        $grantType = $serviceLocator->get($class);
                     } else {
-                        if (is_string($class)) {
-                            // if class is a direct implementation in of grant type classes
+                        /** maps the grant type to a strategy **/
+                        // a strategy key is available
+                        if (isset($strategies[$grantTypeName])) {
+                            $strategy = $strategies[$grantTypeName];
+                        } else {
+                            // if class is a direct implementation of grant type class
                             if (in_array($class, $concreteClasses)) {
                                 $strategy = array_flip($concreteClasses);
                                 $strategy = $strategy[$class];
                                 $strategy = $strategies[$strategy];
                             } else {
-                                // look at the parent as our last hoorah
+                                // look at the parent as our last check
                                 $parentClass = get_parent_class($class);
                                 if (in_array($parentClass, $concreteClasses)) {
-                                    $strategy = array_flip($concreteClass);
+                                    $strategy = array_flip($concreteClasses);
                                     $strategy = $strategy[$parentClass];
                                     $strategy = $strategies[$strategy];
                                 }
                             }
                         }
-                    }
 
-                    if (!isset($strategy)) {
-                         throw new Exception\InvalidClassException(sprintf(
-                            "Class '%s' error: cannot map class '%s' to a Grant Type strategy",
-                            __METHOD__,
-                            $class
-                        ));
-                    }
+                        if (!isset($strategy)) {
+                            throw new Exception\InvalidClassException(sprintf(
+                                "Class '%s' error: cannot map class '%s' to a Grant Type strategy",
+                                __METHOD__,
+                                $class
+                            ));
+                        }
 
-                    // forward construction to grant type strategy
-                    $grantTypeStrategy = $serviceLocator->get($strategy);
-                    $grantTypeStrategy($class, $serverKey);
+                        // forward construction to grant type strategy
+                        $grantTypeStrategy = $serviceLocator->get($strategy);
+                        $grantTypeStrategy($class, $params, $serverKey);
+                    }
                 }
+
+                if (!$grantType instanceof GrantTypeInterface) {
+                    throw new Exception\InvalidClassException(sprintf(
+                        "Class '%s' error: '%s' is not of GrantTypeInterface",
+                        __METHOD__,
+                        get_class($grantType)
+                    ));
+                }
+
+                $grantTypeContainer[$serverKey][$grantTypeName] = $grantType;
+
+                return $grantType;
             }
-
-            if (!$grantType instanceof GrantTypeInterface) {
-                throw new Exception\InvalidClassException(sprintf(
-                    "Class '%s' error: '%s' is not of GrantTypeInterface",
-                    __METHOD__,
-                    get_class($grantType)
-                ));
-            }
-
-            $grantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
-            $grantTypeContainer[$serverKey][$grantTypeName] = $grantType;
-
-            return $grantType;
         };
     }
 }

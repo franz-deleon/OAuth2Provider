@@ -53,19 +53,14 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
     public function createServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         $serverKey     = $this->serverKey;
-        $serverConfigs = $this->serverConfig;
-        $serverConfigs = new ServerConfigurations($serverConfigs);
+        $serverConfigs = new ServerConfigurations($this->serverConfig);
 
         // initialize storages
-        foreach ($serverConfigs->getStorages() as $storageName => $storage) {
-            $storageFactory = $serviceLocator->get('OAuth2Provider/Service/StorageFactory');
-            $storageFactory($storage, $storageName, $serverKey);
-        }
+        $storageFactory = $serviceLocator->get('OAuth2Provider/Service/StorageFactory');
+        $storages = $storageFactory($serverConfigs->getStorages(), $serverKey);
 
         // initialize grant types
-        foreach ($serverConfigs->getGrantTypes() as $grantTypeName => $grantType) {
-            $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/GrantTypeFactory');
-            $grantTypeFactory($grantType, $grantTypeName, $serverKey);
-        }
+        $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/GrantTypeFactory');
+        $grantTypeFactory($serverConfigs->getGrantTypes(), $serverKey);
     }
 }

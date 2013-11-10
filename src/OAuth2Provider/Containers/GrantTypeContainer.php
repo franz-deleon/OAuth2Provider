@@ -3,28 +3,27 @@ namespace OAuth2Provider\Containers;
 
 use Zend\Stdlib\ArrayStack;
 
-class GrantTypeContainer extends ArrayStack
+class GrantTypeContainer extends ArrayStack implements ContainerInterface
 {
-    public function getServerGrantTypes($server)
+    public function getServerContents($server)
     {
-        $array = $this->getArrayCopy();
-        if (isset($array[$server])) {
-            return $array[$server];
+        $grantTypeData = $this->getArrayCopy();
+        if (isset($grantTypeData[$server])) {
+            return $grantTypeData[$server];
         }
     }
 
-    public function getServerStorageInKey($server, $grantTypeKey)
+    public function getServerContentsFromKey($server, $key)
     {
-        $array = $this->getArrayCopy();
-        if (isset($array[$server][$grantTypeKey])) {
-            return $array[$server][$grantTypeKey];
+        $grantTypeData = $this->getArrayCopy();
+        if (isset($grantTypeData[$server][$key])) {
+            return $grantTypeData[$server][$key];
         }
     }
 
-    public function isServerStorageInKey($server, $grantTypeKey)
+    public function isServerContentsInKey($server, $key)
     {
-        $array = $this->getArrayCopy();
-        if (isset($array[$server][$grantTypeKey])) {
+        if (null !== $this->getServerContentsFromKey($server, $key)) {
             return true;
         }
         return false;

@@ -43,11 +43,14 @@ class StorageFactoryTest extends \PHPUnit_Framework_TestCase
 	 */
     public function testCreateService()
     {
-        $mainSm = Bootstrap::getServiceManager();
+        $storages = array(
+            'user_credentials' => new \stdClass(),
+        );
+
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
 
         $storageFactory = $this->storageFactory->createService($mainSm);
-        $r = $storageFactory(new \stdClass(), 'user_credentials', 'default');
-        $this->assertInstanceOf('stdClass', $r);
+        $r = $storageFactory($storages, 'server_key');
     }
 
     /**
@@ -56,10 +59,14 @@ class StorageFactoryTest extends \PHPUnit_Framework_TestCase
 	 */
     public function testCreateServiceReturnsException()
     {
-        $mainSm = Bootstrap::getServiceManager();
+        $storages = array(
+            'not_in_valid' => new \stdClass(),
+        );
+
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
 
         $storageFactory = $this->storageFactory->createService($mainSm);
-        $r = $storageFactory(new \stdClass(), 'user_xxx', 'default');
+        $r = $storageFactory($storages, 'server_key');
     }
 }
 

@@ -3,21 +3,32 @@ namespace OAuth2Provider\Containers;
 
 use Zend\Stdlib\ArrayStack;
 
-class StorageContainer extends ArrayStack
+class StorageContainer extends ArrayStack implements ContainerInterface
 {
-    public function getServerStorages($server)
+    public function getServerContents($server)
     {
-        $array = $this->getArrayCopy();
-        if (isset($array[$server])) {
-            return $array[$server];
+        $storageData = $this->getArrayCopy();
+        if (isset($storageData[$server])) {
+            return $storageData[$server];
         }
     }
 
-    public function getServerStorageInKey($server, $storageKey)
+    public function getServerContentsFromKey($server, $key)
     {
-        $array = $this->getArrayCopy();
-        if (isset($array[$server][$storageKey])) {
-            return $array[$server][$storageKey];
+        $storageData = $this->getArrayCopy();
+        if (isset($storageData[$server][$key])) {
+            return $storageData[$server][$key];
         }
+    }
+
+    public function isServerContentsFromKey($server, $key)
+    {
+        if (is_string($server)
+            && is_string($key)
+            && null !== $this->getServerContentsFromKey($server, $key)
+        ) {
+            return true;
+        }
+        return false;
     }
 }
