@@ -2,6 +2,7 @@
 namespace OAuth2Provider\Service\Factory;
 
 use OAuth2Provider\Exception;
+use OAuth2Provider\Lib\Utilities;
 
 use OAuth2\GrantType\GrantTypeInterface;
 
@@ -41,14 +42,13 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        $strategies = $this->availableStrategy;
+        $strategies      = $this->availableStrategy;
         $concreteClasses = $this->concreteClasses;
 
         return function ($grantTypes, $serverKey) use ($serviceLocator, $strategies, $concreteClasses) {
             $grantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
 
             foreach ($grantTypes as $grantTypeName => $grantType) {
-
                 if (is_array($grantType)) {
                     if (!isset($grantType['class'])) {
                         throw new Exception\InvalidServerException(sprintf(
@@ -73,20 +73,19 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                         /** maps the grant type to a strategy **/
                         // a strategy key is available
                         if (isset($strategies[$grantTypeName])) {
-                            $strategy = $strategies[$grantTypeName];
+                            $grantTypeKey = $grantTypeName;
+                            $strategy = $strategies[$grantTypeKey];
                         } else {
                             // if class is a direct implementation of grant type class
                             if (in_array($class, $concreteClasses)) {
-                                $strategy = array_flip($concreteClasses);
-                                $strategy = $strategy[$class];
-                                $strategy = $strategies[$strategy];
+                                $grantTypeKey = array_search($class, $concreteClasses);
+                                $strategy = $strategies[$grantTypeKey];
                             } else {
                                 // look at the parent as our last check
                                 $parentClass = get_parent_class($class);
                                 if (in_array($parentClass, $concreteClasses)) {
-                                    $strategy = array_flip($concreteClasses);
-                                    $strategy = $strategy[$parentClass];
-                                    $strategy = $strategies[$strategy];
+                                    $grantTypeKey = array_search($parentClass, $concreteClasses);
+                                    $strategy = $strategies[$grantTypeKey];
                                 }
                             }
                         }
@@ -101,7 +100,7 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
 
                         // forward construction to grant type strategy
                         $grantTypeStrategy = $serviceLocator->get($strategy);
-                        $grantTypeStrategy($class, $params, $serverKey);
+                        $grantType = $grantTypeStrategy($class, $params, $serverKey);
                     }
                 }
 
@@ -113,10 +112,22 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                     ));
                 }
 
-                $grantTypeContainer[$serverKey][$grantTypeName] = $grantType;
+                // figure grant type key if not defined
+                if (!isset($grantTypeKey)) {
+                    $grantTypeClass = get_class($grantType);
+                    $grantTypeKey = array_search($grantTypeClass, $concreteClasses);
+                    if (false === $grantTypeKey) {
+                        $grantTypeKey = $serviceLocator->get('FilterManager')
+                            ->get('wordcamelcasetounderscore')
+                            ->filter(Utilities::extractClassnameFromFQNS($grantTypeClass));
+                    }
+                }
 
-                return $grantType;
+                // store the grant type in the container
+                $grantTypeContainer[$serverKey][$grantTypeKey] = $grantType;
             }
+
+            return $grantTypeContainer;
         };
     }
 }

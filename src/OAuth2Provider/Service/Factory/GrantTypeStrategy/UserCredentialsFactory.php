@@ -2,7 +2,6 @@
 namespace OAuth2Provider\Service\Factory\GrantTypeStrategy;
 
 use OAuth2Provider\Exception;
-use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
 
@@ -25,7 +24,7 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
                 $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
 
                 // check if there is a direct defined storage key
-                } elseif ($storageContainer->isServerContentsFromKey($serverKey, $storageName))  {
+                if ($storageContainer->isServerContentsFromKey($serverKey, $storageName))  {
                     $storage = $storageContainer->getServerContentsFromKey($serverKey, $storageName);
                 } elseif ($storageContainer->isServerContentsFromKey($serverKey, UserCredentialsFactory::IDENTIFIER)) {
                     $storage = $storageContainer->getServerContentsFromKey($serverKey, UserCredentialsFactory::IDENTIFIER);
@@ -34,19 +33,18 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
                 } elseif (is_object($storageName)) {
                     $storage = $storageName;
                 }
-
             }
 
+            if (!isset($storage)) {
+                throw new Exception\InvalidServerException(sprintf(
+                    "Class '%s' error: storage of type '%s'is required for grant type '%s'",
+                    __METHOD__,
+                    UserCredentialsFactory::IDENTIFIER,
+                    $grantTypeClassName
+                ));
+            }
 
-            $storage = $storageContainer->getServerContentsFromKey($serverKey, UserCredentialsFactory::IDENTIFIER);
-
-
-            var_dump($storage);die;
-
-            $GrantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
-            $GrantTypeContainer[$serverKey][$storageName] = $grantTypeObj;
-
-            return $grantTypeObj;
+            return new $grantTypeClassName($storage);
         };
     }
 }

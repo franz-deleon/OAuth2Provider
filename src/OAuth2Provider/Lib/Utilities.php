@@ -40,4 +40,22 @@ class Utilities
             throw new Exception\ClassNotExistException($errorMessage);
         }
     }
+
+    /**
+     * Extract the class name from a fully qualified namespace
+     * @param string|object $class
+     * @return mixed
+     */
+    public static function extractClassnameFromFQNS($class)
+    {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+
+        if (is_string($class)) {
+            $class = substr($class, (strrpos($class, '\\') + 1));
+        }
+
+        return $class;
+    }
 }
