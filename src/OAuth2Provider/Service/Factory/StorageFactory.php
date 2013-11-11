@@ -48,7 +48,7 @@ class StorageFactory implements ServiceManager\FactoryInterface
                 $storageContainer[$serverKey][$storageName] = $storageObj;
             }
 
-            return $storageContainer;
+            return $storageContainer->getServerContents($serverKey);
         };
     }
 }
