@@ -29,9 +29,9 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         if (preg_match(static::REGEX_SERVER_PATTERN, $requestedName, $serverKeyMatch)
             && !empty($serverKeyMatch[1])
         ) {
-            $serverKey     = $serverKeyMatch[1];
-            $serverConfigs = $serviceLocator->get('OAuth2Provider\Options\Configuration')->getServers();
+            $serverKey = $serverKeyMatch[1];
 
+            $serverConfigs = $serviceLocator->get('OAuth2Provider\Options\Configuration')->getServers();
             if (isset($serverConfigs[$serverKey])) {
                 $this->serverKey    = $serverKey;
                 $this->serverConfig = $serverConfigs[$serverKey];
