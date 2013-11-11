@@ -1,11 +1,15 @@
 <?php
 namespace OAuth2Provider;
 
-use OAuth2\GrantType\UserCredentials;
+use OAuth2\Storage\UserCredentialsInterface;
 
-class UserCreds extends UserCredentials
+class UserCreds implements UserCredentialsInterface
 {
-    public function __construct($he)
+    public function checkUserCredentials($username, $password)
+    {
+
+    }
+    public function getUserDetails($username)
     {
 
     }

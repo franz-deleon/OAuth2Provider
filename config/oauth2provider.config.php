@@ -1,4 +1,5 @@
 <?php
+use OAuth2Provider\UserCreds;
 return array(
     /**
      * Servers
@@ -15,8 +16,8 @@ return array(
     'servers' => array(
         'default' => array(
             'storages' => array(
-                'user_credentials' => new \stdClass(),
-                'authorization_code' => new \stdClass(),
+                'user_credentials' => new OAuth2Provider\UserCreds('hi'),
+                //'authorization_code' => new \stdClass(),
             ),
             'grant_types' => array(
                 //'user_credentials' => 'OAuth2\GrantType\UserCredentials',
