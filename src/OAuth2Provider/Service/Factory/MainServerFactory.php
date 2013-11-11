@@ -1,8 +1,6 @@
 <?php
 namespace OAuth2Provider\Service\Factory;
 
-use OAuth2Provider\Exception;
-
 use Zend\ServiceManager;
 
 class MainServerFactory implements ServiceManager\FactoryInterface
@@ -20,6 +18,6 @@ class MainServerFactory implements ServiceManager\FactoryInterface
         $configuration = $serviceLocator->get('OAuth2Provider/Options/Configuration');
 
         // initialize the main server via the abstract server factory;
-        return $serviceLocator->get($configuration->getMainServer());
+        return $serviceLocator->get('oauth2provider.server.' . $configuration->getMainServer());
     }
 }

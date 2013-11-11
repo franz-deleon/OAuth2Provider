@@ -48,6 +48,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests GrantTypeFactory->createService()
+     * @group test1
      */
     public function testCreateServiceGrantTypeIsPHPObject()
     {
@@ -67,9 +68,27 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
      * Tests GrantTypeFactory->createService()
      * @group test2
      */
-    public function testCreateServiceGrantTypeIsPHPObjectWithUserCredentialParent()
+    public function testCreateServiceGrantTypeIsPHPObjectWithUserCredentialAsParent()
     {
         $storage = new Assets\GrantTypeWithParentUserCredentials(new Assets\StorageUserCredentials());
+        $grantTypeConfig = array(
+            $storage,
+        );
+
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        $factory = $this->GrantTypeFactory->createService($mainSm);
+        $r = $factory($grantTypeConfig, 'server1');
+        $this->assertSame(array('user_credentials' => $storage), $r);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @group test2b
+     */
+    public function testCreateServiceGrantTypeIsPHPObjectWithCustomUserCredentials()
+    {
+        $storage = new Assets\GrantTypeCustomUserCredentials();
         $grantTypeConfig = array(
             $storage,
         );
@@ -129,6 +148,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
 
+        // seed the storagecontainer
         $storageContainer = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
         $storageContainer['server1']['user_credentials'] = new Assets\StorageUserCredentials();
 
@@ -143,7 +163,118 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = $this->GrantTypeFactory->createService($mainSm);
         $r = $factory($grantTypeConfig, 'server1');
-        //$this->assertSame(array('user_credentials' => $storage), $r);
+        $this->assertInstanceOf('OAuth2\GrantType\UserCredentials', $r['user_credentials']);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @group test6
+     */
+    public function testCreateServiceGrantTypeWithStorageAsGrantTypeKey()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        // seed the storagecontainer
+        $storageContainer = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
+        $storageContainer['server1']['user_credentials'] = new Assets\StorageUserCredentials();
+
+        $grantTypeConfig = array(
+            'user_credentials' => array(
+                'class' => 'OAuth2\GrantType\UserCredentials',
+            )
+        );
+
+        $factory = $this->GrantTypeFactory->createService($mainSm);
+        $r = $factory($grantTypeConfig, 'server1');
+        $this->assertInstanceOf('OAuth2\GrantType\UserCredentials', $r['user_credentials']);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @group test7
+     */
+    public function testCreateServiceGrantTypeWithParentAsConcreteGrantType()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        // seed the storagecontainer
+        $storageContainer = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
+        $storageContainer['server1']['user_credentials'] = new Assets\StorageUserCredentials();
+
+        $grantTypeConfig = array(
+            array(
+                'class' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
+                'params' => array(
+                    'storage' => 'user_credentials'
+                )
+            )
+        );
+
+        $factory = $this->GrantTypeFactory->createService($mainSm);
+        $r = $factory($grantTypeConfig, 'server1');
+        $this->assertInstanceOf('OAuth2\GrantType\UserCredentials', $r['user_credentials']);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @expectedException OAuth2Provider\Exception\InvalidServerException
+     * @group test8
+     */
+    public function testCreateServiceGrantTypeReturnsExceptionOnNoClassKey()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        $grantTypeConfig = array(
+            array(
+                'params' => array(
+                    'storage' => 'user_credentials'
+                )
+            )
+        );
+
+        $factory = $this->GrantTypeFactory->createService($mainSm);
+        $factory($grantTypeConfig, 'server1');
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @expectedException OAuth2Provider\Exception\InvalidConfigException
+     * @group test9
+     */
+    public function testCreateServiceGrantTypeReturnsExceptionOnNoParamsConfig()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        $grantTypeConfig = array(
+            array(
+                'class' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
+            )
+        );
+
+        $factory = $this->GrantTypeFactory->createService($mainSm);
+        $factory($grantTypeConfig, 'server1');
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @expectedException OAuth2Provider\Exception\InvalidClassException
+     * @group test10
+     */
+    public function testCreateServiceGrantTypeReturnsExceptionOnInvalidStrategy()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        $grantTypeConfig = array(
+            array(
+                'class' => 'OAuth2ProviderTests\Nothing',
+                'params' => array(
+                    'storage' => 'user_credentials',
+                ),
+            )
+        );
+
+        $factory = $this->GrantTypeFactory->createService($mainSm);
+        $factory($grantTypeConfig, 'server1');
     }
 }
 

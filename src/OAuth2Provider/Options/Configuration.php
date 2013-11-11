@@ -28,7 +28,7 @@ class Configuration extends AbstractOptions
      */
     public function getMainServer()
     {
-        return "oauth2provider.server.{$this->mainServer}";
+        return $this->mainServer;
     }
 
 	/**

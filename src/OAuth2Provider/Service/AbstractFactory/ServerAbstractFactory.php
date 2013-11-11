@@ -11,7 +11,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
     /**
      * @var string
      */
-    const REGEX_SERVER_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9]+)$~';
+    const REGEX_SERVER_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9_]+)$~';
 
     protected $serverConfig;
     protected $serverKey;
@@ -69,5 +69,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         // initialize grant types
         $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/GrantTypeFactory');
         $grantTypeFactory($serverConfigs->getGrantTypes(), $serverKey);
+
+        return new \stdClass();
     }
 }

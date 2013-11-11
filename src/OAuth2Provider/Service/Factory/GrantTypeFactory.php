@@ -71,18 +71,21 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                         $grantType = $serviceLocator->get($class);
                     } else {
                         /** maps the grant type to a strategy **/
-                        if (empty($params)) {
-                            throw new Exception\InvalidConfigException(sprintf(
-                                "Class '%s' error: 'params' configuration is missing",
-                                __METHOD__
-                            ));
-                        }
-
                         // a strategy key is available
                         if (isset($strategies[$grantTypeName])) {
                             $grantTypeKey = $grantTypeName;
-                            $strategy = $strategies[$grantTypeKey];
+                            $strategy     = $strategies[$grantTypeKey];
+                            if (!isset($params['storage'])) {
+                                $params['storage'] = $grantTypeKey;
+                            }
                         } else {
+                            if (empty($params)) {
+                                throw new Exception\InvalidConfigException(sprintf(
+                                    "Class '%s' error: 'params' configuration is missing",
+                                    __METHOD__
+                                ));
+                            }
+
                             // if class is a direct implementation of grant type class
                             if (in_array($class, $concreteClasses)) {
                                 $grantTypeKey = array_search($class, $concreteClasses);
@@ -125,7 +128,7 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                     $grantTypeKey = array_search($grantTypeClass, $concreteClasses);
                     if (false === $grantTypeKey) {
                         // try the parent class if it can be mapped
-                        $parentClass = get_parent_class($class);
+                        $parentClass = get_parent_class($grantType);
                         $grantTypeKey = array_search($parentClass, $concreteClasses);
 
                         // if still no mapping, try to extract from the classname
