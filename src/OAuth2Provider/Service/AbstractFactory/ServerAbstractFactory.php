@@ -8,6 +8,11 @@ use Zend\ServiceManager;
 
 class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
 {
+    /**
+     * @var string
+     */
+    const REGEX_SERVER_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9]+)$~';
+
     protected $serverConfig;
     protected $serverKey;
 
@@ -21,8 +26,10 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        if (0 === strpos($requestedName, 'oauth2provider.server.')) {
-            $serverKey = substr($requestedName, strrpos($requestedName, '.') + 1);
+        if (preg_match(static::REGEX_SERVER_PATTERN, $requestedName, $serverKeyMatch)
+            && !empty($serverKeyMatch[1])
+        ) {
+            $serverKey     = $serverKeyMatch[1];
             $serverConfigs = $serviceLocator->get('OAuth2Provider\Options\Configuration')->getServers();
 
             if (isset($serverConfigs[$serverKey])) {
