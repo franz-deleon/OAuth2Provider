@@ -4,17 +4,30 @@ namespace OAuth2Provider\Containers;
 interface ContainerInterface
 {
     /**
-     * Retrieves the contents of a specific server
-     * The returned array should be off below:
+     * Retrieves the contents of a specific server.
      *
+     * <code>
      * array(
      *     'OAuth_Server1' => array(
-     *          'content_key' => new SomeObject,
+     *          'content_key1' => new SomeObject1,
+     *          'content_key2' => new SomeObject2,
      *     ),
      *     'OAuth_Server2' => array(
-     *          'content_key' => new SomeObject,
+     *          'content_key1' => new SomeObject2,
      *     ),
      * )
+     * </code>
+     *
+     * Assuming the container have the contents above.
+     * ContainerInterface::getServerContents('OAuth_Server1')
+     * returns:
+     *
+     * <code>
+     * array(
+     *     'content_key1' => new SomeObject1,
+     *     'content_key2' => new SomeObject2,
+     * )
+     * </code>
      *
      * @param  string $server
      * @return array
@@ -24,16 +37,18 @@ interface ContainerInterface
     /**
      * Retrieves the contents of a server for a specific content key.
      *
+     * <code>
      * array(
      *     'OAuth_Server1' => array(
      *          'content_key1' => new SomeObject1,
      *     ),
      *     'OAuth_Server2' => array(
-     *          'content_key' => new SomeObject1,
+     *          'content_key' => new SomeObject2,
      *     ),
      * )
+     * </code>
      *
-     * With the data above:
+     * Assuming we have the data above stored in the container.
      *
      * ContainerInterface::getServerContentsFromKey('OAuth_Server1', 'content_key1')
      * returns: new SomeObject1
