@@ -3,11 +3,6 @@ namespace OAuth2Provider;
 
 class Module
 {
-    public function onBootstrap($mvcEvent)
-    {
-
-    }
-
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
@@ -41,6 +36,9 @@ class Module
                 'OAuth2Provider/Containers/GrantTypeContainer' => 'OAuth2Provider\Containers\GrantTypeContainer',
             ),
             'factories' => array(
+                'franz' => function ($sm) {
+                    return 'franz';
+                },
                 'OAuth2Provider/Options/Configuration'     => 'OAuth2Provider\Service\Factory\ConfigurationFactory',
 
                 /** Standard factories **/

@@ -71,6 +71,13 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                         $grantType = $serviceLocator->get($class);
                     } else {
                         /** maps the grant type to a strategy **/
+                        if (empty($params)) {
+                            throw new Exception\InvalidConfigException(sprintf(
+                                "Class '%s' error: 'params' configuration is missing",
+                                __METHOD__
+                            ));
+                        }
+
                         // a strategy key is available
                         if (isset($strategies[$grantTypeName])) {
                             $grantTypeKey = $grantTypeName;
@@ -112,14 +119,30 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                     ));
                 }
 
-                // figure grant type key if not defined
+                // figure grant type key if not defined, usually used on a php object
                 if (!isset($grantTypeKey)) {
                     $grantTypeClass = get_class($grantType);
                     $grantTypeKey = array_search($grantTypeClass, $concreteClasses);
                     if (false === $grantTypeKey) {
-                        $grantTypeKey = $serviceLocator->get('FilterManager')
-                            ->get('wordcamelcasetounderscore')
-                            ->filter(Utilities::extractClassnameFromFQNS($grantTypeClass));
+                        // try the parent class if it can be mapped
+                        $parentClass = get_parent_class($class);
+                        $grantTypeKey = array_search($parentClass, $concreteClasses);
+
+                        // if still no mapping, try to extract from the classname
+                        if (false === $grantTypeKey) {
+                            $grantTypeKey = $serviceLocator->get('FilterManager')
+                                ->get('wordcamelcasetounderscore')
+                                ->filter(Utilities::extractClassnameFromFQNS($grantTypeClass));
+
+                            // because we have an underscored keys, try one last time to loop
+                            // through each and find a map and return the first match
+                            foreach (array_flip($concreteClasses) as $grantTypeId) {
+                                if (false !== stripos($grantTypeKey, $grantTypeId)) {
+                                    $grantTypeKey = $grantTypeId;
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -127,7 +150,7 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                 $grantTypeContainer[$serverKey][$grantTypeKey] = $grantType;
             }
 
-            return $grantTypeContainer;
+            return $grantTypeContainer->getServerContents($serverKey);
         };
     }
 }
