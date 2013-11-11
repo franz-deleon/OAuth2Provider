@@ -36,9 +36,6 @@ class Module
                 'OAuth2Provider/Containers/GrantTypeContainer' => 'OAuth2Provider\Containers\GrantTypeContainer',
             ),
             'factories' => array(
-                'franz' => function ($sm) {
-                    return 'franz';
-                },
                 'OAuth2Provider/Options/Configuration'     => 'OAuth2Provider\Service\Factory\ConfigurationFactory',
 
                 /** Standard factories **/
@@ -55,6 +52,7 @@ class Module
             ),
             'abstract_factories' => array(
                 'OAuth2Provider\Service\AbstractFactory\ServerAbstractFactory',
+                'OAuth2Provider\Service\AbstractFactory\GrantTypeAbstractFactory',
             ),
             'aliases' => array(
                 'oauth2provider.server.main' => 'OAuth2Provider/Service/MainServerFactory',
