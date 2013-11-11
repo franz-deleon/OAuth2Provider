@@ -44,7 +44,7 @@ class ConfigurationFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateService()
     {
         $config = array(
-            'api_oauth_provider' => array(
+            'oauth2provider' => array(
                 'servers' => 'OauthServer',
                 'controller' => 'OauthController',
                 'main_server' => 'client',
@@ -66,7 +66,7 @@ class ConfigurationFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateServiceWithMainServerEmptyValueShouldUseDefault()
     {
         $config = array(
-            'api_oauth_provider' => array(
+            'oauth2provider' => array(
                 'main_server' => '',
             ),
         );

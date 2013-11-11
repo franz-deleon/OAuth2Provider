@@ -20,13 +20,13 @@ class ConfigurationFactory implements ServiceManager\FactoryInterface
     {
         $config = $serviceLocator->get('Config');
 
-        if (!isset($config['api_oauth_provider'])) {
+        if (!isset($config['oauth2provider'])) {
             throw new Exception\InvalidConfigException(sprintf(
                 "Class '%s' error: config api_oauth_provider does not exist.",
                 __CLASS__ . ":" . __METHOD__
             ));
         }
 
-        return new Options\Configuration($config['api_oauth_provider']);
+        return new Options\Configuration($config['oauth2provider']);
     }
 }
