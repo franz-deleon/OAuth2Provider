@@ -49,7 +49,7 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('OAuth2Provider\Controller\UserCredentialsController'));
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('OAuth2Provider\Options\Configuration', $controllerStub);
+        $mainSm->setService('OAuth2Provider/Options/Configuration', $controllerStub);
 
         $pluginSM = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
             ->setMethods(array('getServiceLocator'))
@@ -74,7 +74,7 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('I\do\not\exist'));
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('OAuth2Provider\Options\Configuration', $controllerStub);
+        $mainSm->setService('OAuth2Provider/Options/Configuration', $controllerStub);
 
         $pluginSM = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
             ->setMethods(array('getServiceLocator'))

@@ -53,7 +53,7 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($config));
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('OAuth2Provider\Options\Configuration', $configMock);
+        $mainSm->setService('OAuth2Provider/Options/Configuration', $configMock);
 
         $r = $this->ServerAbstractFactory->canCreateServiceWithName($mainSm, null, 'oauth2provider.server.myconfig');
         $this->assertTrue($r);
@@ -75,7 +75,7 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($config));
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('OAuth2Provider\Options\Configuration', $configMock);
+        $mainSm->setService('OAuth2Provider/Options/Configuration', $configMock);
 
         $r = $this->ServerAbstractFactory->canCreateServiceWithName($mainSm, null, 'oauth2provider.server.notexist');
         $this->assertTrue($r);

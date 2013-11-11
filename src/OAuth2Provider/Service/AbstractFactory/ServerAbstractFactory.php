@@ -31,7 +31,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         ) {
             $serverKey = $serverKeyMatch[1];
 
-            $serverConfigs = $serviceLocator->get('OAuth2Provider\Options\Configuration')->getServers();
+            $serverConfigs = $serviceLocator->get('OAuth2Provider/Options/Configuration')->getServers();
             if (isset($serverConfigs[$serverKey])) {
                 $this->serverKey    = $serverKey;
                 $this->serverConfig = $serverConfigs[$serverKey];
@@ -68,7 +68,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
 
         // initialize grant types
         $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/GrantTypeFactory');
-        $grantTypeFactory($serverConfigs->getGrantTypes(), $serverKey);
+        $grantTypes = $grantTypeFactory($serverConfigs->getGrantTypes(), $serverKey);
 
         return new \stdClass();
     }
