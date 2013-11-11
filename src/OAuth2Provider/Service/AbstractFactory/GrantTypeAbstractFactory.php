@@ -64,7 +64,6 @@ class GrantTypeAbstractFactory implements ServiceManager\AbstractFactoryInterfac
      */
     public function createServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $grantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
-        return $grantTypeContainer->getServerContentsFromKey($this->serverKey, $this->grantTypeKey);
+        return $this->grantTypeContainer->getServerContentsFromKey($this->serverKey, $this->grantTypeKey);
     }
 }
