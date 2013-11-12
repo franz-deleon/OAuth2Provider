@@ -103,7 +103,7 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
 
                 if (!$strategyObj instanceof ResponseTypeInterface) {
                     throw new Exception\InvalidClassException(sprintf(
-                        "Class '%s' error: '%s' is not of GrantTypeInterface",
+                        "Class '%s' error: '%s' is not of ResponseTypeInterface",
                         __METHOD__,
                         get_class($strategyObj)
                     ));

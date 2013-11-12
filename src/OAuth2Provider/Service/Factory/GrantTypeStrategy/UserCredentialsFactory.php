@@ -3,12 +3,13 @@ namespace OAuth2Provider\Service\Factory\GrantTypeStrategy;
 
 use OAuth2Provider\Exception;
 use OAuth2Provider\Options\GrantType\UserCredentialsConfigurations;
+use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
 
 class UserCredentialsFactory implements ServiceManager\FactoryInterface
 {
-    const IDENTIFIER = 'user_credentials';
+    const USER_CREDENTIALS_IDENTIFIER = 'user_credentials';
 
     /**
      * Initialize an OAuth storage object
@@ -22,25 +23,19 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
 
             $config = new UserCredentialsConfigurations($params);
 
-            $storageName = $config->getStorage();
-            $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
-
-            // check if there is a direct defined storage key
-            if ($storageContainer->isExistingServerContentInKey($serverKey, $storageName))  {
-                $storage = $storageContainer->getServerContentsFromKey($serverKey, $storageName);
-            } elseif ($storageContainer->isExistingServerContentInKey($serverKey, UserCredentialsFactory::IDENTIFIER)) {
-                $storage = $storageContainer->getServerContentsFromKey($serverKey, UserCredentialsFactory::IDENTIFIER);
-            } elseif (is_string($storageName) && $serviceLocator->has($storageName)) {
-                $storage = $serviceLocator->get($storageName);
-            } elseif (is_object($storageName)) {
-                $storage = $storageName;
-            }
+            $storage = Utilities::storageLookup(
+                $serverKey,
+                $config->getStorage(),
+                $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
+                $serviceLocator,
+                UserCredentialsFactory::USER_CREDENTIALS_IDENTIFIER
+            );
 
             if (!isset($storage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for grant type '%s'",
                     __METHOD__,
-                    UserCredentialsFactory::IDENTIFIER,
+                    UserCredentialsFactory::USER_CREDENTIALS_IDENTIFIER,
                     $grantTypeClassName
                 ));
             }
