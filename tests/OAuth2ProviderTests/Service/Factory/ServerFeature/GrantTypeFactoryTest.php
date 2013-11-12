@@ -1,7 +1,7 @@
 <?php
 namespace OAuth2ProviderTests;
 
-use OAuth2Provider\Service\Factory\GrantTypeFactory;
+use OAuth2Provider\Service\Factory\ServerFeature\GrantTypeFactory;
 
 /**
  * GrantTypeFactory test case.

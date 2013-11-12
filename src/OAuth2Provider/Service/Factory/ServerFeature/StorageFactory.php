@@ -1,5 +1,5 @@
 <?php
-namespace OAuth2Provider\Service\Factory;
+namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;

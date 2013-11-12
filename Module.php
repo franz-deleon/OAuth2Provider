@@ -39,9 +39,9 @@ class Module
                 'OAuth2Provider/Options/Configuration'     => 'OAuth2Provider\Service\Factory\ConfigurationFactory',
 
                 /** Standard factories **/
-                'OAuth2Provider/Service/StorageFactory'    => 'OAuth2Provider\Service\Factory\StorageFactory',
                 'OAuth2Provider/Service/MainServerFactory' => 'OAuth2Provider\Service\Factory\MainServerFactory',
-                'OAuth2Provider/Service/GrantTypeFactory'  => 'OAuth2Provider\Service\Factory\GrantTypeFactory',
+                'OAuth2Provider/Service/ServerFeature/StorageFactory'    => 'OAuth2Provider\Service\Factory\ServerFeature\StorageFactory',
+                'OAuth2Provider/Service/ServerFeature/GrantTypeFactory'  => 'OAuth2Provider\Service\Factory\ServerFeature\GrantTypeFactory',
 
                 /** Grant Type Strategies **/
                 'OAuth2Provider/GrantTypeStrategy/AuthorizationCode' => 'OAuth2Provider\Service\Factory\GrantTypeStrategy\AuthorizationCodeFactory',
