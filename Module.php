@@ -14,6 +14,7 @@ class Module
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+                    'OAuth2ProviderTests' => __DIR__ . '/tests/OAuth2ProviderTests',
                 ),
             ),
         );
