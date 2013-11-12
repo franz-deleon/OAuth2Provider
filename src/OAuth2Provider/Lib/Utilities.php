@@ -2,6 +2,7 @@
 namespace OAuth2Provider\Lib;
 
 use OAuth2Provider\Exception;
+use OAuth2Provider\Containers\ContainerInterface;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -24,8 +25,8 @@ class Utilities
      */
     public static function createClass($class, ServiceLocatorInterface $serviceManager = null, $errorMessage = null)
     {
-        if (null !== $serviceManager &&
-            (is_array($class) || is_string($class))
+        if (null !== $serviceManager
+            && (is_array($class) || is_string($class))
             && $serviceManager->has($class)
         ) {
             return $serviceManager->get($class);
@@ -57,5 +58,57 @@ class Utilities
         }
 
         return $class;
+    }
+
+    /**
+     * Checks for a given subject if it is stored in a given storage container
+     *
+     * @param mixed  $serverIndex
+     * @param string $server
+     * @param ContainerInterface $container
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param string $identifier
+     * @param string $defaultReturn
+     * @return object|null
+     */
+    public static function storageLookup(
+        $server = null,
+        $serverIndex = null,
+        ContainerInterface $container = null,
+        ServiceLocatorInterface $serviceLocator = null,
+        $identifier = null,
+        $defaultReturn = null
+    ) {
+        $result = null;
+
+        // check if subject is in the container
+        if (isset($container)
+            && $container->isExistingServerContentInKey($server, $serverIndex)
+        )  {
+            $result = $container->getServerContentsFromKey($server, $serverIndex);
+
+        // check if identifier is present in the storage
+        } elseif (isset($container)
+            && $container->isExistingServerContentInKey($server, $identifier)
+        ) {
+            $result = $container->getServerContentsFromKey($server, $identifier);
+
+        // check if the subject is a service manager element
+        } elseif (is_string($serverIndex) && isset($serviceLocator)
+            && $serviceLocator->has($serverIndex)
+        ) {
+            $result = $serviceLocator->get($serverIndex);
+
+        // check if the subject is an object
+        } elseif (is_object($serverIndex)) {
+            $result = $serverIndex;
+        }
+
+        // if no result created, use default return value
+        if (null === $result) {
+            $result = $defaultReturn;
+        }
+
+        return $result;
     }
 }
