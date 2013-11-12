@@ -12,7 +12,7 @@ class Configuration extends AbstractOptions
     protected $mainServer = 'default';
 
     /**
-     * Server list
+     * Server list available
      * @var array
      */
     protected $servers;

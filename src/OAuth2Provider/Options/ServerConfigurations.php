@@ -10,36 +10,67 @@ use Zend\Stdlib\AbstractOptions;
 class ServerConfigurations extends AbstractOptions
 {
     /**
+     * Storages available for mapping for this server
+     *
      * @var array;
      */
     protected $storages = array();
 
     /**
+     * Configurations to pass to the server
+     *
+     * List of default configurations:
+     *
+     *   'access_lifetime'            => 3600,
+     *   'www_realm'                  => 'Service',
+     *   'token_param_name'           => 'access_token',
+     *   'token_bearer_header_name'   => 'Bearer',
+     *   'enforce_state'              => true,
+     *   'require_exact_redirect_uri' => true,
+     *   'allow_implicit'             => false,
+     *   'allow_credentials_in_request_body' => true,
+     *
+     * Optional
+     *
      * @var array
      */
     protected $configs = array();
 
     /**
+     * Grant types to pass to the server
+     * Optional
      * @var array;
      */
     protected $grantTypes = array();
 
     /**
+     * Response type to pass to the server
+     * Optional
+     *
      * @var array;
      */
     protected $responseTypes = array();
 
     /**
+     * Token type to pass to the server
+     * Optional
+     *
      * @var array;
      */
     protected $tokenType;
 
     /**
+     * Scope Utilitity to pass to the server
+     * Optional
+     *
      * @var array;
      */
     protected $scopeUtil;
 
     /**
+     * Assertion type to pass to the server
+     * Optional
+     *
      * @var ClientAssertionTypeInterface;
      */
     protected $clientAssertionType;

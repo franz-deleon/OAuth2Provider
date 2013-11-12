@@ -5,6 +5,12 @@ use Zend\Stdlib\AbstractOptions;
 
 class UserCredentialsConfigurations extends AbstractOptions
 {
+    /**
+     * Storage object to pass to User Credentials Grant Type
+     * Required
+     *
+     * @var string
+     */
     protected $storage;
 
 	/**

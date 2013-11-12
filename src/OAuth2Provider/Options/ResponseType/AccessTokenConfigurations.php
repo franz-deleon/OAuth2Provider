@@ -7,6 +7,8 @@ class AccessTokenConfigurations extends AbstractOptions
 {
     /**
      * The Token Storage object to use
+     * Required
+     *
      * @var mixed
      */
     protected $tokenStorage;
@@ -14,6 +16,7 @@ class AccessTokenConfigurations extends AbstractOptions
     /**
      * Refresh Token storage to use
      * Optional
+     *
      * @var mixed
      */
     protected $refreshStorage;
@@ -21,6 +24,7 @@ class AccessTokenConfigurations extends AbstractOptions
     /**
      * Extra configurations
      * Optional
+     *
      * @var unknown
      */
     protected $config = array();
