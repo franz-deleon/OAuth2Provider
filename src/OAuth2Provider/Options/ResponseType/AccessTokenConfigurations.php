@@ -25,7 +25,7 @@ class AccessTokenConfigurations extends AbstractOptions
      * Extra configurations
      * Optional
      *
-     * @var unknown
+     * @var array
      */
     protected $config = array();
 
