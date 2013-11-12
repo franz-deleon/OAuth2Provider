@@ -12,6 +12,17 @@ class ServerConfigurations extends AbstractOptions
     /**
      * Storages available for mapping for this server
      *
+     * List of storage keys:
+     *
+     * 1. 'access_token',
+     * 2. 'authorization_code',
+     * 3. 'client_credentials',
+     * 4. 'client',
+     * 5. 'refresh_token',
+     * 6. 'user_credentials',
+     * 7. 'jwt_bearer',
+     * 8. 'scope',
+     *
      * @var array;
      */
     protected $storages = array();
@@ -19,7 +30,7 @@ class ServerConfigurations extends AbstractOptions
     /**
      * Configurations to pass to the server
      *
-     * List of default configurations:
+     * List of default key/value configurations:
      *
      *   'access_lifetime'            => 3600,
      *   'www_realm'                  => 'Service',
