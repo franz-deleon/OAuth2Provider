@@ -68,7 +68,7 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
                         // a strategy key is available
                         if (isset($strategies[$strategyName])) {
                             $strategyContainerKey = $strategyName;
-                            $strategy     = $strategies[$strategyContainerKey];
+                            $strategy = $strategies[$strategyContainerKey];
                             if (!isset($params['storage'])) {
                                 $params['storage'] = $strategyContainerKey;
                             }
