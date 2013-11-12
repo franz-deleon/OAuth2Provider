@@ -53,7 +53,7 @@ class Configuration extends AbstractOptions
 	/**
      * @param field_type $server
      */
-    public function setServers($servers)
+    public function setServers(array $servers)
     {
         $this->servers = $servers;
         return $this;

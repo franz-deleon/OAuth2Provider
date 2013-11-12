@@ -68,5 +68,29 @@ class StorageContainerTest extends \PHPUnit_Framework_TestCase
         $r = $this->StorageContainer->getServerContentsFromKey('server1', 'storage2');
         $this->assertEquals('ss2', $r);
     }
+
+    /**
+     * Tests StorageContainer->isExistingServerContentInKey()
+     */
+    public function testisExistingServerContentInKey()
+    {
+        $this->StorageContainer['server1']['storage1'] = 'ss1';
+        $this->StorageContainer['server2']['storage2'] = 'ss2';
+
+        $r = $this->StorageContainer->isExistingServerContentInKey('server1', 'storage1');
+        $this->assertTrue($r);
+    }
+
+    /**
+     * Tests StorageContainer->isExistingServerContentInKey()
+     */
+    public function testisExistingServerContentInKeyReturnsFalse()
+    {
+        $this->StorageContainer['server1']['storage1'] = 'ss1';
+        $this->StorageContainer['server2']['storage2'] = 'ss2';
+
+        $r = $this->StorageContainer->isExistingServerContentInKey('server1', 'storage2');
+        $this->assertFalse($r);
+    }
 }
 

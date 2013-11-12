@@ -61,9 +61,10 @@ class ServerConfigurations extends AbstractOptions
 	/**
      * @param multitype: $config
      */
-    public function setConfig($config)
+    public function setConfig(array $config)
     {
         $this->config = $config;
+        return $this;
     }
 
 	/**
@@ -80,6 +81,7 @@ class ServerConfigurations extends AbstractOptions
     public function setStorages(array $storages)
     {
         $this->storages = $storages;
+        return $this;
     }
 
 	/**
@@ -96,6 +98,7 @@ class ServerConfigurations extends AbstractOptions
     public function setGrantTypes(array $grantTypes)
     {
         $this->grantTypes = $grantTypes;
+        return $this;
     }
 
 	/**
@@ -112,6 +115,7 @@ class ServerConfigurations extends AbstractOptions
     public function setResponseTypes(array $responseTypes)
     {
         $this->responseTypes = $responseTypes;
+        return $this;
     }
 
 	/**
@@ -128,6 +132,7 @@ class ServerConfigurations extends AbstractOptions
     public function setTokenType(TokenTypeInterface $tokeType)
     {
         $this->tokenType = $tokeType;
+        return $this;
     }
 
 	/**
@@ -144,6 +149,7 @@ class ServerConfigurations extends AbstractOptions
     public function setScopeUtil(ScopeInterface $scopeUtil)
     {
         $this->scopeUtil = $scopeUtil;
+        return $this;
     }
 
 	/**
