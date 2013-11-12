@@ -18,6 +18,11 @@ return array(
                 'user_credentials' => new OAuth2Provider\UserCreds('hi'),
                 //'authorization_code' => new \stdClass(),
             ),
+            'configs' => array(
+                'www_realm'                  => 'Service',
+                'token_param_name'           => 'access_token',
+                'token_bearer_header_name'   => 'Bearer',
+            ),
             'grant_types' => array(
                 //'user_credentials' => 'OAuth2\GrantType\UserCredentials',
                 //'OAuth2Provider\UserCreds',

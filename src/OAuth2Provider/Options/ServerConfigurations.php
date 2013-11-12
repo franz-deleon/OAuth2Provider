@@ -17,7 +17,7 @@ class ServerConfigurations extends AbstractOptions
     /**
      * @var array
      */
-    protected $config = array();
+    protected $configs = array();
 
     /**
      * @var array;
@@ -53,17 +53,17 @@ class ServerConfigurations extends AbstractOptions
 	/**
      * @return the $config
      */
-    public function getConfig()
+    public function getConfigs()
     {
-        return $this->config;
+        return $this->configs;
     }
 
 	/**
      * @param multitype: $config
      */
-    public function setConfig(array $config)
+    public function setConfigs(array $configs)
     {
-        $this->config = $config;
+        $this->configs = $configs;
         return $this;
     }
 

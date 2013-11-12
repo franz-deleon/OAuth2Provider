@@ -73,6 +73,10 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $storageFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/StorageFactory');
         $storages = $storageFactory($serverConfigs->getStorages(), $serverKey);
 
+        // store config
+        $configFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ConfigFactory');
+        $configs = $configFactory($serverConfigs->getConfigs(), $serverKey);
+
         // initialize grant types
         $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/GrantTypeFactory');
         $grantTypes = $grantTypeFactory($serverConfigs->getGrantTypes(), $serverKey);
