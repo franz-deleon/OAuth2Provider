@@ -34,7 +34,7 @@ class GrantTypeAbstractFactory implements ServiceManager\AbstractFactoryInterfac
         if (preg_match(static::REGEX_GRANTTYPE_PATTERN, $requestedName, $matches)
             && !empty($matches[2])
         ) {
-            $this->serverKey    = ($matches[1] === 'main')
+            $this->serverKey = ($matches[1] === 'main')
                 ? $serviceLocator->get('OAuth2Provider/Options/Configuration')->getMainServer()
                 : $matches[1];
             $this->grantTypeKey = $matches[2];
