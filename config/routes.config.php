@@ -4,7 +4,7 @@ return array(
         'oauth2provider' => array(
             'type' => 'literal',
             'options' => array(
-                'route' => '/oauth',
+                'route' => '/oauth2',
                 'constraints' => array(),
                 'defaults' => array(
                     'controller' => 'OAuthController',
