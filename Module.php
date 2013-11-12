@@ -42,6 +42,8 @@ class Module
 
                 /** Standard factories **/
                 'OAuth2Provider/Service/MainServerFactory' => 'OAuth2Provider\Service\Factory\MainServerFactory',
+
+                /** Server Features **/
                 'OAuth2Provider/Service/ServerFeature/StorageFactory'      => 'OAuth2Provider\Service\Factory\ServerFeature\StorageFactory',
                 'OAuth2Provider/Service/ServerFeature/GrantTypeFactory'    => 'OAuth2Provider\Service\Factory\ServerFeature\GrantTypeFactory',
                 'OAuth2Provider/Service/ServerFeature/ConfigFactory'       => 'OAuth2Provider\Service\Factory\ServerFeature\ConfigFactory',
