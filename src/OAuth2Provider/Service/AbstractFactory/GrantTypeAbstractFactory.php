@@ -40,13 +40,13 @@ class GrantTypeAbstractFactory implements ServiceManager\AbstractFactoryInterfac
             $this->grantTypeKey = $matches[2];
 
             $this->grantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
-            if ($this->grantTypeContainer->isServerContentsInKey($this->serverKey, $this->grantTypeKey)) {
+            if ($this->grantTypeContainer->isExistingServerContentInKey($this->serverKey, $this->grantTypeKey)) {
                 return true;
             }
 
             // attempt to initialize the server then check for the grant type key again
             $serviceLocator->get("oauth2provider.server.{$this->serverKey}");
-            if ($this->grantTypeContainer->isServerContentsInKey($this->serverKey, $this->grantTypeKey)) {
+            if ($this->grantTypeContainer->isExistingServerContentInKey($this->serverKey, $this->grantTypeKey)) {
                 return true;
             }
         }

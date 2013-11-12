@@ -21,9 +21,12 @@ class GrantTypeContainer extends ArrayStack implements ContainerInterface
         }
     }
 
-    public function isServerContentsInKey($server, $key)
+    public function isExistingServerContentInKey($server, $key)
     {
-        if (null !== $this->getServerContentsFromKey($server, $key)) {
+        if (is_string($server)
+            && is_string($key)
+            && null !== $this->getServerContentsFromKey($server, $key)
+        ) {
             return true;
         }
         return false;

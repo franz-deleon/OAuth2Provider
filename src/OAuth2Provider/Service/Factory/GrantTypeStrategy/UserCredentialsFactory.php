@@ -30,9 +30,9 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
             $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
 
             // check if there is a direct defined storage key
-            if ($storageContainer->isServerContentsFromKey($serverKey, $storageName))  {
+            if ($storageContainer->isExistingServerContentInKey($serverKey, $storageName))  {
                 $storage = $storageContainer->getServerContentsFromKey($serverKey, $storageName);
-            } elseif ($storageContainer->isServerContentsFromKey($serverKey, UserCredentialsFactory::IDENTIFIER)) {
+            } elseif ($storageContainer->isExistingServerContentInKey($serverKey, UserCredentialsFactory::IDENTIFIER)) {
                 $storage = $storageContainer->getServerContentsFromKey($serverKey, UserCredentialsFactory::IDENTIFIER);
             } elseif (is_string($storageName) && $serviceLocator->has($storageName)) {
                 $storage = $serviceLocator->get($storageName);

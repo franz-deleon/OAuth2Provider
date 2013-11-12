@@ -21,7 +21,7 @@ class StorageContainer extends ArrayStack implements ContainerInterface
         }
     }
 
-    public function isServerContentsFromKey($server, $key)
+    public function isExistingServerContentInKey($server, $key)
     {
         if (is_string($server)
             && is_string($key)
