@@ -4,22 +4,19 @@ namespace OAuth2Provider\Service\Factory\ServerFeature;
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
 
-use OAuth2\GrantType\GrantTypeInterface;
+use OAuth2\ResponseType\ResponseTypeInterface;
 
 use Zend\ServiceManager;
 
-class GrantTypeFactory implements ServiceManager\FactoryInterface
+class ResponseTypeFactory implements ServiceManager\FactoryInterface
 {
     /**
      * List of available strategies
      * @var string
      */
     protected $availableStrategy = array(
+        'access_token'       => 'OAuth2Provider/GrantTypeStrategy/AccessToken',
         'authorization_code' => 'OAuth2Provider/GrantTypeStrategy/AuthorizationCode',
-        'client_credentials' => 'OAuth2Provider/GrantTypeStrategy/ClientCredentials',
-        'jwt_bearer'         => 'OAuth2Provider/GrantTypeStrategy/JwtBearer',
-        'refresh_token'      => 'OAuth2Provider/GrantTypeStrategy/RefreshToken' ,
-        'user_credentials'   => 'OAuth2Provider/GrantTypeStrategy/UserCredentials',
     );
 
     /**
@@ -27,15 +24,12 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
      * @var array
      */
     protected $concreteClasses = array(
-        'authorization_code' => 'OAuth2\GrantType\AuthorizationCode',
-        'client_credentials' => 'OAuth2\GrantType\ClientCredentials',
-        'jwt_bearer'         => 'OAuth2\GrantType\JwtBearer',
-        'refresh_token'      => 'OAuth2\GrantType\RefreshToken',
-        'user_credentials'   => 'OAuth2\GrantType\UserCredentials',
+        'access_token'       => 'OAuth2\ResponseType\AccessToken',
+        'authorization_code' => 'OAuth2\ResponseType\AuthorizationCode',
     );
 
     /**
-     * Initialize an OAuth Grant Type object
+     * Initialize an OAuth Response Type object
      *
      * @param ServiceLocatorInterface $serviceLocator
      * @return mixed
@@ -45,21 +39,21 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
         $strategies      = $this->availableStrategy;
         $concreteClasses = $this->concreteClasses;
 
-        return function ($grantTypes, $serverKey) use ($serviceLocator, $strategies, $concreteClasses) {
-            $grantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
+        return function ($strategyTypes, $serverKey) use ($serviceLocator, $strategies, $concreteClasses) {
+            $container = $serviceLocator->get('OAuth2Provider/Containers/ResponseTypeContainer');
 
-            foreach ($grantTypes as $grantTypeName => $grantType) {
-                if (is_array($grantType)) {
-                    if (!isset($grantType['class'])) {
+            foreach ($strategyTypes as $strategyName => $strategyParams) {
+                if (is_array($strategyParams)) {
+                    if (!isset($strategyParams['class'])) {
                         throw new Exception\InvalidServerException(sprintf(
                             "Class '%s' error: cannot find 'class' key in array",
                             __METHOD__
                         ));
                     }
-                    $class  = $grantType['class'];
-                    $params = isset($grantType['params']) ? $grantType['params'] : null;
-                } elseif (is_string($grantType)) {
-                    $class  = $grantType;
+                    $class  = $strategyParams['class'];
+                    $params = isset($strategyParams['params']) ? $strategyParams['params'] : null;
+                } elseif (is_string($strategyParams)) {
+                    $class  = $strategyParams;
                     $params = null;
                 } else {
                     $class  = null;
@@ -68,73 +62,73 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
 
                 if (isset($class)) {
                     if ($serviceLocator->has($class)) {
-                        $grantType = $serviceLocator->get($class);
+                        $strategyParams = $serviceLocator->get($class);
                     } else {
-                        /** maps the grant type to a strategy **/
+                        /** maps the strategy type to a strategy **/
                         // a strategy key is available
-                        if (isset($strategies[$grantTypeName])) {
-                            $grantTypeKey = $grantTypeName;
-                            $strategy     = $strategies[$grantTypeKey];
+                        if (isset($strategies[$strategyName])) {
+                            $strategyContainerKey = $strategyName;
+                            $strategy     = $strategies[$strategyContainerKey];
                             if (!isset($params['storage'])) {
-                                $params['storage'] = $grantTypeKey;
+                                $params['storage'] = $strategyContainerKey;
                             }
                         } else {
                             // if class is a direct implementation of grant type class
                             if (in_array($class, $concreteClasses)) {
-                                $grantTypeKey = array_search($class, $concreteClasses);
-                                $strategy = $strategies[$grantTypeKey];
+                                $strategyContainerKey = array_search($class, $concreteClasses);
+                                $strategy = $strategies[$strategyContainerKey];
                             } else {
                                 // look at the parent as our last check
                                 $parentClass = get_parent_class($class);
                                 if (in_array($parentClass, $concreteClasses)) {
-                                    $grantTypeKey = array_search($parentClass, $concreteClasses);
-                                    $strategy = $strategies[$grantTypeKey];
+                                    $strategyContainerKey = array_search($parentClass, $concreteClasses);
+                                    $strategy = $strategies[$strategyContainerKey];
                                 }
                             }
                         }
 
                         if (!isset($strategy)) {
                             throw new Exception\InvalidClassException(sprintf(
-                                "Class '%s' error: cannot map class '%s' to a Grant Type strategy",
+                                "Class '%s' error: cannot map class '%s' to a strategy",
                                 __METHOD__,
                                 $class
                             ));
                         }
 
                         // forward construction to grant type strategy
-                        $grantTypeStrategy = $serviceLocator->get($strategy);
-                        $grantType = $grantTypeStrategy($class, $params, $serverKey);
+                        $strategy = $serviceLocator->get($strategy);
+                        $strategyObj = $strategy($class, $params, $serverKey);
                     }
                 }
 
-                if (!$grantType instanceof GrantTypeInterface) {
+                if (!$strategyObj instanceof ResponseTypeInterface) {
                     throw new Exception\InvalidClassException(sprintf(
                         "Class '%s' error: '%s' is not of GrantTypeInterface",
                         __METHOD__,
-                        get_class($grantType)
+                        get_class($strategyObj)
                     ));
                 }
 
                 // figure grant type key if not defined, usually used on a php object
-                if (!isset($grantTypeKey)) {
-                    $grantTypeClass = get_class($grantType);
-                    $grantTypeKey = array_search($grantTypeClass, $concreteClasses);
-                    if (false === $grantTypeKey) {
+                if (!isset($strategyContainerKey)) {
+                    $grantTypeClass = get_class($strategyObj);
+                    $strategyContainerKey = array_search($grantTypeClass, $concreteClasses);
+                    if (false === $strategyContainerKey) {
                         // try the parent class if it can be mapped
-                        $parentClass = get_parent_class($grantType);
-                        $grantTypeKey = array_search($parentClass, $concreteClasses);
+                        $parentClass = get_parent_class($strategyObj);
+                        $strategyContainerKey = array_search($parentClass, $concreteClasses);
 
                         // if still no mapping, try to extract from the classname
-                        if (false === $grantTypeKey) {
-                            $grantTypeKey = $serviceLocator->get('FilterManager')
+                        if (false === $strategyContainerKey) {
+                            $strategyContainerKey = $serviceLocator->get('FilterManager')
                                 ->get('wordcamelcasetounderscore')
                                 ->filter(Utilities::extractClassnameFromFQNS($grantTypeClass));
 
                             // because we have an underscored keys, try one last time to loop
                             // through each and find a map and return the first match
                             foreach (array_flip($concreteClasses) as $grantTypeId) {
-                                if (false !== stripos($grantTypeKey, $grantTypeId)) {
-                                    $grantTypeKey = $grantTypeId;
+                                if (false !== stripos($strategyContainerKey, $grantTypeId)) {
+                                    $strategyContainerKey = $grantTypeId;
                                     break;
                                 }
                             }
@@ -143,10 +137,10 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                 }
 
                 // store the grant type in the container
-                $grantTypeContainer[$serverKey][$grantTypeKey] = $grantType;
+                $container[$serverKey][$strategyContainerKey] = $strategyObj;
             }
 
-            return $grantTypeContainer->getServerContents($serverKey);
+            return $container->getServerContents($serverKey);
         };
     }
 }

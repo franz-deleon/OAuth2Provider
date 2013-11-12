@@ -1,14 +1,13 @@
 <?php
-namespace OAuth2Provider\Service\Factory\GrantTypeStrategy;
+namespace OAuth2Provider\Service\Factory\ResponseTypeStrategy;
 
 use OAuth2Provider\Exception;
-use OAuth2Provider\Options\GrantType\UserCredentialsConfigurations;
 
 use Zend\ServiceManager;
 
-class UserCredentialsFactory implements ServiceManager\FactoryInterface
+class AccessTokenFactory implements ServiceManager\FactoryInterface
 {
-    const IDENTIFIER = 'user_credentials';
+    const IDENTIFIER = 'access_token';
 
     /**
      * Initialize an OAuth storage object
@@ -20,16 +19,14 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
     {
         return function ($grantTypeClassName, $params, $serverKey) use ($serviceLocator) {
 
-            $config = new UserCredentialsConfigurations($params);
-
-            $storageName = $config->getStorage();
+            $storageName = isset($params['access_token_storage']) ? $params['storage'] : null;
             $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
 
             // check if there is a direct defined storage key
             if ($storageContainer->isExistingServerContentInKey($serverKey, $storageName))  {
                 $storage = $storageContainer->getServerContentsFromKey($serverKey, $storageName);
-            } elseif ($storageContainer->isExistingServerContentInKey($serverKey, UserCredentialsFactory::IDENTIFIER)) {
-                $storage = $storageContainer->getServerContentsFromKey($serverKey, UserCredentialsFactory::IDENTIFIER);
+            } elseif ($storageContainer->isExistingServerContentInKey($serverKey, AccessTokenFactory::IDENTIFIER)) {
+                $storage = $storageContainer->getServerContentsFromKey($serverKey, AccessTokenFactory::IDENTIFIER);
             } elseif (is_string($storageName) && $serviceLocator->has($storageName)) {
                 $storage = $serviceLocator->get($storageName);
             } elseif (is_object($storageName)) {
@@ -40,7 +37,7 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for grant type '%s'",
                     __METHOD__,
-                    UserCredentialsFactory::IDENTIFIER,
+                    AccessTokenFactory::IDENTIFIER,
                     $grantTypeClassName
                 ));
             }

@@ -13,7 +13,7 @@ class UserCredentialsController extends AbstractActionController
 
     public function RequestTokenAction()
     {
-        //echo $this->getServiceLocator()->get('franz');//oauth2provider.server.main
+        $this->getServiceLocator()->get('oauth2provider.server.main');
         //$r = $this->getServiceLocator()->get('OAuth/Storage/ClientCredentials')->getClientDetails(123);
         //var_dump($r);
         return new ViewModel();

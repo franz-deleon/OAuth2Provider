@@ -238,25 +238,6 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests GrantTypeFactory->createService()
-     * @expectedException OAuth2Provider\Exception\InvalidConfigException
-     * @group test9
-     */
-    public function testCreateServiceGrantTypeReturnsExceptionOnNoParamsConfig()
-    {
-        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-
-        $grantTypeConfig = array(
-            array(
-                'class' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
-            )
-        );
-
-        $factory = $this->GrantTypeFactory->createService($mainSm);
-        $factory($grantTypeConfig, 'server1');
-    }
-
-    /**
-     * Tests GrantTypeFactory->createService()
      * @expectedException OAuth2Provider\Exception\InvalidClassException
      * @group test10
      */
