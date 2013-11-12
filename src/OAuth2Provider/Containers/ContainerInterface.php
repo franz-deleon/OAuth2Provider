@@ -57,4 +57,14 @@ interface ContainerInterface
      * @return mixed The data to return
      */
     public function getServerContentsFromKey($server, $key);
+
+    /**
+     * Check if there are contents in the specified server for
+     * a specific key.
+     *
+     * @param string $server
+     * @param string $key
+     * @return boolean
+     */
+    public function isExistingServerContentInKey($server, $key);
 }
