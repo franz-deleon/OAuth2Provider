@@ -13,7 +13,14 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
      */
     const REGEX_SERVER_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9_]+)$~';
 
+    /**
+     * @var array
+     */
     protected $serverConfig;
+
+    /**
+     * @var string
+     */
     protected $serverKey;
 
     /**

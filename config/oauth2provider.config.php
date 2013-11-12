@@ -1,5 +1,4 @@
 <?php
-use OAuth2Provider\UserCreds;
 return array(
     /**
      * Servers
