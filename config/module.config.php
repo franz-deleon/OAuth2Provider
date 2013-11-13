@@ -52,6 +52,11 @@ return array(
             'OAuth2Provider/Service/ServerFeature/StrategyBuilder' => false,
         ),
     ),
+    'controllers' => array(
+        'factories' => array(
+            'OAuthController' => 'OAuth2Provider\Service\Factory\ControllerFactory',
+        ),
+    ),
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
