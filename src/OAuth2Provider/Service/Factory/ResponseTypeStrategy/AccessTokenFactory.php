@@ -3,7 +3,6 @@ namespace OAuth2Provider\Service\Factory\ResponseTypeStrategy;
 
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
-use OAuth2Provider\Options\ResponseType\AccessTokenConfigurations;
 
 use Zend\ServiceManager;
 
@@ -28,7 +27,7 @@ class AccessTokenFactory implements ServiceManager\FactoryInterface
         return function ($accessTokenClassName, $params, $serverKey) use ($serviceLocator) {
 
             $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
-            $config = new AccessTokenConfigurations($params);
+            $config = $serviceLocator->get('OAuth2Provider/Options/ResponseType/AccessToken')->setFromArray($params);
 
             $tokenStorageName        = $config->getTokenStorage() ?: $config->getStorage();
             $refreshTokenStorageName = $config->getRefreshStorage();

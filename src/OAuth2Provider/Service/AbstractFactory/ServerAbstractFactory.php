@@ -2,7 +2,6 @@
 namespace OAuth2Provider\Service\AbstractFactory;
 
 use OAuth2Provider\Exception;
-use OAuth2Provider\Options\ServerConfigurations;
 
 use Zend\ServiceManager;
 
@@ -67,7 +66,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
     public function createServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         $serverKey     = $this->serverKey;
-        $serverConfigs = new ServerConfigurations($this->serverConfig);
+        $serverConfigs = $serviceLocator->get('OAuth2Provider/Options/Server')->setFromArray($this->serverConfig);
 
         // initialize storages
         $storageFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/StorageFactory');

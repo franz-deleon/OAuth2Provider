@@ -2,7 +2,6 @@
 namespace OAuth2Provider\Service\Factory\GrantTypeStrategy;
 
 use OAuth2Provider\Exception;
-use OAuth2Provider\Options\GrantType\UserCredentialsConfigurations;
 use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
@@ -21,7 +20,7 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
     {
         return function ($grantTypeClassName, $params, $serverKey) use ($serviceLocator) {
 
-            $config = new UserCredentialsConfigurations($params);
+            $config = $serviceLocator->get('OAuth2Provider/Options/GrantType/UserCredentials')->setFromArray($params);
 
             $storage = Utilities::storageLookup(
                 $serverKey,
