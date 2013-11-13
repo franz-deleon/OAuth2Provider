@@ -30,7 +30,7 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
                 UserCredentialsFactory::USER_CREDENTIALS_IDENTIFIER
             );
 
-            if (!isset($storage)) {
+            if (empty($storage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for grant type '%s'",
                     __METHOD__,

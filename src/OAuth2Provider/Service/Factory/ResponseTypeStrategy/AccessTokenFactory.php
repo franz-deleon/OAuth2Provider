@@ -50,7 +50,7 @@ class AccessTokenFactory implements ServiceManager\FactoryInterface
                 AccessTokenFactory::REFRESH_TOKEN_IDENTIFIER
             );
 
-            if (!isset($tokenStorage)) {
+            if (empty($tokenStorage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for Access Token '%s'",
                     __METHOD__,
