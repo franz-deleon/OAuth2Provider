@@ -12,10 +12,10 @@ class Utilities
      * Common execution process to create an object out of <$class>
      *
      * 1. Checks if $class is a ServiceManager element
-     * 2. If above not pass, check if <$class> is valid FQNS
-     * 4. If above not pass, check if <$class> is callable
-     * 5. If above not pass, check if <$class> is object
-     * 6. Returns an error none of above is valid
+     * 2. If above did not pass, check if <$class> is valid FQNS
+     * 3. If above did not pass, check if <$class> is callable
+     * 4. If above did not pass, check if <$class> is object
+     * 5. Returns an error if none of the above is valid
      *
      * @param mixed  $class           Target to execute in the flow
      * @param string $serviceManager  Service Manager
@@ -25,7 +25,7 @@ class Utilities
      */
     public static function createClass($class, ServiceLocatorInterface $serviceManager = null, $errorMessage = null)
     {
-        if (null !== $serviceManager
+        if (isset($serviceManager)
             && (is_array($class) || is_string($class))
             && $serviceManager->has($class)
         ) {
@@ -81,7 +81,7 @@ class Utilities
     ) {
         $result = null;
 
-        // check if subject is in the container
+        // check if serverInderx is in the container
         if (isset($container)
             && $container->isExistingServerContentInKey($server, $serverIndex)
         )  {
@@ -93,7 +93,7 @@ class Utilities
         ) {
             $result = $container->getServerContentsFromKey($server, $identifier);
 
-        // check if the subject is a service manager element
+        // check if the serverIndex is a service manager element
         } elseif (is_string($serverIndex) && isset($serviceLocator)
             && $serviceLocator->has($serverIndex)
         ) {
