@@ -3,6 +3,7 @@ namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
+use OAuth2Provider\Options\ServerFeatureTypeConfiguration;
 
 use OAuth2\GrantType\GrantTypeInterface;
 
@@ -50,42 +51,43 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
 
             foreach ($grantTypes as $grantTypeName => $grantType) {
                 if (is_array($grantType)) {
-                    if (!isset($grantType['class'])) {
+                    $featureConfig = new ServerFeatureTypeConfiguration($grantType);
+                    if (!$featureConfig->getName()) {
                         throw new Exception\InvalidServerException(sprintf(
-                            "Class '%s' error: cannot find 'class' key in array",
+                            "Class '%s' error: cannot find 'name' key in array",
                             __METHOD__
                         ));
                     }
-                    $class  = $grantType['class'];
-                    $params = isset($grantType['params']) ? $grantType['params'] : null;
+                    $featureName   = $featureConfig->getName();
+                    $featureParams = $featureConfig->getParams();
                 } elseif (is_string($grantType)) {
-                    $class  = $grantType;
-                    $params = null;
+                    $featureName   = $grantType;
+                    $featureParams = null;
                 } else {
-                    $class  = null;
-                    $params = null;
+                    $featureName   = null;
+                    $featureParams = null;
                 }
 
-                if (isset($class)) {
-                    if ($serviceLocator->has($class)) {
-                        $grantType = $serviceLocator->get($class);
+                if (isset($featureName)) {
+                    if ($serviceLocator->has($featureName)) {
+                        $grantType = $serviceLocator->get($featureName);
                     } else {
                         /** maps the grant type to a strategy **/
                         // a strategy key is available
                         if (isset($strategies[$grantTypeName])) {
                             $grantTypeKey = $grantTypeName;
                             $strategy     = $strategies[$grantTypeKey];
-                            if (!isset($params['storage'])) {
-                                $params['storage'] = $grantTypeKey;
+                            if (!isset($featureParams['storage'])) {
+                                $featureParams['storage'] = $grantTypeKey;
                             }
                         } else {
                             // if class is a direct implementation of grant type class
-                            if (in_array($class, $concreteClasses)) {
-                                $grantTypeKey = array_search($class, $concreteClasses);
+                            if (in_array($featureName, $concreteClasses)) {
+                                $grantTypeKey = array_search($featureName, $concreteClasses);
                                 $strategy = $strategies[$grantTypeKey];
                             } else {
                                 // look at the parent as our last check
-                                $parentClass = get_parent_class($class);
+                                $parentClass = get_parent_class($featureName);
                                 if (in_array($parentClass, $concreteClasses)) {
                                     $grantTypeKey = array_search($parentClass, $concreteClasses);
                                     $strategy = $strategies[$grantTypeKey];
@@ -97,13 +99,13 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
                             throw new Exception\InvalidClassException(sprintf(
                                 "Class '%s' error: cannot map class '%s' to a Grant Type strategy",
                                 __METHOD__,
-                                $class
+                                $featureName
                             ));
                         }
 
                         // forward construction to grant type strategy
                         $grantTypeStrategy = $serviceLocator->get($strategy);
-                        $grantType = $grantTypeStrategy($class, $params, $serverKey);
+                        $grantType = $grantTypeStrategy($featureName, $featureParams, $serverKey);
                     }
                 }
 

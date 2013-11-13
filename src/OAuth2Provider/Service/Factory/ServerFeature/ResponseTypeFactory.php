@@ -3,6 +3,7 @@ namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
+use OAuth2Provider\Options\ServerFeatureTypeConfiguration;
 
 use OAuth2\ResponseType\ResponseTypeInterface;
 
@@ -44,42 +45,43 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
 
             foreach ($strategyTypes as $strategyName => $strategyParams) {
                 if (is_array($strategyParams)) {
-                    if (!isset($strategyParams['class'])) {
+                    $featureConfig = new ServerFeatureTypeConfiguration($strategyParams);
+                    if (!$featureConfig->getName()) {
                         throw new Exception\InvalidServerException(sprintf(
                             "Class '%s' error: cannot find 'class' key in array",
                             __METHOD__
                         ));
                     }
-                    $class  = $strategyParams['class'];
-                    $params = isset($strategyParams['params']) ? $strategyParams['params'] : null;
+                    $featureName   = $featureConfig->getName();
+                    $featureParams = $featureConfig->getParams();
                 } elseif (is_string($strategyParams)) {
-                    $class  = $strategyParams;
-                    $params = null;
+                    $featureName   = $strategyParams;
+                    $featureParams = null;
                 } else {
-                    $class  = null;
-                    $params = null;
+                    $featureName   = null;
+                    $featureParams = null;
                 }
 
-                if (isset($class)) {
-                    if ($serviceLocator->has($class)) {
-                        $strategyParams = $serviceLocator->get($class);
+                if (isset($featureName)) {
+                    if ($serviceLocator->has($featureName)) {
+                        $strategyParams = $serviceLocator->get($featureName);
                     } else {
                         /** maps the strategy type to a strategy **/
                         // a strategy key is available
                         if (isset($strategies[$strategyName])) {
                             $strategyContainerKey = $strategyName;
                             $strategy = $strategies[$strategyContainerKey];
-                            if (!isset($params['storage'])) {
-                                $params['storage'] = $strategyContainerKey;
+                            if (!isset($featureParams['storage'])) {
+                                $featureParams['storage'] = $strategyContainerKey;
                             }
                         } else {
                             // if class is a direct implementation of grant type class
-                            if (in_array($class, $concreteClasses)) {
-                                $strategyContainerKey = array_search($class, $concreteClasses);
+                            if (in_array($featureName, $concreteClasses)) {
+                                $strategyContainerKey = array_search($featureName, $concreteClasses);
                                 $strategy = $strategies[$strategyContainerKey];
                             } else {
                                 // look at the parent as our last check
-                                $parentClass = get_parent_class($class);
+                                $parentClass = get_parent_class($featureName);
                                 if (in_array($parentClass, $concreteClasses)) {
                                     $strategyContainerKey = array_search($parentClass, $concreteClasses);
                                     $strategy = $strategies[$strategyContainerKey];
@@ -91,13 +93,13 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
                             throw new Exception\InvalidClassException(sprintf(
                                 "Class '%s' error: cannot map class '%s' to a strategy",
                                 __METHOD__,
-                                $class
+                                $featureName
                             ));
                         }
 
                         // forward construction to grant type strategy
                         $strategy = $serviceLocator->get($strategy);
-                        $strategyObj = $strategy($class, $params, $serverKey);
+                        $strategyObj = $strategy($featureName, $featureParams, $serverKey);
                     }
                 }
 

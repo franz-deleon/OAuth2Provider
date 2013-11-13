@@ -108,7 +108,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Assets\GrantTypeWithParentUserCredentials(new Assets\StorageUserCredentials());
         $grantTypeConfig = array(
-            'class' => 'user/credentials'
+            'name' => 'user/credentials'
         );
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -128,7 +128,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
         $storage = new Assets\GrantTypeWithParentUserCredentials(new Assets\StorageUserCredentials());
         $grantTypeConfig = array(
             array(
-                'class' => 'user/credentials'
+                'name' => 'user/credentials'
             )
         );
 
@@ -154,7 +154,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
         $grantTypeConfig = array(
             array(
-                'class' => 'OAuth2\GrantType\UserCredentials',
+                'name' => 'OAuth2\GrantType\UserCredentials',
                 'params' => array(
                     'storage' => 'user_credentials'
                 )
@@ -180,7 +180,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
         $grantTypeConfig = array(
             'user_credentials' => array(
-                'class' => 'OAuth2\GrantType\UserCredentials',
+                'name' => 'OAuth2\GrantType\UserCredentials',
             )
         );
 
@@ -203,7 +203,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
         $grantTypeConfig = array(
             array(
-                'class' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
+                'name' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
                 'params' => array(
                     'storage' => 'user_credentials'
                 )
@@ -247,7 +247,7 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
         $grantTypeConfig = array(
             array(
-                'class' => 'OAuth2ProviderTests\Nothing',
+                'name' => 'OAuth2ProviderTests\Nothing',
                 'params' => array(
                     'storage' => 'user_credentials',
                 ),
