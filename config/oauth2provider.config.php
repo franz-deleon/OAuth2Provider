@@ -48,7 +48,7 @@ return array(
                 //'OAuth2Provider\UserCreds',
                 //'OAuth2\GrantType\UserCredentials',
                 array(
-                    'class' => 'OAuth2\GrantType\UserCredentials',
+                    'name' => 'OAuth2\GrantType\UserCredentials',
                     'params' => array(
                         //'storage' => 'user_credentials',
                     ),
@@ -56,7 +56,7 @@ return array(
             ),
             'response_types' => array(
                 array(
-                    'class' => 'OAuth2\ResponseType\AccessToken',
+                    'name' => 'OAuth2\ResponseType\AccessToken',
                     'params' => array(
                         //'token_storage' => 'access_token',
                         //'refresh_storage' => 'refresh_token',
