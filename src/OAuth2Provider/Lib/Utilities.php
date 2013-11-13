@@ -33,7 +33,7 @@ class Utilities
         } elseif (is_string($class) && class_exists($class)) {
             return new $class();
         } elseif (is_callable($class)) {
-            return call_user_func($class);
+            return call_user_func($class, $serviceManager);
         } elseif (is_object($class)) {
             return $class;
         } else {
