@@ -56,5 +56,24 @@ class AuthorizationCodeFactoryTest extends \PHPUnit_Framework_TestCase
         $r = $r($classname, $params, 'server1');
         $this->assertInstanceOf('OAuth2\ResponseType\AuthorizationCodeInterface', $r);
     }
+
+    /**
+	 * Tests UserCredentialsFactory->createService()
+	 * @expectedException OAuth2Provider\Exception\InvalidServerException
+	 */
+    public function testCreateServiceReturnsException()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        // seed the storage
+        $storageCont = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
+        $storageCont['server1']['authorization_code'] = null;
+
+        $classname = 'OAuth2\ResponseType\AuthorizationCode';
+        $params = array('storage' => 'authorization_code');
+        $r = $this->AuthorizationCodeFactory->createService($mainSm);
+        $r = $r($classname, $params, 'server1');
+        $this->assertInstanceOf('OAuth2\ResponseType\AuthorizationCodeInterface', $r);
+    }
 }
 

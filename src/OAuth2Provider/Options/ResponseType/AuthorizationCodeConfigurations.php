@@ -32,6 +32,7 @@ class AuthorizationCodeConfigurations extends TypeAbstract
     public function setAuthorizationCodeStorage($authorizationCodeStorage)
     {
         $this->authorizationCodeStorage = $authorizationCodeStorage;
+        return $this;
     }
 
 	/**
@@ -48,6 +49,7 @@ class AuthorizationCodeConfigurations extends TypeAbstract
     public function setConfig($config)
     {
         $this->config = $config;
+        return $this;
     }
 
 }
