@@ -30,7 +30,7 @@ class AccessTokenFactory implements ServiceManager\FactoryInterface
             $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
             $config = new AccessTokenConfigurations($params);
 
-            $tokenStorageName        = $config->getTokenStorage();
+            $tokenStorageName        = $config->getTokenStorage() ?: $config->getStorage();
             $refreshTokenStorageName = $config->getRefreshStorage();
 
             // check if there is a direct defined 'token storage'

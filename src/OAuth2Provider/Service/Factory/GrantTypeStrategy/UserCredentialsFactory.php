@@ -25,7 +25,7 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
 
             $storage = Utilities::storageLookup(
                 $serverKey,
-                $config->getStorage(),
+                $config->getUserCredentialsStorage() ?: $config->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
                 UserCredentialsFactory::USER_CREDENTIALS_IDENTIFIER
