@@ -82,7 +82,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
 
         // store config
         $responseTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ResponseTypeFactory');
-        $responseType = $responseTypeFactory($serverConfigs->getResponseTypes(), $serverKey);
+        $responseTypes = $responseTypeFactory($serverConfigs->getResponseTypes(), $serverKey);
 
         return new \stdClass();
     }
