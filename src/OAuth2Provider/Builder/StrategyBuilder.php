@@ -3,13 +3,13 @@ namespace OAuth2Provider\Builder;
 
 use OAuth2Provider\Containers\ContainerInterface;
 use OAuth2Provider\Exception;
+use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class StrategyBuilder
 {
-    protected $serviceLocator;
-    protected $strategyTypes = array();
+    protected $subjects = array();
     protected $serverKey;
     protected $strategies = array();
     protected $concreteClasses = array();
@@ -19,7 +19,7 @@ class StrategyBuilder
     /**
      * We need all of the setters to construct
      *
-     * @param array              $strategyTypes
+     * @param array              $subject
      * @param string             $serverKey
      * @param array              $strategies
      * @param array              $concreteClasses
@@ -27,14 +27,14 @@ class StrategyBuilder
      * @param string             $interface
      */
 	public function __construct(
-	   array $strategyTypes,
+	   array $subjects,
 	   $serverKey,
 	   array $strategies,
 	   array $concreteClasses,
 	   ContainerInterface $container,
 	   $interface
 	) {
-        $this->strategyTypes   = $strategyTypes;
+        $this->subjects        = $subjects;
         $this->serverKey       = $serverKey;
         $this->strategies      = $strategies;
         $this->concreteClasses = $concreteClasses;
@@ -50,14 +50,7 @@ class StrategyBuilder
      */
     public function initStrategyFeature(ServiceLocatorInterface $serviceLocator)
     {
-        $strategyTypes   = $this->strategyTypes;
-        $serverKey       = $this->serverKey;
-        $strategies      = $this->strategies;
-        $concreteClasses = $this->concreteClasses;
-        $container       = $this->container;
-        $interface       = $this->interface;
-
-        foreach ($strategyTypes as $strategyName => $strategyParams) {
+        foreach ($this->subjects as $strategyName => $strategyParams) {
             if (is_array($strategyParams)) {
                 $featureConfig = $serviceLocator->get('OAuth2Provider/Options/ServerFeatureType')->setFromArray($strategyParams);
                 if (!$featureConfig->getName()) {
@@ -71,6 +64,8 @@ class StrategyBuilder
             } elseif (is_string($strategyParams)) {
                 $featureName   = $strategyParams;
                 $featureParams = array();
+            } elseif (is_object($strategyParams)) {
+                $strategyObj = $strategyParams;
             } else {
                 $featureName   = null;
                 $featureParams = array();
@@ -78,27 +73,27 @@ class StrategyBuilder
 
             if (isset($featureName)) {
                 if ($serviceLocator->has($featureName)) {
-                    $strategyParams = $serviceLocator->get($featureName);
+                    $strategyObj = $serviceLocator->get($featureName);
                 } else {
                     /** maps the strategy type to a strategy **/
                     // a strategy key is available
-                    if (isset($strategies[$strategyName])) {
+                    if (isset($this->strategies[$strategyName])) {
                         $strategyContainerKey = $strategyName;
-                        $strategy = $strategies[$strategyContainerKey];
+                        $strategy = $this->strategies[$strategyContainerKey];
                         if (!isset($featureParams['storage'])) {
                             $featureParams['storage'] = $strategyContainerKey;
                         }
                     } else {
                         // if class is a direct implementation of grant type class
-                        if (in_array($featureName, $concreteClasses)) {
-                            $strategyContainerKey = array_search($featureName, $concreteClasses);
-                            $strategy = $strategies[$strategyContainerKey];
+                        if (in_array($featureName, $this->concreteClasses)) {
+                            $strategyContainerKey = array_search($featureName, $this->concreteClasses);
+                            $strategy = $this->strategies[$strategyContainerKey];
                         } else {
                             // look at the parent as our last check
                             $parentClass = get_parent_class($featureName);
-                            if (in_array($parentClass, $concreteClasses)) {
-                                $strategyContainerKey = array_search($parentClass, $concreteClasses);
-                                $strategy = $strategies[$strategyContainerKey];
+                            if (in_array($parentClass, $this->concreteClasses)) {
+                                $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
+                                $strategy = $this->strategies[$strategyContainerKey];
                             }
                         }
                     }
@@ -111,29 +106,29 @@ class StrategyBuilder
                         ));
                     }
 
-                    // forward construction to grant type strategy
+                    // forward construction specific strategy
                     $strategy = $serviceLocator->get($strategy);
-                    $strategyObj = $strategy($featureName, $featureParams, $serverKey);
+                    $strategyObj = $strategy($featureName, $featureParams, $this->serverKey);
                 }
             }
 
-            if (!is_subclass_of($strategyObj, $interface)) {
+            if (!is_subclass_of($strategyObj, $this->interface)) {
                 throw new Exception\InvalidClassException(sprintf(
                     "Class '%s' error: '%s' is not of '%s'",
                     __METHOD__,
                     get_class($strategyObj),
-                    $interface
+                    $this->interface
                 ));
             }
 
-            // figure grant type key if not defined, usually used on a php object
+            // figure container server key if not defined, usually will occur on a php obj
             if (!isset($strategyContainerKey)) {
                 $grantTypeClass = get_class($strategyObj);
-                $strategyContainerKey = array_search($grantTypeClass, $concreteClasses);
+                $strategyContainerKey = array_search($grantTypeClass, $this->concreteClasses);
                 if (false === $strategyContainerKey) {
                     // try the parent class if it can be mapped
                     $parentClass = get_parent_class($strategyObj);
-                    $strategyContainerKey = array_search($parentClass, $concreteClasses);
+                    $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
 
                     // if still no mapping, try to extract from the classname
                     if (false === $strategyContainerKey) {
@@ -143,7 +138,7 @@ class StrategyBuilder
 
                         // because we have an underscored keys, try one last time to loop
                         // through each and find a map and return the first match
-                        foreach (array_flip($concreteClasses) as $grantTypeId) {
+                        foreach (array_flip($this->concreteClasses) as $grantTypeId) {
                             if (false !== stripos($strategyContainerKey, $grantTypeId)) {
                                 $strategyContainerKey = $grantTypeId;
                                 break;
@@ -154,9 +149,9 @@ class StrategyBuilder
             }
 
             // store the grant type in the container
-            $container[$serverKey][$strategyContainerKey] = $strategyObj;
+            $this->container[$this->serverKey][$strategyContainerKey] = $strategyObj;
         }
 
-        return $container->getServerContents($serverKey);
+        return $this->container->getServerContents($this->serverKey);
     }
 }
