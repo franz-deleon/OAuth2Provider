@@ -66,9 +66,6 @@ class StrategyBuilder
                 $featureParams = array();
             } elseif (is_object($strategyParams)) {
                 $strategyObj = $strategyParams;
-            } else {
-                $featureName   = null;
-                $featureParams = array();
             }
 
             if (isset($featureName)) {
