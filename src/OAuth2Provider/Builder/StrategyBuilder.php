@@ -26,14 +26,14 @@ class StrategyBuilder
      * @param ContainerInterface $container
      * @param string             $interface
      */
-	public function __construct(
-	   array $subjects,
-	   $serverKey,
-	   array $strategies,
-	   array $concreteClasses,
-	   ContainerInterface $container,
-	   $interface
-	) {
+    public function __construct(
+        array $subjects,
+        $serverKey,
+        array $strategies,
+        array $concreteClasses,
+        ContainerInterface $container,
+        $interface
+    ) {
         $this->subjects        = $subjects;
         $this->serverKey       = $serverKey;
         $this->strategies      = $strategies;
