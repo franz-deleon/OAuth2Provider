@@ -1,22 +1,42 @@
 <?php
 return array(
     /**
-     * Servers
+     * The module works by asking you to define how you create your OAuth 2 Server.
+     * OAuth2Provider module will do its best to map grant types, response type, etc,
+     * that you wish to use with a specific storage.
      *
-     * Grant Type keys:
-     * 1. authorization_code
-     * 2. client_credentials
-     * 3. jwt_bearer
-     * 4. refresh_token
-     * 5. user_credentials
+     * Refer to the strategies on how this works. Each of these features gets mapped
+     * to a specific stategy. Available strategies can found at:
+     * OAuth2Provider\Factory\*TypeStrategy
      *
-     * OAuth 2 server list and configurations
+     * In addition, refer to, https://github.com/bshaffer/oauth2-server-php
+     * if you have no idea what OAuth 'server' I am talking about :)
+     *
+     * In a nutshell, all you have to do is define your storages in the 'storages' configuration
+     * The storages will accept php objects or Service Manager defined keys.
+     *
+     * The available configuration keys provided for servers are:
+     *
+     * a. storages
+     * b. configs
+     * c. grant_types
+     * d. response_types
+     * e. token_type
+     * f. scope_util
+     * g. client_assertion_type
+     *
+     * You can view the list on: OAuth2Provider\Options\ServerConfigurations
+     *
      */
     'servers' => array(
         'default' => array(
             'storages' => array(
-                'user_credentials' => new OAuth2Provider\UserCreds('hi'),
-                //'authorization_code' => new \stdClass(),
+                'user_credentials' => new \OAuth2ProviderTests\Assets\Storage\UserCredentialsStorage(),
+                'access_token'  => new \OAuth2ProviderTests\Assets\Storage\AccessTokenStorage(),
+                'refresh_token' => function ($sm) {
+                    $x = new \OAuth2ProviderTests\Assets\Storage\RefreshTokenStorage();
+                    return $x;
+                }
             ),
             'configs' => array(
                 'www_realm'                  => 'Service',
@@ -30,9 +50,21 @@ return array(
                 array(
                     'class' => 'OAuth2\GrantType\UserCredentials',
                     'params' => array(
-                        'storage' => 'user_credentials',
+                        //'storage' => 'user_credentials',
                     ),
                 ),
+            ),
+            'response_types' => array(
+                array(
+                    'class' => 'OAuth2\ResponseType\AccessToken',
+                    'params' => array(
+                        //'token_storage' => 'access_token',
+                        //'refresh_storage' => 'refresh_token',
+                        'config' => array(
+
+                        ),
+                    ),
+                )
             ),
         ),
     ),
@@ -40,7 +72,7 @@ return array(
     /**
      * Main Primary Server
      *
-     * Define by picking the "main server" to use from server configuration list above.
+     * Define by picking the "main server" to use from server configurations list/keys above.
      * Default: default
      */
     'main_server' => '',
