@@ -39,15 +39,18 @@ class Module
                 'OAuth2Provider/Containers/ResponseTypeContainer' => 'OAuth2Provider\Containers\ResponseTypeContainer',
             ),
             'factories' => array(
+                /** Main configuration factory (oauth2provider.config.php) **/
                 'OAuth2Provider/Options/Configuration' => 'OAuth2Provider\Service\Factory\ConfigurationFactory',
 
                 /** Standard factories **/
                 'OAuth2Provider/Service/MainServerFactory' => 'OAuth2Provider\Service\Factory\MainServerFactory',
 
                 /** Server Features **/
-                'OAuth2Provider/Service/ServerFeature/StorageFactory'      => 'OAuth2Provider\Service\Factory\ServerFeature\StorageFactory',
+                'OAuth2Provider/Service/ServerFeature/StorageFactory' => 'OAuth2Provider\Service\Factory\ServerFeature\StorageFactory',
+                'OAuth2Provider/Service/ServerFeature/ConfigFactory'  => 'OAuth2Provider\Service\Factory\ServerFeature\ConfigFactory',
+
+                /** Strategy based Server Features **/
                 'OAuth2Provider/Service/ServerFeature/GrantTypeFactory'    => 'OAuth2Provider\Service\Factory\ServerFeature\GrantTypeFactory',
-                'OAuth2Provider/Service/ServerFeature/ConfigFactory'       => 'OAuth2Provider\Service\Factory\ServerFeature\ConfigFactory',
                 'OAuth2Provider/Service/ServerFeature/ResponseTypeFactory' => 'OAuth2Provider\Service\Factory\ServerFeature\ResponseTypeFactory',
 
                 /** Grant Type Strategies **/
