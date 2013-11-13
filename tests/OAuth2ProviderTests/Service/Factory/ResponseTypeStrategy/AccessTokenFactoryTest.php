@@ -52,7 +52,7 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['access_token'] = new Assets\Storage\AccessTokenStorage();
         $storageCont['server1']['refresh_token'] = new Assets\Storage\RefreshTokenStorage();
 
-        $classname = 'OAuth2ProviderTests\Assets\ResponseTypeCustomAccessToken';
+        $classname = 'OAuth2\ResponseType\AccessToken';
         $params = array('token_storage' => '', 'refresh_storage' => '');
         $r = $this->AccessTokenFactory->createService($mainSm);
         $r = $r($classname, $params, 'server1');
@@ -71,7 +71,7 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['access_token'] = new Assets\Storage\AccessTokenStorage();
         $storageCont['server1']['refresh_token'] = null;
 
-        $classname = 'OAuth2ProviderTests\Assets\ResponseTypeCustomAccessToken';
+        $classname = 'OAuth2\ResponseType\AccessToken';
         $params = array('token_storage' => '', 'refresh_storage' => '');
         $r = $this->AccessTokenFactory->createService($mainSm);
         $r = $r($classname, $params, 'server1');
@@ -90,7 +90,7 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
         $storageCont['server1']['access_token'] = null;
 
-        $classname = 'OAuth2ProviderTests\Assets\ResponseTypeCustomAccessToken';
+        $classname = 'OAuth2\ResponseType\AccessToken';
         $params = array('token_storage' => '', 'refresh_storage' => '');
         $r = $this->AccessTokenFactory->createService($mainSm);
         $r($classname, $params, 'server1');

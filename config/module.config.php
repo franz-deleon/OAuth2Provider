@@ -14,6 +14,7 @@ return array(
             'OAuth2Provider/Options/TypeAbstract'      => 'OAuth2Provider\Options\TypeAbstract',
             'OAuth2Provider/Options/GrantType/UserCredentials' => 'OAuth2Provider\Options\GrantType\UserCredentialsConfigurations',
             'OAuth2Provider/Options/ResponseType/AccessToken'  => 'OAuth2Provider\Options\ResponseType\AccessTokenConfigurations',
+            'OAuth2Provider/Options/ResponseType/AuthorizationCode' => 'OAuth2Provider\Options\ResponseType\AuthorizationCodeConfigurations',
         ),
         'factories' => array(
             /** Main Options Configuration (oauth2provider.config.php) **/
@@ -49,12 +50,11 @@ return array(
             'oauth2provider.server.main' => 'OAuth2Provider/Service/MainServerFactory',
         ),
         'shared' => array(
-            'OAuth2Provider/Service/ServerFeature/StrategyBuilder' => false,
-            'OAuth2Provider/Options/ServerFeatureType'             => false,
-            'OAuth2Provider/Options/TypeAbstract'                  => false,
-            'OAuth2Provider/Options/Server'                        => false,
-            'OAuth2Provider/Options/GrantType/UserCredentials'     => false,
-            'OAuth2Provider/Options/ResponseType/AccessToken'      => false,
+            'OAuth2Provider/Options/ServerFeatureType'         => false,
+            'OAuth2Provider/Options/TypeAbstract'              => false,
+            'OAuth2Provider/Options/Server'                    => false,
+            'OAuth2Provider/Options/GrantType/UserCredentials' => false,
+            'OAuth2Provider/Options/ResponseType/AccessToken'  => false,
         ),
     ),
     'controllers' => array(
