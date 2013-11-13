@@ -20,15 +20,6 @@ class Module
         );
     }
 
-    public function getControllerConfig()
-    {
-        return array(
-            'factories' => array(
-                'OAuthController' => 'OAuth2Provider\Service\Factory\ControllerFactory',
-            ),
-        );
-    }
-
     public function getServiceConfig()
     {
         return array(
