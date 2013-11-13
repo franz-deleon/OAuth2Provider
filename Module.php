@@ -19,22 +19,4 @@ class Module
             ),
         );
     }
-
-    public function getServiceConfig()
-    {
-        return array(
-            'factories' => array(
-                'OAuth2Provider/Service/ServerFeature/StrategyBuilder' => function () {
-                    return function ($strategyTypes, $serverKey, $strategies, $concreteClasses, $container) {
-                        return new OAuth2Provider\Service\Factory\ServerFeature\StrategyBuilder(
-                            $strategyTypes, $serverKey, $strategies, $concreteClasses, $container
-                        );
-                    };
-                },
-            ),
-            'shared' => array(
-                'OAuth2Provider/Service/ServerFeature/StrategyBuilder' => false,
-            ),
-        );
-    }
 }
