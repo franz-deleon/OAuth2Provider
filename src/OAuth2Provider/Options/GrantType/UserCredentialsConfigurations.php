@@ -1,9 +1,9 @@
 <?php
 namespace OAuth2Provider\Options\GrantType;
 
-use Zend\Stdlib\AbstractOptions;
+use OAuth2Provider\Options\TypeAbstract;
 
-class UserCredentialsConfigurations extends AbstractOptions
+class UserCredentialsConfigurations extends TypeAbstract
 {
     /**
      * Storage object to pass to User Credentials Grant Type
@@ -11,22 +11,22 @@ class UserCredentialsConfigurations extends AbstractOptions
      *
      * @var string
      */
-    protected $storage;
+    protected $userCredentialsStorage;
 
 	/**
      * @return the $storage
      */
-    public function getStorage()
+    public function getUserCredentialsStorage()
     {
-        return $this->storage;
+        return $this->userCredentialsStorage;
     }
 
 	/**
      * @param field_type $storage
      */
-    public function setStorage($storage)
+    public function setUserCredentialsStorage($storage)
     {
-        $this->storage = $storage;
+        $this->userCredentialsStorage = $storage;
         return $this;
     }
 }

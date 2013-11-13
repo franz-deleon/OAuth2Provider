@@ -84,7 +84,7 @@ class Utilities
         // check if serverInderx is in the container
         if (isset($container)
             && $container->isExistingServerContentInKey($server, $serverIndex)
-        )  {
+        ) {
             $result = $container->getServerContentsFromKey($server, $serverIndex);
 
         // check if identifier is present in the storage
@@ -102,10 +102,7 @@ class Utilities
         // check if the subject is an object
         } elseif (is_object($serverIndex)) {
             $result = $serverIndex;
-        }
-
-        // if no result created, use default return value
-        if (null === $result) {
+        } else {
             $result = $defaultReturn;
         }
 

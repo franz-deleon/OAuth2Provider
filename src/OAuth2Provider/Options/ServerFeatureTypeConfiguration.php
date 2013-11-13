@@ -49,7 +49,7 @@ class ServerFeatureTypeConfiguration extends AbstractOptions
 	/**
      * @param multitype: $params
      */
-    public function setParams($params)
+    public function setParams(array $params)
     {
         $this->params = $params;
         return $this;

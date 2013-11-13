@@ -1,9 +1,9 @@
 <?php
 namespace OAuth2Provider\Options\ResponseType;
 
-use Zend\Stdlib\AbstractOptions;
+use OAuth2Provider\Options\TypeAbstract;
 
-class AccessTokenConfigurations extends AbstractOptions
+class AccessTokenConfigurations extends TypeAbstract
 {
     /**
      * The Token Storage object to use

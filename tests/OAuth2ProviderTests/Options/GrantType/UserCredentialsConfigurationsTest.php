@@ -42,9 +42,9 @@ class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
     /**
 	 * Tests UserCredentialsConfigurations->getStorage()
 	 */
-    public function testGetStorage()
+    public function testGetUserCredentialsStorage()
     {
-        $r = $this->UserCredentialsConfigurations->getStorage(/* parameters */);
+        $r = $this->UserCredentialsConfigurations->getUserCredentialsStorage(/* parameters */);
         $this->assertNull($r);
     }
 
@@ -53,7 +53,7 @@ class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
 	 */
     public function testSetStorage()
     {
-        $r = $this->UserCredentialsConfigurations->setStorage('user_credentials');
+        $r = $this->UserCredentialsConfigurations->setUserCredentialsStorage('user_credentials');
         $this->assertSame($this->UserCredentialsConfigurations, $r);
     }
 
@@ -62,8 +62,8 @@ class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
 	 */
     public function testSetStorageReturnsExpected()
     {
-        $this->UserCredentialsConfigurations->setStorage('user_credentials');
-        $r = $this->UserCredentialsConfigurations->getStorage();
+        $this->UserCredentialsConfigurations->setUserCredentialsStorage('user_credentials');
+        $r = $this->UserCredentialsConfigurations->getUserCredentialsStorage();
         $this->assertEquals('user_credentials', $r);
     }
 }

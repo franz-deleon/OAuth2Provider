@@ -2,15 +2,15 @@
 return array(
     /**
      * The module works by asking you to define how you create your OAuth 2 Server.
-     * OAuth2Provider module will do its best to map grant types, response type, etc,
-     * that you wish to use with a specific storage.
+     * OAuth2Provider module will do its best to map grant types, response type, etc
+     * that you wish to use for a specific storage.
      *
      * Refer to the strategies on how this works. Each of these features gets mapped
-     * to a specific stategy. Available strategies can found at:
+     * to a specific stategy. Available strategies can be found at:
      * OAuth2Provider\Factory\*TypeStrategy
      *
-     * In addition, refer to, https://github.com/bshaffer/oauth2-server-php
-     * if you have no idea what OAuth 'server' I am talking about :)
+     * In addition, refer to https://github.com/bshaffer/oauth2-server-php
+     * if you have no idea what an OAuth 'server' is :)
      *
      * In a nutshell, all you have to do is define your storages in the 'storages' configuration
      * The storages will accept php objects or Service Manager defined keys.
