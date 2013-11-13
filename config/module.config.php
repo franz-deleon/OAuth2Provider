@@ -50,6 +50,11 @@ return array(
         ),
         'shared' => array(
             'OAuth2Provider/Service/ServerFeature/StrategyBuilder' => false,
+            'OAuth2Provider/Options/ServerFeatureType'             => false,
+            'OAuth2Provider/Options/TypeAbstract'                  => false,
+            'OAuth2Provider/Options/Server'                        => false,
+            'OAuth2Provider/Options/GrantType/UserCredentials'     => false,
+            'OAuth2Provider/Options/ResponseType/AccessToken'      => false,
         ),
     ),
     'controllers' => array(
