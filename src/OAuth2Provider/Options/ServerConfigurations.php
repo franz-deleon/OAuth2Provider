@@ -1,10 +1,6 @@
 <?php
 namespace OAuth2Provider\Options;
 
-use OAuth2\ClientAssertionType\ClientAssertionTypeInterface;
-use OAuth2\ScopeInterface;
-use OAuth2\TokenType\TokenTypeInterface;
-
 use Zend\Stdlib\AbstractOptions;
 
 class ServerConfigurations extends AbstractOptions
