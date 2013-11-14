@@ -103,7 +103,7 @@ class StrategyBuilder
                         ));
                     }
 
-                    // forward construction specific strategy
+                    // forward construction to specific strategy
                     $strategy = $serviceLocator->get($strategy);
                     $strategyObj = $strategy($featureName, $featureParams, $this->serverKey);
                 }
@@ -145,7 +145,7 @@ class StrategyBuilder
                 }
             }
 
-            // store the grant type in the container
+            // store the object in the container
             $this->container[$this->serverKey][$strategyContainerKey] = $strategyObj;
         }
 

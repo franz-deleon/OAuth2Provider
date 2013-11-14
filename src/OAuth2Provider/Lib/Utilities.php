@@ -81,7 +81,7 @@ class Utilities
     ) {
         $result = null;
 
-        // check if serverInderx is in the container
+        // check if serverIndex is in the container
         if (isset($container)
             && $container->isExistingServerContentInKey($server, $serverIndex)
         ) {

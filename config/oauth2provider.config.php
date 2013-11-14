@@ -12,10 +12,11 @@ return array(
      * In addition, refer to https://github.com/bshaffer/oauth2-server-php
      * if you have no idea what an OAuth 'server' is :)
      *
-     * In a nutshell, all you have to do is define your storages in the 'storages' configuration
-     * The storages will accept php objects or Service Manager defined keys.
+     * In a nutshell, all you have to do is define your storages in the 'storages' configuration.
+     * The storages will accept php objects or Service Manager, or callbacks
+     * with an injected service manager (function ($sm) {}).
      *
-     * The available configuration keys provided for servers are:
+     * The available configuration keys provided for 'servers' are:
      *
      * a. storages
      * b. configs
@@ -25,8 +26,7 @@ return array(
      * f. scope_util
      * g. client_assertion_type
      *
-     * You can view the list on: OAuth2Provider\Options\ServerConfigurations
-     *
+     * You can view the list of configurations in: OAuth2Provider\Options\ServerConfigurations
      */
     'servers' => array(
         'default' => array(
@@ -64,7 +64,7 @@ return array(
 
                         ),
                     ),
-                )
+                ),
             ),
         ),
     ),
@@ -72,15 +72,21 @@ return array(
     /**
      * Main Primary Server
      *
-     * Define by picking the "main server" to use from server configurations list/keys above.
-     * Default: default
+     * Define by picking the "main server" to use from the server configurations list/keys above.
+     * You can access the main server using the through the main service manager by:
+     *
+     * <code>
+     * $sm->get('oauth2provider.server.main');
+     * </code>
+     *
+     * Defaults to: default
      */
     'main_server' => '',
 
     /**
      * Controller
      *
-     * Define which controller to use
+     * Define which controller to use:
      */
     'controller' => 'OAuth2Provider\Controller\UserCredentialsController',
 );

@@ -49,6 +49,10 @@ class ServerConfigurations extends AbstractOptions
 
     /**
      * Grant types to pass to the server
+     * Strategies available:
+     *
+     * 1. user_credentials
+     *
      * Optional
      * @var array;
      */
@@ -56,6 +60,11 @@ class ServerConfigurations extends AbstractOptions
 
     /**
      * Response type to pass to the server
+     * Strategies available:
+     *
+     * 1. access_token
+     * 2. authorization_code
+     *
      * Optional
      *
      * @var array;
@@ -87,6 +96,11 @@ class ServerConfigurations extends AbstractOptions
     protected $clientAssertionType;
 
     /**
+     * The default OAuth2 server class
+     * Needs to be FQNS
+     *
+     * Required
+     *
      * @var string;
      */
     protected $serverClass = 'OAuth2\Server';

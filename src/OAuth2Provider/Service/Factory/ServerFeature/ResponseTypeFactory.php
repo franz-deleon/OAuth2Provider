@@ -27,10 +27,10 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
 
     /**
      * Specific configuration mapping to comply with server
-     * @var unknown
+     * @var array
      */
     protected $keyMappings = array(
-        'access_token' => 'token',
+        'access_token'       => 'token',
         'authorization_code' => 'code',
     );
 
