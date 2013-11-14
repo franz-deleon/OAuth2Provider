@@ -3,6 +3,8 @@ namespace OAuth2Provider\Service\AbstractFactory;
 
 use OAuth2Provider\Exception;
 
+use OAuth2\Server as OAuth2Server;
+
 use Zend\ServiceManager;
 
 class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
@@ -84,6 +86,6 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $responseTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ResponseTypeFactory');
         $responseTypes = $responseTypeFactory($serverConfigs->getResponseTypes(), $serverKey);
 
-        return new \stdClass();
+        return new OAuth2Server($storages, $configs, $grantTypes, $responseTypes);
     }
 }

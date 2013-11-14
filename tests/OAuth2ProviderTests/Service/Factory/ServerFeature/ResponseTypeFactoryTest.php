@@ -47,7 +47,7 @@ class ResponseTypeFactoryTest extends \PHPUnit_Framework_TestCase
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
         $r = $this->ResponseTypeFactory->createService($mainSm);
-        $this->assertSame(array('access_token' => $storage), $r($strategies, 'server1'));
+        $this->assertSame(array('token' => $storage), $r($strategies, 'server1'));
     }
 }
 

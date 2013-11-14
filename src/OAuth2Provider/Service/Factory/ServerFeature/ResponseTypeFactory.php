@@ -27,6 +27,15 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
     );
 
     /**
+     * Specific configuration mapping to comply with server
+     * @var unknown
+     */
+    protected $keyMappings = array(
+        'access_token' => 'token',
+        'authorization_code' => 'code',
+    );
+
+    /**
      * The interface to validate against
      * @var string FQNS
      */
@@ -43,8 +52,11 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
         $strategies      = $this->availableStrategy;
         $concreteClasses = $this->concreteClasses;
         $interface       = $this->strategyInterface;
+        $keyMappings     = $this->keyMappings;
 
-        return function ($strategyTypes, $serverKey) use ($serviceLocator, $strategies, $concreteClasses, $interface) {
+        return function ($strategyTypes, $serverKey)
+            use ($serviceLocator, $strategies, $concreteClasses, $interface, $keyMappings
+        ) {
             $strategy = new StrategyBuilder(
                 $strategyTypes,
                 $serverKey,
@@ -53,7 +65,19 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
                 $serviceLocator->get('OAuth2Provider/Containers/ResponseTypeContainer'),
                 $interface
             );
-            return $strategy->initStrategyFeature($serviceLocator);
+            $strategy = $strategy->initStrategyFeature($serviceLocator);
+
+            // we need to map the key to eather 'code' for authorization_code and/or 'token' for access_token
+            if (!empty($strategy)) {
+                $return = array();
+                foreach ($strategy as $key => $val) {
+                    if (isset($keyMappings[$key])) {
+                        $return[$keyMappings[$key]] = $val;
+                    }
+                }
+                unset($strategy);
+                return $return;
+            }
         };
     }
 }
