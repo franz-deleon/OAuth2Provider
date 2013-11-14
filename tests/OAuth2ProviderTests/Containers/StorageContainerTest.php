@@ -40,7 +40,7 @@ class StorageContainerTest extends \PHPUnit_Framework_TestCase
     /**
 	 * Tests StorageContainer->getServerStorages()
 	 */
-    public function testGetServerStorages()
+    public function testGetServerContent()
     {
         $expected = array(
             'storage1' => 'ss1',
@@ -52,6 +52,16 @@ class StorageContainerTest extends \PHPUnit_Framework_TestCase
 
         $r = $this->StorageContainer->getServerContents('server1');
         $this->assertSame($expected, $r);
+    }
+
+    /**
+	 * Tests StorageContainer->getServerStorages()
+	 */
+    public function testGetServerContentReturnEmptyArray()
+    {
+        $r = $this->StorageContainer->getServerContents('server1');
+        $this->assertInternalType('array', $r);
+        $this->assertEmpty($r);
     }
 
     /**
@@ -67,6 +77,18 @@ class StorageContainerTest extends \PHPUnit_Framework_TestCase
 
         $r = $this->StorageContainer->getServerContentsFromKey('server1', 'storage2');
         $this->assertEquals('ss2', $r);
+    }
+
+    /**
+	 * Tests StorageContainer->getServerStorageNotInKey()
+	 */
+    public function testGetServerStorageInKeyReturnsEmptyArray()
+    {
+        $this->StorageContainer['server1']['storage1'] = 'ss1';
+
+        $r = $this->StorageContainer->getServerContentsFromKey('server1', 'storage4');
+        $this->assertInternalType('array', $r);
+        $this->assertEmpty($r);
     }
 
     /**
