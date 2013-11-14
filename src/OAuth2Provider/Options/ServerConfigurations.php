@@ -75,7 +75,7 @@ class ServerConfigurations extends AbstractOptions
      * Token type to pass to the server
      * Optional
      *
-     * @var array;
+     * @var mixed|TokenTypeInterface
      */
     protected $tokenType;
 
@@ -83,7 +83,7 @@ class ServerConfigurations extends AbstractOptions
      * Scope Utilitity to pass to the server
      * Optional
      *
-     * @var array;
+     * @var mixed|ScopeInterface;
      */
     protected $scopeUtil;
 
@@ -91,7 +91,7 @@ class ServerConfigurations extends AbstractOptions
      * Assertion type to pass to the server
      * Optional
      *
-     * @var ClientAssertionTypeInterface;
+     * @var mixed|ClientAssertionTypeInterface;
      */
     protected $clientAssertionType;
 
@@ -183,11 +183,11 @@ class ServerConfigurations extends AbstractOptions
     }
 
 	/**
-     * @param field_type $tokeType
+     * @param field_type $tokenType
      */
-    public function setTokenType(TokenTypeInterface $tokeType)
+    public function setTokenType($tokenType)
     {
-        $this->tokenType = $tokeType;
+        $this->tokenType = $tokenType;
         return $this;
     }
 
@@ -202,7 +202,7 @@ class ServerConfigurations extends AbstractOptions
 	/**
      * @param field_type $scopeUtil
      */
-    public function setScopeUtil(ScopeInterface $scopeUtil)
+    public function setScopeUtil($scopeUtil)
     {
         $this->scopeUtil = $scopeUtil;
         return $this;
@@ -219,7 +219,7 @@ class ServerConfigurations extends AbstractOptions
 	/**
      * @param field_type $clientAssertionType
      */
-    public function setClientAssertionType(ClientAssertionTypeInterface $clientAssertionType)
+    public function setClientAssertionType($clientAssertionType)
     {
         $this->clientAssertionType = $clientAssertionType;
     }
