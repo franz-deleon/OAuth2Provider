@@ -7,6 +7,7 @@ return array(
             'OAuth2Provider/Containers/ConfigContainer'       => 'OAuth2Provider\Containers\ConfigContainer',
             'OAuth2Provider/Containers/GrantTypeContainer'    => 'OAuth2Provider\Containers\GrantTypeContainer',
             'OAuth2Provider/Containers/ResponseTypeContainer' => 'OAuth2Provider\Containers\ResponseTypeContainer',
+            'OAuth2Provider/Containers/TokenTypeContainer'    => 'OAuth2Provider\Containers\TokenTypeContainer',
 
             /** Options configurations **/
             'OAuth2Provider/Options/Server'            => 'OAuth2Provider\Options\ServerConfigurations',
@@ -15,6 +16,7 @@ return array(
             'OAuth2Provider/Options/GrantType/UserCredentials' => 'OAuth2Provider\Options\GrantType\UserCredentialsConfigurations',
             'OAuth2Provider/Options/ResponseType/AccessToken'  => 'OAuth2Provider\Options\ResponseType\AccessTokenConfigurations',
             'OAuth2Provider/Options/ResponseType/AuthorizationCode' => 'OAuth2Provider\Options\ResponseType\AuthorizationCodeConfigurations',
+            'OAuth2Provider/Options/TokenType/Bearer' => 'OAuth2Provider\Options\TokenType\BearerConfigurations',
         ),
         'factories' => array(
             /** Main Options Configuration (oauth2provider.config.php) **/
@@ -30,6 +32,7 @@ return array(
             /** Strategy based Server Features **/
             'OAuth2Provider/Service/ServerFeature/GrantTypeFactory'    => 'OAuth2Provider\Service\Factory\ServerFeature\GrantTypeFactory',
             'OAuth2Provider/Service/ServerFeature/ResponseTypeFactory' => 'OAuth2Provider\Service\Factory\ServerFeature\ResponseTypeFactory',
+            'OAuth2Provider/Service/ServerFeature/TokenTypeFactory'    => 'OAuth2Provider\Service\Factory\ServerFeature\TokenTypeFactory',
 
             /** Grant Type Strategies - OAuth2Provider/Service/ServerFeature/GrantTypeFactory **/
             'OAuth2Provider/GrantTypeStrategy/AuthorizationCode' => 'OAuth2Provider\Service\Factory\GrantTypeStrategy\AuthorizationCodeFactory',
@@ -41,6 +44,9 @@ return array(
             /** Response Type Strategies - OAuth2Provider/Service/ServerFeature/ResponseTypeFactory **/
             'OAuth2Provider/GrantTypeStrategy/AccessToken'       => 'OAuth2Provider\Service\Factory\ResponseTypeStrategy\AccessTokenFactory',
             'OAuth2Provider/GrantTypeStrategy/AuthorizationCode' => 'OAuth2Provider\Service\Factory\ResponseTypeStrategy\AuthorizationCodeFactory',
+
+            /** Token Type Strategies - OAuth2Provider/Service/ServerFeature/TokenTypeFactory **/
+            'OAuth2Provider/TokenTypeStrategy/Bearer' => 'OAuth2Provider\Service\Factory\TokenTypeStrategy\BearerFactory',
         ),
         'abstract_factories' => array(
             'OAuth2Provider\Service\AbstractFactory\ServerAbstractFactory',
@@ -55,6 +61,8 @@ return array(
             'OAuth2Provider/Options/Server'                    => false,
             'OAuth2Provider/Options/GrantType/UserCredentials' => false,
             'OAuth2Provider/Options/ResponseType/AccessToken'  => false,
+            'OAuth2Provider/Options/ResponseType/AuthorizationCode' => false,
+            'OAuth2Provider/Options/TokenType/Bearer'          => false,
         ),
     ),
     'controllers' => array(

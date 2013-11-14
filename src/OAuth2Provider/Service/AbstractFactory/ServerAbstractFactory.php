@@ -82,10 +82,14 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/GrantTypeFactory');
         $grantTypes = $grantTypeFactory($serverConfigs->getGrantTypes(), $serverKey);
 
-        // store config
+        // initialize response types
         $responseTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ResponseTypeFactory');
         $responseTypes = $responseTypeFactory($serverConfigs->getResponseTypes(), $serverKey);
 
-        return new OAuth2Server($storages, $configs, $grantTypes, $responseTypes);
+        // initialize token type
+        $tokenTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/TokenTypeFactory');
+        $tokenTypes = $tokenTypeFactory($serverConfigs->getTokenType(), $serverKey);
+
+        return new OAuth2Server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes);
     }
 }

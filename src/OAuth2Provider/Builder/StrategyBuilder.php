@@ -29,7 +29,7 @@ class StrategyBuilder
      *                                                 the initialized strategy
      */
     public function __construct(
-        array $strategies,
+        $strategies,
         $serverKey,
         array $availableStrategies,
         array $concreteClasses,
@@ -52,7 +52,11 @@ class StrategyBuilder
      */
     public function initStrategyFeature(ServiceLocatorInterface $serviceLocator)
     {
-        foreach ($this->strategies as $strategyName => $strategyParams) {
+        $strategies = !is_array($this->strategies) && !empty($this->strategies)
+            ? array($this->strategies)
+            : $this->strategies;
+
+        foreach ($strategies as $strategyName => $strategyParams) {
             if (is_array($strategyParams)) {
                 $featureConfig = $serviceLocator->get('OAuth2Provider/Options/ServerFeatureType')->setFromArray($strategyParams);
                 if (!$featureConfig->getName()) {
