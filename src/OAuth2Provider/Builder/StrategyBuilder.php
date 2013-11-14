@@ -9,37 +9,39 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class StrategyBuilder
 {
-    protected $subjects = array();
-    protected $serverKey;
     protected $strategies = array();
+    protected $serverKey;
+    protected $availableStrategies = array();
     protected $concreteClasses = array();
     protected $container;
     protected $interface;
 
     /**
-     * We need all of the setters to construct
+     * We need all of the properties to construct
      *
-     * @param array              $subject
-     * @param string             $serverKey
-     * @param array              $strategies
-     * @param array              $concreteClasses
-     * @param ContainerInterface $container
-     * @param string             $interface
+     * @param array              $strategies           List of strategies to map
+     * @param string             $serverKey            The server key where the strategy is stored
+     *                                                 in the container
+     * @param array              $availableStrategies  List of available strategies this moduls supports
+     * @param array              $concreteClasses      Concrete classes mapping to strategy keys
+     * @param ContainerInterface $container            The container to look for
+     * @param string             $interface            The interface to check against
+     *                                                 the initialized strategy
      */
     public function __construct(
-        array $subjects,
-        $serverKey,
         array $strategies,
+        $serverKey,
+        array $availableStrategies,
         array $concreteClasses,
         ContainerInterface $container,
         $interface
     ) {
-        $this->subjects        = $subjects;
-        $this->serverKey       = $serverKey;
-        $this->strategies      = $strategies;
-        $this->concreteClasses = $concreteClasses;
-        $this->container       = $container;
-        $this->interface       = $interface;
+        $this->strategies          = $strategies;
+        $this->serverKey           = $serverKey;
+        $this->availableStrategies = $availableStrategies;
+        $this->concreteClasses     = $concreteClasses;
+        $this->container           = $container;
+        $this->interface           = $interface;
     }
 
     /**
@@ -50,7 +52,7 @@ class StrategyBuilder
      */
     public function initStrategyFeature(ServiceLocatorInterface $serviceLocator)
     {
-        foreach ($this->subjects as $strategyName => $strategyParams) {
+        foreach ($this->strategies as $strategyName => $strategyParams) {
             if (is_array($strategyParams)) {
                 $featureConfig = $serviceLocator->get('OAuth2Provider/Options/ServerFeatureType')->setFromArray($strategyParams);
                 if (!$featureConfig->getName()) {
@@ -74,9 +76,9 @@ class StrategyBuilder
                 } else {
                     /** maps the strategy type to a strategy **/
                     // a strategy key is available
-                    if (isset($this->strategies[$strategyName])) {
+                    if (isset($this->availableStrategies[$strategyName])) {
                         $strategyContainerKey = $strategyName;
-                        $strategy = $this->strategies[$strategyContainerKey];
+                        $strategy = $this->availableStrategies[$strategyContainerKey];
                         if (!isset($featureParams['storage'])) {
                             $featureParams['storage'] = $strategyContainerKey;
                         }
@@ -84,13 +86,13 @@ class StrategyBuilder
                         // if class is a direct implementation of grant type class
                         if (in_array($featureName, $this->concreteClasses)) {
                             $strategyContainerKey = array_search($featureName, $this->concreteClasses);
-                            $strategy = $this->strategies[$strategyContainerKey];
+                            $strategy = $this->availableStrategies[$strategyContainerKey];
                         } else {
                             // look at the parent as our last check
                             $parentClass = get_parent_class($featureName);
                             if (in_array($parentClass, $this->concreteClasses)) {
                                 $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
-                                $strategy = $this->strategies[$strategyContainerKey];
+                                $strategy = $this->availableStrategies[$strategyContainerKey];
                             }
                         }
                     }
