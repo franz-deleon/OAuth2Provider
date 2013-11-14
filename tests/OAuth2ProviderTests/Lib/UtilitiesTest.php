@@ -138,7 +138,7 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     /**
 	 * Tests Utilities::storageLookup()
 	 */
-    public function testStorageLookupWhereSubjectIsASMElement()
+    public function testStorageLookupWhereSubjectIsSMElement()
     {
         $sm = Bootstrap::getServiceManager()->setAllowOverride(true);
         $sm->setService('UserCredentials', new \stdClass());

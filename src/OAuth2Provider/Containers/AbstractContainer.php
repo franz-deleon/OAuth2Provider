@@ -11,6 +11,7 @@ abstract class AbstractContainer extends ArrayStack implements ContainerInterfac
         if (isset($storageData[$server])) {
             return $storageData[$server];
         }
+        return array();
     }
 
     public function getServerContentsFromKey($server, $key)
@@ -19,13 +20,15 @@ abstract class AbstractContainer extends ArrayStack implements ContainerInterfac
         if (isset($storageData[$server][$key])) {
             return $storageData[$server][$key];
         }
+        return array();
     }
 
     public function isExistingServerContentInKey($server, $key)
     {
+        $storageData = $this->getArrayCopy();
         if (is_string($server)
             && is_string($key)
-            && null !== $this->getServerContentsFromKey($server, $key)
+            && isset($storageData[$server][$key])
         ) {
             return true;
         }

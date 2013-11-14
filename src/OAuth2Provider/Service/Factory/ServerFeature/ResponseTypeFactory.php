@@ -1,7 +1,6 @@
 <?php
 namespace OAuth2Provider\Service\Factory\ServerFeature;
 
-use OAuth2Provider\Exception;
 use OAuth2Provider\Builder\StrategyBuilder;
 
 use Zend\ServiceManager;
@@ -54,8 +53,12 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
         $interface       = $this->strategyInterface;
         $keyMappings     = $this->keyMappings;
 
-        return function ($strategyTypes, $serverKey)
-            use ($serviceLocator, $strategies, $concreteClasses, $interface, $keyMappings
+        return function ($strategyTypes, $serverKey) use (
+            $serviceLocator,
+            $strategies,
+            $concreteClasses,
+            $interface,
+            $keyMappings
         ) {
             $strategy = new StrategyBuilder(
                 $strategyTypes,
@@ -65,19 +68,17 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
                 $serviceLocator->get('OAuth2Provider/Containers/ResponseTypeContainer'),
                 $interface
             );
-            $strategy = $strategy->initStrategyFeature($serviceLocator);
 
-            // we need to map the key to eather 'code' for authorization_code and/or 'token' for access_token
-            if (!empty($strategy)) {
-                $return = array();
-                foreach ($strategy as $key => $val) {
-                    if (isset($keyMappings[$key])) {
-                        $return[$keyMappings[$key]] = $val;
-                    }
+            // map keys to comply with server
+            $result = array();
+            foreach ($strategy->initStrategyFeature($serviceLocator) as $key => $val) {
+                if (isset($keyMappings[$key])) {
+                    $result[$keyMappings[$key]] = $val;
                 }
-                unset($strategy);
-                return $return;
             }
+            unset($strategy);
+
+            return $result;
         };
     }
 }
