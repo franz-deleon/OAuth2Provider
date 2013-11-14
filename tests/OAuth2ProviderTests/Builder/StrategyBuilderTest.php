@@ -127,11 +127,11 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $storage = new Assets\GrantTypeWithParentUserCredentials(new Assets\StorageUserCredentials());
         $config = array(
-            'name' => 'user/credentials'
+            'name' => 'namespace_user_credentials'
         );
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('user/credentials', $storage);
+        $mainSm->setService('namespace_user_credentials', $storage);
 
         $subjects  = $config;
         $serverKey = 'server1';
@@ -149,17 +149,17 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
      * Tests GrantTypeFactory->createService()
      * @group test4
      */
-    public function testInitStrategyFeatureIsAServiceManagerElementUsingConfigAsArray()
+    public function testInitStrategyFeatureIsAServiceManagerElementUsingConfigAsArrayAndDirectNameAsSMElement()
     {
         $storage = new Assets\GrantTypeWithParentUserCredentials(new Assets\StorageUserCredentials());
         $config = array(
             array(
-                'name' => 'user/credentials'
+                'name' => 'user_credentials_x1'
             )
         );
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('user/credentials', $storage);
+        $mainSm->setService('user_credentials_x1', $storage);
 
         $subjects  = $config;
         $serverKey = 'server1';
@@ -226,6 +226,34 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $subjects  = $config;
         $serverKey = 'server1';
+        $container = $mainSm->get('OAuth2Provider/Containers/GrantTypeContainer');
+        $strategies = array('user_credentials' => 'OAuth2Provider/GrantTypeStrategy/UserCredentials');
+        $concreteClasses = array('user_credentials'   => 'OAuth2\GrantType\UserCredentials');
+        $interface = 'OAuth2\GrantType\GrantTypeInterface';
+        $builder = new StrategyBuilder($subjects, $serverKey, $strategies, $concreteClasses, $container, $interface);
+
+        $r = $builder->initStrategyFeature($mainSm);
+        $this->assertInstanceOf('OAuth2\GrantType\UserCredentials', $r['user_credentials']);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @group test5b
+     */
+    public function testInitStrategyFeatureWithFeatureNameAsAvailableStrategyKey()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        // seed the storagecontainer
+        $storageContainer = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
+        $storageContainer['server2']['user_credentials'] = new Assets\StorageUserCredentials();
+
+        $config = array(
+            'user_credentials',
+        );
+
+        $subjects  = $config;
+        $serverKey = 'server2';
         $container = $mainSm->get('OAuth2Provider/Containers/GrantTypeContainer');
         $strategies = array('user_credentials' => 'OAuth2Provider/GrantTypeStrategy/UserCredentials');
         $concreteClasses = array('user_credentials'   => 'OAuth2\GrantType\UserCredentials');

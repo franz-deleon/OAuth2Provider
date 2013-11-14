@@ -74,26 +74,33 @@ class StrategyBuilder
                 if ($serviceLocator->has($featureName)) {
                     $strategyObj = $serviceLocator->get($featureName);
                 } else {
-                    /** maps the strategy type to a strategy **/
-                    // a strategy key is available
+                    /** Attempt to map a strategy to one of the available strategies **/
+
+                    /** checke if a strategy key is available **/
                     if (isset($this->availableStrategies[$strategyName])) {
                         $strategyContainerKey = $strategyName;
                         $strategy = $this->availableStrategies[$strategyContainerKey];
                         if (!isset($featureParams['storage'])) {
                             $featureParams['storage'] = $strategyContainerKey;
                         }
+
+                    /** check if feature name is a key of available strategies **/
+                    } elseif (isset($this->availableStrategies[$featureName])) {
+                        $strategyContainerKey = $featureName;
+                        $strategy    = $this->availableStrategies[$featureName];
+                        $featureName = $this->concreteClasses[$featureName];
+
+                     /** check if name is a direct implementation of a concrete class **/
+                    } elseif (in_array($featureName, $this->concreteClasses)) {
+                         $strategyContainerKey = array_search($featureName, $this->concreteClasses);
+                         $strategy = $this->availableStrategies[$strategyContainerKey];
+
+                    /** look at the parent as our last check **/
                     } else {
-                        // if class is a direct implementation of grant type class
-                        if (in_array($featureName, $this->concreteClasses)) {
-                            $strategyContainerKey = array_search($featureName, $this->concreteClasses);
+                        $parentClass = get_parent_class($featureName);
+                        if (in_array($parentClass, $this->concreteClasses)) {
+                            $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
                             $strategy = $this->availableStrategies[$strategyContainerKey];
-                        } else {
-                            // look at the parent as our last check
-                            $parentClass = get_parent_class($featureName);
-                            if (in_array($parentClass, $this->concreteClasses)) {
-                                $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
-                                $strategy = $this->availableStrategies[$strategyContainerKey];
-                            }
                         }
                     }
 
