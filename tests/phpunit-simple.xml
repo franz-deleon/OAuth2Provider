@@ -3,7 +3,7 @@
 <phpunit bootstrap="Bootstrap.php" colors="true">
     <testsuites>
         <testsuite name="OAuth2Provider">
-            <directory>./reports</directory>
+            <directory>./OAuth2ProviderTests</directory>
         </testsuite>
     </testsuites>
     <filter>
