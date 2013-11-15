@@ -2,7 +2,6 @@
 namespace OAuth2Provider\Service\Factory\TokenTypeStrategy;
 
 use OAuth2Provider\Exception;
-use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
 

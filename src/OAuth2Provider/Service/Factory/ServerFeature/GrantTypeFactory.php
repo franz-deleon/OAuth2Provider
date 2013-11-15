@@ -1,7 +1,6 @@
 <?php
 namespace OAuth2Provider\Service\Factory\ServerFeature;
 
-use OAuth2Provider\Exception;
 use OAuth2Provider\Builder\StrategyBuilder;
 
 use Zend\ServiceManager;
