@@ -57,6 +57,7 @@ class StrategyBuilder
             : $this->strategies;
 
         foreach ($strategies as $strategyName => $strategyParams) {
+
             if (is_array($strategyParams)) {
                 $featureConfig = $serviceLocator->get('OAuth2Provider/Options/ServerFeatureType')->setFromArray($strategyParams);
                 if (!$featureConfig->getName()) {
@@ -119,6 +120,9 @@ class StrategyBuilder
                     // forward construction to specific strategy
                     $strategy = $serviceLocator->get($strategy);
                     $strategyObj = $strategy($featureName, $featureParams, $this->serverKey);
+
+                    // unset common vars
+                    unset($strategy, $featureName, $featureParams);
                 }
             }
 
@@ -160,6 +164,7 @@ class StrategyBuilder
 
             // store the object in the container
             $this->container[$this->serverKey][$strategyContainerKey] = $strategyObj;
+            unset($strategyObj);
         }
 
         return $this->container->getServerContents($this->serverKey);
