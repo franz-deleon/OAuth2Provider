@@ -14,6 +14,7 @@ return array(
             'OAuth2Provider/Options/ServerFeatureType' => 'OAuth2Provider\Options\ServerFeatureTypeConfiguration',
             'OAuth2Provider/Options/TypeAbstract'      => 'OAuth2Provider\Options\TypeAbstract',
             'OAuth2Provider/Options/GrantType/UserCredentials' => 'OAuth2Provider\Options\GrantType\UserCredentialsConfigurations',
+            'OAuth2Provider/Options/GrantType/RefreshToken'    => 'OAuth2Provider\Options\GrantType\RefreshTokenConfigurations',
             'OAuth2Provider/Options/ResponseType/AccessToken'  => 'OAuth2Provider\Options\ResponseType\AccessTokenConfigurations',
             'OAuth2Provider/Options/ResponseType/AuthorizationCode' => 'OAuth2Provider\Options\ResponseType\AuthorizationCodeConfigurations',
             'OAuth2Provider/Options/TokenType/Bearer' => 'OAuth2Provider\Options\TokenType\BearerConfigurations',
