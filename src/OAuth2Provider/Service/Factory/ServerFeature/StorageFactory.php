@@ -44,7 +44,10 @@ class StorageFactory implements ServiceManager\FactoryInterface
                     ));
                 }
 
-                $storageObj = Utilities::createClass($storage, $serviceLocator, "Class '" . get_class($storage) . "' does not exist.");
+                $storageObj = Utilities::createClass($storage, $serviceLocator, sprintf(
+                    "Class '%s' does not exist.",
+                    is_object($storage) ? get_class($storage) : $storage
+                ));
                 $storageContainer[$serverKey][$storageName] = $storageObj;
             }
 
