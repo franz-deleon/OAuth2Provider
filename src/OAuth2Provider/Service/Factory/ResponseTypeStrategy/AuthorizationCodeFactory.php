@@ -23,13 +23,13 @@ class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        return function ($authorizationCodeClassName, $params, $serverKey) use ($serviceLocator) {
-            $config = $serviceLocator->get('OAuth2Provider/Options/ResponseType/AuthorizationCode')->setFromArray($params);
+        return function ($authorizationCodeClassName, $options, $serverKey) use ($serviceLocator) {
+            $options = $serviceLocator->get('OAuth2Provider/Options/ResponseType/AuthorizationCode')->setFromArray($options);
 
             // check if there is a direct defined 'token storage'
             $authorizationCodeStorage = Utilities::storageLookup(
                 $serverKey,
-                $config->getAuthorizationCodeStorage() ?: $config->getStorage(),
+                $options->getAuthorizationCodeStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
                 AuthorizationCodeFactory::AUTHORIZATION_CODE_IDENTIFIER
@@ -44,7 +44,7 @@ class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
                 ));
             }
 
-            return new $authorizationCodeClassName($authorizationCodeStorage, $config->getConfig());
+            return new $authorizationCodeClassName($authorizationCodeStorage, $options->getConfig());
         };
     }
 }

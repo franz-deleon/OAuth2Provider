@@ -20,12 +20,12 @@ class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
     {
         return function ($authorizationCodeClassName, $options, $serverKey) use ($serviceLocator) {
 
-            $config = $serviceLocator->get('OAuth2Provider/Options/GrantType/AuthorizationCode')
+            $options = $serviceLocator->get('OAuth2Provider/Options/GrantType/AuthorizationCode')
                 ->setFromArray($options);
 
             $storage = Utilities::storageLookup(
                 $serverKey,
-                $config->getAuthorizationCodeStorage() ?: $config->getStorage(),
+                $options->getAuthorizationCodeStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
                 AuthorizationCodeFactory::AUTHORIZATION_CODE_IDENTIFIER

@@ -24,13 +24,13 @@ class AccessTokenFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        return function ($accessTokenClassName, $params, $serverKey) use ($serviceLocator) {
+        return function ($accessTokenClassName, $options, $serverKey) use ($serviceLocator) {
 
             $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
-            $config = $serviceLocator->get('OAuth2Provider/Options/ResponseType/AccessToken')->setFromArray($params);
+            $options = $serviceLocator->get('OAuth2Provider/Options/ResponseType/AccessToken')->setFromArray($options);
 
-            $tokenStorageName        = $config->getTokenStorage() ?: $config->getStorage();
-            $refreshTokenStorageName = $config->getRefreshStorage();
+            $tokenStorageName        = $options->getTokenStorage() ?: $options->getStorage();
+            $refreshTokenStorageName = $options->getRefreshStorage();
 
             // check if there is a direct defined 'token storage'
             $tokenStorage = Utilities::storageLookup(
@@ -59,7 +59,7 @@ class AccessTokenFactory implements ServiceManager\FactoryInterface
                 ));
             }
 
-            return new $accessTokenClassName($tokenStorage, $refreshTokenStorage, $config->getConfig());
+            return new $accessTokenClassName($tokenStorage, $refreshTokenStorage, $options->getConfig());
         };
     }
 }

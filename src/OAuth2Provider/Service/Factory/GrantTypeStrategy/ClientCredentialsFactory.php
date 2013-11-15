@@ -20,11 +20,11 @@ class ClientCredentialsFactory implements ServiceManager\FactoryInterface
     {
         return function ($clientCredentialsClassName, $options, $serverKey) use ($serviceLocator) {
 
-            $config = $serviceLocator->get('OAuth2Provider/Options/GrantType/ClientCredentials')->setFromArray($options);
+            $options = $serviceLocator->get('OAuth2Provider/Options/GrantType/ClientCredentials')->setFromArray($options);
 
             $storage = Utilities::storageLookup(
                 $serverKey,
-                $config->getClientCredentialsStorage() ?: $config->getStorage(),
+                $options->getClientCredentialsStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
                 ClientCredentialsFactory::CLIENT_CREDENTIALS_IDENTIFIER
@@ -39,7 +39,7 @@ class ClientCredentialsFactory implements ServiceManager\FactoryInterface
                 ));
             }
 
-            return new $clientCredentialsClassName($storage, $config->getConfigs());
+            return new $clientCredentialsClassName($storage, $options->getConfigs());
         };
     }
 }

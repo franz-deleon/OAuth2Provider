@@ -18,13 +18,13 @@ class UserCredentialsFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        return function ($grantTypeClassName, $params, $serverKey) use ($serviceLocator) {
+        return function ($grantTypeClassName, $options, $serverKey) use ($serviceLocator) {
 
-            $config = $serviceLocator->get('OAuth2Provider/Options/GrantType/UserCredentials')->setFromArray($params);
+            $options = $serviceLocator->get('OAuth2Provider/Options/GrantType/UserCredentials')->setFromArray($options);
 
             $storage = Utilities::storageLookup(
                 $serverKey,
-                $config->getUserCredentialsStorage() ?: $config->getStorage(),
+                $options->getUserCredentialsStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
                 UserCredentialsFactory::USER_CREDENTIALS_IDENTIFIER
