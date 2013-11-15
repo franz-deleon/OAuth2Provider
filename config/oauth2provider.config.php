@@ -47,6 +47,7 @@ return array(
                 //'user_credentials' => 'OAuth2\GrantType\UserCredentials',
                 //'OAuth2Provider\UserCreds',
                 //'OAuth2\GrantType\UserCredentials',
+                'client_credentials',
                 array(
                     'name' => 'OAuth2\GrantType\UserCredentials',
                     'params' => array(
