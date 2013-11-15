@@ -23,12 +23,12 @@ class RefreshTokenFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        return function ($redfreshTokenClassName, $options, $serverKey) use ($serviceLocator) {
+        return function ($refreshTokenClassName, $options, $serverKey) use ($serviceLocator) {
 
             $options = $serviceLocator->get('OAuth2Provider/Options/GrantType/RefreshToken')->setFromArray($options);
 
             // check if there is a direct defined 'token storage'
-            $tokenStorage = Utilities::storageLookup(
+            $refreshTokenStorage = Utilities::storageLookup(
                 $serverKey,
                 $options->getRefreshTokenStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
@@ -36,16 +36,16 @@ class RefreshTokenFactory implements ServiceManager\FactoryInterface
                 RefreshTokenFactory::REFRESH_TOKEN_IDENTIFIER
             );
 
-            if (empty($tokenStorage)) {
+            if (empty($refreshTokenStorage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for '%s'",
                     __METHOD__,
                     RefreshTokenFactory::REFRESH_TOKEN_IDENTIFIER,
-                    $redfreshTokenClassName
+                    $refreshTokenClassName
                 ));
             }
 
-            return new $redfreshTokenClassName($tokenStorage, $options->getConfigs());
+            return new $refreshTokenClassName($refreshTokenStorage, $options->getConfigs());
         };
     }
 }
