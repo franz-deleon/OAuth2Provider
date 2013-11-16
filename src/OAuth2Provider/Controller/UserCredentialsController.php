@@ -1,15 +1,14 @@
 <?php
 namespace OAuth2Provider\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 use Zend\Mvc\Controller\AbstractRestfulController;
 
 class UserCredentialsController extends AbstractRestfulController
 {
     public function indexAction()
     {
-        return new ViewModel();
+        return new JsonModel();
     }
 
     public function RequestTokenAction()
@@ -35,6 +34,8 @@ class UserCredentialsController extends AbstractRestfulController
 
 
 
-        return new ViewModel();
+        return new JsonModel(array(
+        	'x' => 'xc'
+        ));
     }
 }

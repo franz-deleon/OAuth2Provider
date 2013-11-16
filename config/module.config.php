@@ -80,6 +80,9 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy',
+        ),
     ),
     'oauth2provider' => include_once __DIR__ . '/OAuth2provider.config.php',
     'router'         => include_once __DIR__ . '/routes.config.php',
