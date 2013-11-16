@@ -63,23 +63,23 @@ class ServerFeatureTypeConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests ServerFeatureTypeConfiguration->getParams()
+     * Tests ServerFeatureTypeConfiguration->getOptions()
      */
-    public function testGetParams()
+    public function testGetOptions()
     {
-        $r = $this->ServerFeatureTypeConfiguration->getParams(/* parameters */);
+        $r = $this->ServerFeatureTypeConfiguration->getOptions(/* parameters */);
         $this->assertInternalType('array', $r);
     }
 
     /**
-     * Tests ServerFeatureTypeConfiguration->setParams()
+     * Tests ServerFeatureTypeConfiguration->setOptions()
      */
-    public function testSetParams()
+    public function testSetOptions()
     {
-        $s = $this->ServerFeatureTypeConfiguration->setParams(array('server1'));
+        $s = $this->ServerFeatureTypeConfiguration->setOptions(array('server1'));
         $this->assertSame($this->ServerFeatureTypeConfiguration, $s);
 
-        $r = $this->ServerFeatureTypeConfiguration->getParams();
+        $r = $this->ServerFeatureTypeConfiguration->getOptions();
         $this->assertEquals(array('server1'), $r);
     }
 }

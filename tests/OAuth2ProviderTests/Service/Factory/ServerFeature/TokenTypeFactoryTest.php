@@ -86,13 +86,13 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
 	 * Tests TokenTypeFactory->createService()
 	 * @group test4
 	 */
-    public function testCreateServiceWithConfigAsArrayWithNameAndParams()
+    public function testCreateServiceWithConfigAsArrayWithNameAndOptions()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
         $config = array(
             array(
                 'name' => 'bearer',
-                'params' => array(
+                'options' => array(
                     'configs' => array(
                         'token_bearer_header_name' => 'franz',
                     ),
@@ -109,12 +109,12 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
 	 * Tests TokenTypeFactory->createService()
 	 * @group test5
 	 */
-    public function testCreateServiceWithConfigAsDirectWithNameAndParams()
+    public function testCreateServiceWithConfigAsDirectWithNameAndOptions()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
         $config = array(
             'name' => 'bearer',
-            'params' => array(
+            'options' => array(
                 'configs' => array(
                     'token_bearer_header_name' => 'franz',
                 ),

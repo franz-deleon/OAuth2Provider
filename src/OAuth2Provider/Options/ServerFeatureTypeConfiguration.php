@@ -19,7 +19,7 @@ class ServerFeatureTypeConfiguration extends AbstractOptions
      * Parameter mapping for a strategy used for <$name>
      * @var array
      */
-    protected $params = array();
+    protected $options = array();
 
 	/**
      * @return the $name
@@ -39,19 +39,19 @@ class ServerFeatureTypeConfiguration extends AbstractOptions
     }
 
 	/**
-     * @return the $params
+     * @return the $options
      */
-    public function getParams()
+    public function getOptions()
     {
-        return $this->params;
+        return $this->options;
     }
 
 	/**
-     * @param multitype: $params
+     * @param multitype: $options
      */
-    public function setParams(array $params)
+    public function setOptions(array $options)
     {
-        $this->params = $params;
+        $this->options = $options;
         return $this;
     }
 }

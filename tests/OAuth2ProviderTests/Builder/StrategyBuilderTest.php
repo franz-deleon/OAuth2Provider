@@ -188,7 +188,7 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
         $config = array(
             array(
                 'name' => 'OAuth2\GrantType\UserCredentials',
-                'params' => array(
+                'options' => array(
                     'storage' => 'user_credentials'
                 )
             )
@@ -279,7 +279,7 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
         $config = array(
             array(
                 'name' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
-                'params' => array(
+                'options' => array(
                     'storage' => 'user_credentials'
                 )
             )
@@ -308,7 +308,7 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
 
         $config = array(
             array(
-                'params' => array(
+                'options' => array(
                     'storage' => 'user_credentials'
                 )
             )
@@ -337,7 +337,7 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
         $config = array(
             array(
                 'name' => 'OAuth2ProviderTests\Nothing',
-                'params' => array(
+                'options' => array(
                     'storage' => 'user_credentials',
                 ),
             )

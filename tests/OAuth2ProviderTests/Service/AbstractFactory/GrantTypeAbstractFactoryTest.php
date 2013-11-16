@@ -79,7 +79,7 @@ class GrantTypeAbstractFactoryTest extends \PHPUnit_Framework_TestCase
                 'grant_types' => array(
                     array(
                         'name' => 'OAuth2\GrantType\UserCredentials',
-                        'params' => array(
+                        'options' => array(
                             'storage' => 'user_credentials',
                         ),
                     ),
@@ -114,7 +114,7 @@ class GrantTypeAbstractFactoryTest extends \PHPUnit_Framework_TestCase
                 'grant_types' => array(
                     array(
                         'name' => 'OAuth2\GrantType\UserCredentials',
-                        'params' => array(
+                        'options' => array(
                             'storage' => 'user_credentials',
                         ),
                     ),
@@ -152,7 +152,7 @@ class GrantTypeAbstractFactoryTest extends \PHPUnit_Framework_TestCase
                 'grant_types' => array(
                     array(
                         'name' => 'OAuth2\GrantType\UserCredentials',
-                        'params' => array(
+                        'options' => array(
                             'storage' => 'user_credentials',
                         ),
                     ),

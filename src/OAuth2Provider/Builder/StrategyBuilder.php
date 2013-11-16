@@ -56,10 +56,10 @@ class StrategyBuilder
             ? array($this->strategies)
             : $this->strategies;
 
-        foreach ($strategies as $strategyName => $strategyParams) {
+        foreach ($strategies as $strategyName => $strategyOptions) {
 
-            if (is_array($strategyParams)) {
-                $featureConfig = $serviceLocator->get('OAuth2Provider/Options/ServerFeatureType')->setFromArray($strategyParams);
+            if (is_array($strategyOptions)) {
+                $featureConfig = $serviceLocator->get('OAuth2Provider/Options/ServerFeatureType')->setFromArray($strategyOptions);
                 if (!$featureConfig->getName()) {
                     throw new Exception\InvalidServerException(sprintf(
                         "Class '%s' error: cannot find 'class' key in array",
@@ -67,12 +67,12 @@ class StrategyBuilder
                     ));
                 }
                 $featureName   = $featureConfig->getName();
-                $featureParams = $featureConfig->getParams();
-            } elseif (is_string($strategyParams)) {
-                $featureName   = $strategyParams;
-                $featureParams = array();
-            } elseif (is_object($strategyParams)) {
-                $strategyObj = $strategyParams;
+                $featureOptions = $featureConfig->getOptions();
+            } elseif (is_string($strategyOptions)) {
+                $featureName   = $strategyOptions;
+                $featureOptions = array();
+            } elseif (is_object($strategyOptions)) {
+                $strategyObj = $strategyOptions;
             }
 
             if (isset($featureName)) {
@@ -85,8 +85,8 @@ class StrategyBuilder
                     if (isset($this->availableStrategies[$strategyName])) {
                         $strategyContainerKey = $strategyName;
                         $strategy = $this->availableStrategies[$strategyContainerKey];
-                        if (!isset($featureParams['storage'])) {
-                            $featureParams['storage'] = $strategyContainerKey;
+                        if (!isset($featureOptions['storage'])) {
+                            $featureOptions['storage'] = $strategyContainerKey;
                         }
 
                     /** check if feature name is a key of available strategies **/
@@ -119,10 +119,10 @@ class StrategyBuilder
 
                     // forward construction to specific strategy
                     $strategy = $serviceLocator->get($strategy);
-                    $strategyObj = $strategy($featureName, $featureParams, $this->serverKey);
+                    $strategyObj = $strategy($featureName, $featureOptions, $this->serverKey);
 
                     // unset common vars
-                    unset($strategy, $featureName, $featureParams);
+                    unset($strategy, $featureName, $featureOptions);
                 }
             }
 
@@ -164,7 +164,7 @@ class StrategyBuilder
 
             // store the object in the container
             $this->container[$this->serverKey][$strategyContainerKey] = $strategyObj;
-            unset($strategyObj);
+            unset($strategyObj, $strategyContainerKey);
         }
 
         return $this->container->getServerContents($this->serverKey);

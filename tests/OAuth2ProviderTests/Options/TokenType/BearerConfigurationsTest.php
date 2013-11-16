@@ -52,11 +52,11 @@ class BearerConfigurationsTest extends \PHPUnit_Framework_TestCase
 	 */
     public function testSetConfigs()
     {
-        $s = $this->BearerConfigurations->setConfigs(array('params'));
+        $s = $this->BearerConfigurations->setConfigs(array('options'));
         $this->assertSame($this->BearerConfigurations, $s);
 
         $r = $this->BearerConfigurations->getConfigs();
-        $this->assertSame(array('params'), $r);
+        $this->assertSame(array('options'), $r);
     }
 }
 

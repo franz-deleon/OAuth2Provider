@@ -53,9 +53,9 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['refresh_token'] = new Assets\Storage\RefreshTokenStorage();
 
         $classname = 'OAuth2\ResponseType\AccessToken';
-        $params = array('token_storage' => '', 'refresh_storage' => '');
+        $options = array('token_storage' => '', 'refresh_storage' => '');
         $r = $this->AccessTokenFactory->createService($mainSm);
-        $r = $r($classname, $params, 'server1');
+        $r = $r($classname, $options, 'server1');
         $this->assertInstanceOf('OAuth2\ResponseType\AccessTokenInterface', $r);
     }
 
@@ -72,9 +72,9 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['refresh_token'] = null;
 
         $classname = 'OAuth2\ResponseType\AccessToken';
-        $params = array('token_storage' => '', 'refresh_storage' => '');
+        $options = array('token_storage' => '', 'refresh_storage' => '');
         $r = $this->AccessTokenFactory->createService($mainSm);
-        $r = $r($classname, $params, 'server1');
+        $r = $r($classname, $options, 'server1');
         $this->assertInstanceOf('OAuth2\ResponseType\AccessTokenInterface', $r);
     }
 
@@ -91,9 +91,9 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['access_token'] = null;
 
         $classname = 'OAuth2\ResponseType\AccessToken';
-        $params = array('token_storage' => '', 'refresh_storage' => '');
+        $options = array('token_storage' => '', 'refresh_storage' => '');
         $r = $this->AccessTokenFactory->createService($mainSm);
-        $r($classname, $params, 'server1');
+        $r($classname, $options, 'server1');
     }
 
 

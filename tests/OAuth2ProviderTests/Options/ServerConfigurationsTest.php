@@ -64,9 +64,9 @@ class ServerConfigurationsTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetConfigsReturnsExpected()
     {
-        $this->ServerConfigurations->setConfigs(array('params'));
+        $this->ServerConfigurations->setConfigs(array('options'));
         $r = $this->ServerConfigurations->getConfigs();
-        $this->assertSame(array('params'), $r);
+        $this->assertSame(array('options'), $r);
     }
 
     /**

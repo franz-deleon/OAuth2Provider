@@ -51,9 +51,9 @@ class AuthorizationCodeFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['authorization_code'] = new Assets\Storage\AuthorizationCodeStorage();
 
         $classname = 'OAuth2\ResponseType\AuthorizationCode';
-        $params = array('storage' => 'authorization_code');
+        $options = array('storage' => 'authorization_code');
         $r = $this->AuthorizationCodeFactory->createService($mainSm);
-        $r = $r($classname, $params, 'server1');
+        $r = $r($classname, $options, 'server1');
         $this->assertInstanceOf('OAuth2\ResponseType\AuthorizationCodeInterface', $r);
     }
 
@@ -70,9 +70,9 @@ class AuthorizationCodeFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['authorization_code'] = null;
 
         $classname = 'OAuth2\ResponseType\AuthorizationCode';
-        $params = array('storage' => 'authorization_code');
+        $options = array('storage' => 'authorization_code');
         $r = $this->AuthorizationCodeFactory->createService($mainSm);
-        $r = $r($classname, $params, 'server1');
+        $r = $r($classname, $options, 'server1');
         $this->assertInstanceOf('OAuth2\ResponseType\AuthorizationCodeInterface', $r);
     }
 }

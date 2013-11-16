@@ -50,9 +50,9 @@ class UserCredentialsFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['user_credentials'] = new Assets\Storage\UserCredentialsStorage();
 
         $classname = 'OAuth2ProviderTests\Assets\GrantTypeCustomUserCredentials';
-        $params = array('storage' => 'user_credentials');
+        $options = array('storage' => 'user_credentials');
         $r = $this->UserCredentialsFactory->createService($mainSm);
-        $r = $r($classname, $params, 'server1');
+        $r = $r($classname, $options, 'server1');
         $this->assertInstanceOf('OAuth2\GrantType\GrantTypeInterface', $r);
     }
 
@@ -68,9 +68,9 @@ class UserCredentialsFactoryTest extends \PHPUnit_Framework_TestCase
         $storageCont['server1']['user_credentials'] = '';
 
         $classname = 'OAuth2ProviderTests\Assets\GrantTypeCustomUserCredentials';
-        $params = array('storage' => 'user_credentials');
+        $options = array('storage' => 'user_credentials');
         $r = $this->UserCredentialsFactory->createService($mainSm);
-        $r($classname, $params, 'server1');
+        $r($classname, $options, 'server1');
     }
 }
 
