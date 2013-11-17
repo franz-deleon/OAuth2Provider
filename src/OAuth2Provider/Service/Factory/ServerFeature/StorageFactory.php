@@ -31,7 +31,7 @@ class StorageFactory implements ServiceManager\FactoryInterface
      */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        $storageNames = $this->storageNames;
+        $storageNames = $this->getStorageNames();
         return function ($storages, $serverKey) use ($serviceLocator, $storageNames) {
 
             $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
@@ -53,5 +53,14 @@ class StorageFactory implements ServiceManager\FactoryInterface
 
             return $storageContainer->getServerContents($serverKey);
         };
+    }
+
+    /**
+     * Return the list of available storage names
+     * @return array
+     */
+    public function getStorageNames()
+    {
+        return $this->storageNames;
     }
 }
