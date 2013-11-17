@@ -90,6 +90,10 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $tokenTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/TokenTypeFactory');
         $tokenTypes = $tokenTypeFactory($serverConfigs->getTokenType(), $serverKey);
 
-        return new OAuth2Server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes);
+        // initialize scope
+        $scopeTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ScopeTypeFactory');
+        $scope = $scopeTypeFactory($serverConfigs->getScopeUtil(), $serverKey);
+
+        return new OAuth2Server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope);
     }
 }

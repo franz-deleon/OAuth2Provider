@@ -50,7 +50,7 @@ return array(
                 'client_credentials',
                 array(
                     'name' => 'OAuth2\GrantType\UserCredentials',
-                    'params' => array(
+                    'options' => array(
                         //'storage' => 'user_credentials',
                     ),
                 ),
@@ -58,7 +58,7 @@ return array(
             'response_types' => array(
                 array(
                     'name' => 'OAuth2\ResponseType\AccessToken',
-                    'params' => array(
+                    'options' => array(
                         //'token_storage' => 'access_token',
                         //'refresh_storage' => 'refresh_token',
                         'config' => array(
@@ -66,6 +66,9 @@ return array(
                         ),
                     ),
                 ),
+            ),
+            'scope_util' => array(
+                'name' => 'scope'
             ),
         ),
     ),
