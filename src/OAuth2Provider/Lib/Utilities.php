@@ -108,4 +108,33 @@ class Utilities
 
         return $result;
     }
+
+    /**
+     * This function makes sure the array being
+     * passed is of one strategy object only
+     *
+     * @param mixed $strategy
+     * @return array
+     */
+    public static function singleStrategyOptionExtractor($strategy)
+    {
+        if (!is_array($strategy)) {
+            $strategy = array($strategy);
+        }
+        if (count($strategy) > 1) {
+            $shift = true;
+            foreach ($strategy as $element) {
+                if (!is_array($element)) {
+                    $shift = false;
+                    break;
+                }
+            }
+            if (true === $shift) {
+                $strategy = array_shift($strategy);
+            }
+            $strategy = array($strategy);
+        }
+
+        return $strategy;
+    }
 }

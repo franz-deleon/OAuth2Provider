@@ -182,4 +182,142 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
         $r = Utilities::storageLookup('serverKey', 'jwt_bearer', $container, $sm, 'identifier', 'XxDEFAULTxX');
         $this->assertEquals('XxDEFAULTxX', $r);
     }
+
+    /**
+     * Tests TokenTypeFactory->singleStrategyOptionExtractor()
+     * @group test1
+     */
+    public function testSingleStrategyOptionExtractorWithConfigAsDirectName()
+    {
+        $config = 'bearer';
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertEquals(array('bearer'), $r);
+    }
+
+    /**
+     * @group test2
+     */
+    public function testSingleStrategyOptionExtractorWithConfigAsDirectInsideArray()
+    {
+        $config = array('bearer');
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertEquals(array('bearer'), $r);
+    }
+
+    /**
+     * @group test3
+     */
+    public function testSingleStrategyOptionExtractorWithConfigAsDirectWithNameInsideArray()
+    {
+        $config = array(
+            'name' => 'bearer',
+        );
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertSame(array('name' => 'bearer'), $r);
+    }
+
+    /**
+     * Tests TokenTypeFactory->createService()
+     * @group test4
+     */
+    public function testSingleStrategyOptionExtractorWithConfigAsArrayWithNameAndOptions()
+    {
+        $config = array(
+            array(
+                'name' => 'bearer',
+                'options' => array(
+                    'configs' => array(
+                        'token_bearer_header_name' => 'franz',
+                    ),
+                ),
+            ),
+        );
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertSame($config, $r);
+    }
+
+    /**
+     * @group test5
+     */
+    public function testSingleStrategyOptionExtractorWithConfigAsDirectWithNameAndOptions()
+    {
+        $config = array(
+            'name' => 'bearer',
+            'options' => array(
+                'configs' => array(
+                    'token_bearer_header_name' => 'franz',
+                ),
+            ),
+        );
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertSame(array($config), $r);
+    }
+
+    /**
+     * @group test6
+     */
+    public function testSingleStrategyOptionExtractorWithConfigAsWithNameArrayInsideArray()
+    {
+        $config = array(
+            array(
+                'name' => 'bearer'
+            ),
+        );
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertSame($config, $r);
+    }
+
+    /**
+     * Tests TokenTypeFactory->createService()
+     * @group test7
+     */
+    public function testSingleStrategyOptionExtractorWithConfigAsArrayInsideArrayWithMultipleInputs()
+    {
+        $config = array(
+            array(
+                'name' => 'bearer'
+            ),
+            array(
+                'name' => 'bearer'
+            ),
+        );
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+
+        $expected  = array(
+            array(
+                'name' => 'bearer'
+            )
+        );
+
+        $this->assertSame($expected, $r);
+    }
+
+    /**
+     * @group test8
+     */
+    public function testSingleStrategyOptionWithConfigIsNull()
+    {
+        $config = null;
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertSame(array(null), $r);
+    }
+
+    /**
+     * Tests TokenTypeFactory->createService()
+     * @group test8
+     */
+    public function testSingleStrategyOptionWithConfigIsEmpty()
+    {
+        $config = array();
+
+        $r = Utilities::singleStrategyOptionExtractor($config);
+        $this->assertSame(array(), $r);
+    }
 }
