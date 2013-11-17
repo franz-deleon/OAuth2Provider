@@ -2,6 +2,7 @@
 namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Builder\StrategyBuilder;
+use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
 
@@ -47,27 +48,10 @@ class TokenTypeFactory implements ServiceManager\FactoryInterface
             $interface,
             $serviceLocator
         ) {
-            if (isset($strategy)) {
-                // make sure the array being passed is of one strategy object only
-                if (!is_array($strategy)) {
-                    $strategy = array($strategy);
-                }
-                if (count($strategy) > 1) {
-                    $shift = true;
-                    foreach ($strategy as $element) {
-                        if (!is_array($element)) {
-                            $shift = false;
-                            break;
-                        }
-                    }
-                    if (true === $shift) {
-                        $strategy = array_shift($strategy);
-                    }
-                    $strategy = array($strategy);
-                }
+            if (!empty($strategy)) {
 
                 $strategy = new StrategyBuilder(
-                    $strategy ?: array(),
+                    Utilities::singleStrategyOptionExtractor($strategy),
                     $serverKey,
                     $availableStrategies,
                     $concreteClasses,

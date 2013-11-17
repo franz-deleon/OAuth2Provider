@@ -178,5 +178,19 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
         $r = $ser($config, 'server3');
         $this->assertNull($r);
     }
+
+    /**
+     * Tests TokenTypeFactory->createService()
+     * @group test8
+     */
+    public function testCreateServiceWithConfigIsEmpty()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+        $config = array();
+
+        $ser = $this->TokenTypeFactory->createService($mainSm);
+        $r = $ser($config, 'server3');
+        $this->assertNull($r);
+    }
 }
 

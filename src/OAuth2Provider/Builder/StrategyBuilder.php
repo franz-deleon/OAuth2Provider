@@ -52,7 +52,9 @@ class StrategyBuilder
      */
     public function initStrategyFeature(ServiceLocatorInterface $serviceLocator)
     {
-        $strategies = !is_array($this->strategies) ? array($this->strategies) : $this->strategies;
+        $strategies = !is_array($this->strategies)
+            ? array($this->strategies)
+            : (!empty($this->strategies) ? $this->strategies : array());
 
         foreach ($strategies as $strategyName => $strategyOptions) {
             if (is_array($strategyOptions)) {
