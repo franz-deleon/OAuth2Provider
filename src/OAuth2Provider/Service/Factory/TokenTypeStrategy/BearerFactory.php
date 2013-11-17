@@ -12,7 +12,7 @@ class BearerFactory implements ServiceManager\FactoryInterface
      * This will be used for defaults
      * @var string
      */
-    const BEARER_IDENTIFIER = 'authorization_code';
+    const BEARER_IDENTIFIER = 'bearer';
 
     /**
      * Accepted config keys for bearer

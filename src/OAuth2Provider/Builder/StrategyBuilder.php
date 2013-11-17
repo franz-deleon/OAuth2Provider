@@ -65,7 +65,7 @@ class StrategyBuilder
                         __METHOD__
                     ));
                 }
-                $featureName   = $featureConfig->getName();
+                $featureName    = $featureConfig->getName();
                 $featureOptions = $featureConfig->getOptions();
             } elseif (is_string($strategyOptions)) {
                 $featureName   = $strategyOptions;
