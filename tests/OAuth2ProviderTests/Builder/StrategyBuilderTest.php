@@ -299,6 +299,60 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests GrantTypeFactory->createService()
+     * @group test7b
+     */
+    public function testInitStrategyFeatureWithEmptyConfigString()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        // seed the storagecontainer
+        $storageContainer = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
+        $storageContainer['server1']['user_credentials'] = new Assets\StorageUserCredentials();
+
+        $config = '';
+
+        $subjects  = $config;
+        $serverKey = uniqid();
+        $container = $mainSm->get('OAuth2Provider/Containers/GrantTypeContainer');
+        $strategies = array('user_credentials' => 'OAuth2Provider/GrantTypeStrategy/UserCredentials');
+        $concreteClasses = array('user_credentials'   => 'OAuth2\GrantType\UserCredentials');
+        $interface = 'OAuth2\GrantType\GrantTypeInterface';
+        $builder = new StrategyBuilder($subjects, $serverKey, $strategies, $concreteClasses, $container, $interface);
+
+        $r = $builder->initStrategyFeature($mainSm);
+        $this->assertEmpty($r);
+        $this->assertInternalType('array', $r);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
+     * @group test7c
+     */
+    public function testInitStrategyFeatureWithEmptyConfigArray()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        // seed the storagecontainer
+        $storageContainer = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
+        $storageContainer['server1']['user_credentials'] = new Assets\StorageUserCredentials();
+
+        $config = array();
+
+        $subjects  = $config;
+        $serverKey = uniqid();
+        $container = $mainSm->get('OAuth2Provider/Containers/GrantTypeContainer');
+        $strategies = array('user_credentials' => 'OAuth2Provider/GrantTypeStrategy/UserCredentials');
+        $concreteClasses = array('user_credentials'   => 'OAuth2\GrantType\UserCredentials');
+        $interface = 'OAuth2\GrantType\GrantTypeInterface';
+        $builder = new StrategyBuilder($subjects, $serverKey, $strategies, $concreteClasses, $container, $interface);
+
+        $r = $builder->initStrategyFeature($mainSm);
+        $this->assertEmpty($r);
+        $this->assertInternalType('array', $r);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
      * @expectedException OAuth2Provider\Exception\InvalidServerException
      * @group test8
      */
