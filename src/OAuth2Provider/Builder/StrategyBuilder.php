@@ -62,14 +62,15 @@ class StrategyBuilder
                     ->get('OAuth2Provider/Options/ServerFeatureType')
                     ->setFromArray($strategyValues);
 
-                if (!$options->getName()) {
+                $strategyName    = $options->getName() ?: (is_string($strategyKey) ?  $strategyKey : null);
+                $strategyOptions = $options->getOptions();
+
+                if (!$strategyName) {
                     throw new Exception\InvalidServerException(sprintf(
                         "Class '%s' error: cannot find 'class' key in array",
                         __METHOD__
                     ));
                 }
-                $strategyName   = $options->getName();
-                $strategyOptions = $options->getOptions();
             } elseif (is_string($strategyValues)) {
                 $strategyName   = $strategyValues;
                 $strategyOptions = array();
@@ -86,7 +87,8 @@ class StrategyBuilder
                     /** check if a strategy key is defined and available **/
                     if (isset($this->availableStrategies[$strategyKey])) {
                         $strategyContainerKey = $strategyKey;
-                        $strategy = $this->availableStrategies[$strategyContainerKey];
+                        $strategy     = $this->availableStrategies[$strategyContainerKey];
+                        $strategyName = $this->concreteClasses[$strategyContainerKey];
                         if (!isset($strategyOptions['storage'])) {
                             $strategyOptions['storage'] = $strategyContainerKey;
                         }
@@ -94,20 +96,22 @@ class StrategyBuilder
                     /** check if feature name is a key of available strategies **/
                     } elseif (isset($this->availableStrategies[$strategyName])) {
                         $strategyContainerKey = $strategyName;
-                        $strategy    = $this->availableStrategies[$strategyName];
+                        $strategy     = $this->availableStrategies[$strategyName];
                         $strategyName = $this->concreteClasses[$strategyName];
 
                      /** check if name is a direct implementation of a concrete class **/
                     } elseif (in_array($strategyName, $this->concreteClasses)) {
                          $strategyContainerKey = array_search($strategyName, $this->concreteClasses);
-                         $strategy = $this->availableStrategies[$strategyContainerKey];
+                         $strategy     = $this->availableStrategies[$strategyContainerKey];
+                         $strategyName = $this->concreteClasses[$strategyContainerKey];
 
                     /** look at the parent as our last check **/
                     } else {
                         $parentClass = get_parent_class($strategyName);
                         if (in_array($parentClass, $this->concreteClasses)) {
                             $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
-                            $strategy = $this->availableStrategies[$strategyContainerKey];
+                            $strategy     = $this->availableStrategies[$strategyContainerKey];
+                            $strategyName = $this->concreteClasses[$strategyContainerKey];
                         }
                     }
 
