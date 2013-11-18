@@ -54,6 +54,7 @@ class ScopeConfigurations extends TypeAbstract
     public function setDefaultScope($defaultScope)
     {
         $this->defaultScope = $defaultScope;
+        return $this;
     }
 
     /**
@@ -70,6 +71,7 @@ class ScopeConfigurations extends TypeAbstract
     public function setClientSupportedScopes($clientSupportedScopes)
     {
         $this->clientSupportedScopes = $clientSupportedScopes;
+        return $this;
     }
 
     /**
@@ -86,6 +88,7 @@ class ScopeConfigurations extends TypeAbstract
     public function setClientDefaultScopes($clientDefaultScopes)
     {
         $this->clientDefaultScopes = $clientDefaultScopes;
+        return $this;
     }
 
     /**
@@ -102,6 +105,7 @@ class ScopeConfigurations extends TypeAbstract
     public function setSupportedScopes($supportedScopes)
     {
         $this->supportedScopes = $supportedScopes;
+        return $this;
     }
 
     /**
@@ -118,5 +122,6 @@ class ScopeConfigurations extends TypeAbstract
     public function setUseDefinedScopeStorage($useDefinedScopeStorage)
     {
         $this->useDefinedScopeStorage = (bool) $useDefinedScopeStorage;
+        return $this;
     }
 }

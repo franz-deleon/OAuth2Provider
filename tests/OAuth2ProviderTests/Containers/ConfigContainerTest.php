@@ -9,47 +9,47 @@ use OAuth2Provider\Containers\ConfigContainer;
 class ConfigContainerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var ConfigContainer
-	 */
+     * @var ConfigContainer
+     */
     private $ConfigContainer;
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
         $this->ConfigContainer = new ConfigContainer(/* parameters */);
     }
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->ConfigContainer = null;
         parent::tearDown();
     }
     /**
-	 * Constructs the test case.
-	 */
+     * Constructs the test case.
+     */
     public function __construct()
     {
     }
 
     /**
-	 * Tests ConfigContainer->getServerContentsFromKey()
-	 * @group test1
-	 * @expectedException OAuth2Provider\Exception\ErrorException
-	 */
+     * Tests ConfigContainer->getServerContentsFromKey()
+     * @group test1
+     * @expectedException OAuth2Provider\Exception\ErrorException
+     */
     public function testGetServerContentsFromKey()
     {
         $this->ConfigContainer->getServerContentsFromKey('server1', 'key');
     }
 
     /**
-	 * Tests ConfigContainer->isExistingServerContentInKey()
-	 * @group test2
-	 * @expectedException OAuth2Provider\Exception\ErrorException
-	 */
+     * Tests ConfigContainer->isExistingServerContentInKey()
+     * @group test2
+     * @expectedException OAuth2Provider\Exception\ErrorException
+     */
     public function testIsExistingServerContentInKey()
     {
         $this->ConfigContainer->isExistingServerContentInKey('server1', 'key');

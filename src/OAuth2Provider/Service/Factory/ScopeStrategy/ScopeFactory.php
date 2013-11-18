@@ -1,6 +1,7 @@
 <?php
 namespace OAuth2Provider\Service\Factory\ScopeStrategy;
 
+use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
@@ -15,15 +16,14 @@ class ScopeFactory implements ServiceManager\FactoryInterface
     const SCOPE_IDENTIFIER = 'scope';
 
     /**
-     * Initialize an OAuth Authorization Code Response type
+     * Initialize an OAuth Scope
      *
      * @param ServiceLocatorInterface $serviceLocator
      * @return mixed
     */
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
-        $acceptedKeys = $this->acceptedKeys;
-        return function ($scopeClassName, $options, $serverKey) use ($serviceLocator, $acceptedKeys) {
+        return function ($scopeClassName, $options, $serverKey) use ($serviceLocator) {
             $options = $serviceLocator->get('OAuth2Provider/Options/ScopeType/Scope')->setFromArray($options);
 
             $storage = null;
@@ -64,6 +64,16 @@ class ScopeFactory implements ServiceManager\FactoryInterface
                         $storage['supported_scopes'] = $supportedScopes;
                     }
                 }
+            }
+
+            if (is_object($storage)
+                && !is_subclass_of($storage, 'OAuth2\Storage\ScopeInterface')
+            ) {
+                throw new Exception\InvalidClassException(sprintf(
+                    "Error '%s': storage '%s' is of invalid type",
+                    __METHOD__,
+                    get_class($storage)
+                ));
             }
 
             return new $scopeClassName($storage);
