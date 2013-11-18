@@ -1,23 +1,24 @@
 <?php
 namespace OAuth2Provider\Controller;
 
+use OAuth2Provider\Exception;
+
 use Zend\View\Model\JsonModel;
 use Zend\Mvc\Controller\AbstractRestfulController;
 
-use Zend\Mvc\Controller\AbstractActionController;
-
 class UserCredentialsController extends AbstractRestfulController
-//class UserCredentialsController extends AbstractActionController
 {
     public function AuthorizeAction()
     {
-        // not used;
+        throw new Exception\NotSupportedException(
+            'Error: The authorize endpoint is not supported for user credentials.'
+        );
         return new JsonModel();
     }
 
     public function RequestAction()
     {
-        $server = $this->getServiceLocator()->get('oauth2provider.server.main');
+        $server   = $this->getServiceLocator()->get('oauth2provider.server.main');
         $response = $server->handleTokenRequest(\OAuth2\Request::createFromGlobals());
         $params   = $response->getParameters();
 
@@ -26,12 +27,19 @@ class UserCredentialsController extends AbstractRestfulController
 
     public function ResourceAction()
     {
-        $server = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $isValid  = $server->verifyResourceRequest(\OAuth2\Request::createFromGlobals());
+        $server  = $this->getServiceLocator()->get('oauth2provider.server.main');
+        $isValid = $server->verifyResourceRequest(\OAuth2\Request::createFromGlobals());
 
-        return new JsonModel(array(
-            'success' => $isValid,
-            'message' => $isValid === true ? 'Valid Access Token' : 'Invalid Access Token',
-        ));
+        $params = array();
+        $params['success'] = $isValid;
+
+        if (!$isValid) {
+            $params['error']   = 'Invalid Access Token';
+            $params['message'] = 'The Access token has either expired or not valid';
+        } else {
+            $params['message'] = 'Valid Access Token';
+        }
+
+        return new JsonModel($params);
     }
 }
