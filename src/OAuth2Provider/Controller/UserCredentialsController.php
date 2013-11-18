@@ -4,38 +4,34 @@ namespace OAuth2Provider\Controller;
 use Zend\View\Model\JsonModel;
 use Zend\Mvc\Controller\AbstractRestfulController;
 
+use Zend\Mvc\Controller\AbstractActionController;
+
 class UserCredentialsController extends AbstractRestfulController
+//class UserCredentialsController extends AbstractActionController
 {
-    public function indexAction()
+    public function AuthorizeAction()
     {
+        // not used;
         return new JsonModel();
     }
 
-    public function RequestTokenAction()
+    public function RequestAction()
     {
         $server = $this->getServiceLocator()->get('oauth2provider.server.main');
-// $x = $this->getServiceLocator()->get('request');var_dump($x->getPost('grant_type'));
-        $server->handleTokenRequest(\OAuth2\Request::createFromGlobals())->send();
-        //var_dump($r);
+        $response = $server->handleTokenRequest(\OAuth2\Request::createFromGlobals());
+        $params   = $response->getParameters();
 
-        //$request = \OAuth2\Request::createFromGlobals();
+        return new JsonModel($params);
+    }
 
-        //$userCred = $this->getServiceLocator()->get('ApiOauth2Server/Storage/UserCredentials')->checkUserCredentials('kelmadics', 'abc123');
-//var_dump($userCred);
-//         $this->getServiceLocator()->get('ApiOauth2Server/Storage/UserCredentials')->getUserDetails('kelmadics');
-
-//         $r = $this->getServiceLocator()->get('ApiOauth2Server/Storage/AccessToken')->getAccessToken('123');
-
-
-
-//         //$this->getServiceLocator()->get('ApiOauth2Server/Storage/AccessToken')->setAccessToken('456', 1, 1, '2014-05-05');
-
-//         $r = $this->getServiceLocator()->get('ApiOauth2Server/Storage/ClientCredentials')->checkClientCredentials(1, 123);
-
-
+    public function ResourceAction()
+    {
+        $server = $this->getServiceLocator()->get('oauth2provider.server.main');
+        $isValid  = $server->verifyResourceRequest(\OAuth2\Request::createFromGlobals());
 
         return new JsonModel(array(
-        	'x' => 'xc'
+            'success' => $isValid,
+            'message' => $isValid === true ? 'Valid Access Token' : 'Invalid Access Token',
         ));
     }
 }

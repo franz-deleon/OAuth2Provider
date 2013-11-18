@@ -24,7 +24,7 @@ return array(
                                 'route' => '/request',
                                 'defaults' => array(
                                     'controller' => 'OAuthController',
-                                    'action' => 'request-token',
+                                    'action' => 'request',
                                 ),
                             ),
                         ),
@@ -41,10 +41,10 @@ return array(
                         'access_token' => array(
                             'type' => 'Literal',
                             'options' => array(
-                                'route' => '/access',
+                                'route' => '/resource',
                                 'defaults' => array(
                                     'controller' => 'OAuthController',
-                                    'action' => 'access-token',
+                                    'action' => 'resource',
                                 ),
                             ),
                         ),
