@@ -4,6 +4,8 @@ namespace OAuth2Provider\Service\Factory\ScopeStrategy;
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
 
+use OAuth2\Storage\ScopeInterface;
+
 use Zend\ServiceManager;
 
 class ScopeFactory implements ServiceManager\FactoryInterface
@@ -66,9 +68,7 @@ class ScopeFactory implements ServiceManager\FactoryInterface
                 }
             }
 
-            if (is_object($storage)
-                && !is_subclass_of($storage, 'OAuth2\Storage\ScopeInterface')
-            ) {
+            if (is_object($storage) && !$storage instanceof ScopeInterface) {
                 throw new Exception\InvalidClassException(sprintf(
                     "Error '%s': storage '%s' is of invalid type",
                     __METHOD__,
