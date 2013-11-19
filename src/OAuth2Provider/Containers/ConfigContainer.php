@@ -17,11 +17,6 @@ class ConfigContainer extends AbstractContainer
 
     public function isExistingServerContentInKey($server, $key)
     {
-        throw new ErrorException(sprintf(
-            "Error %s: method '%s' not implemented for '%s'",
-            __METHOD__,
-            __FUNCTION__,
-            __CLASS__
-        ));
+        return false;
     }
 }

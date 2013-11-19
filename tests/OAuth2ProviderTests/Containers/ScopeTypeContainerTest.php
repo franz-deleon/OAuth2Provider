@@ -54,11 +54,11 @@ class ScopeTypeContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests ConfigContainer->isExistingServerContentInKey()
      * @group test2
-     * @expectedException OAuth2Provider\Exception\ErrorException
      */
     public function testIsExistingServerContentInKey()
     {
-        $this->ScopeTypeContainer->isExistingServerContentInKey('server1', 'key');
+        $r = $this->ScopeTypeContainer->isExistingServerContentInKey('server1', 'key');
+        $this->assertFalse($r);
     }
 }
 

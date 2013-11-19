@@ -48,11 +48,11 @@ class ConfigContainerTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests ConfigContainer->isExistingServerContentInKey()
      * @group test2
-     * @expectedException OAuth2Provider\Exception\ErrorException
      */
     public function testIsExistingServerContentInKey()
     {
-        $this->ConfigContainer->isExistingServerContentInKey('server1', 'key');
+        $r = $this->ConfigContainer->isExistingServerContentInKey('server1', 'key');
+        $this->assertFalse($r);
     }
 }
 
