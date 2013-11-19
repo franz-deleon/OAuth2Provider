@@ -19,7 +19,7 @@ class UserCredentialsController extends AbstractRestfulController
     public function RequestAction()
     {
         $server   = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $response = $server->handleTokenRequest(\OAuth2\Request::createFromGlobals());
+        $response = $server->proxyHandleTokenRequest();
         $params   = $response->getParameters();
 
         return new JsonModel($params);
@@ -28,7 +28,7 @@ class UserCredentialsController extends AbstractRestfulController
     public function ResourceAction()
     {
         $server  = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $isValid = $server->verifyResourceRequest(\OAuth2\Request::createFromGlobals());
+        $isValid = $server->proxyVerifyResourceRequest();
 
         $params = array();
         $params['success'] = $isValid;

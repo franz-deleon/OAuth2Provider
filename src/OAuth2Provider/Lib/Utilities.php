@@ -137,4 +137,23 @@ class Utilities
 
         return $strategy;
     }
+
+    /**
+     * This a quick hack for the sm to check if sm key has been initialized yet
+     *
+     * @param ServiceLocatorInterface $sm
+     * @param string $name
+     * @return boolean
+     */
+    public static function hasSMInstance(ServiceLocatorInterface $sm, $name)
+    {
+        $replacements = array('-' => '', '_' => '', ' ' => '', '\\' => '', '/' => '');
+
+        $instances = $sm->getRegisteredServices();
+        $instances = $instances['instances'];
+
+        $name = strtolower(strtr($name, $replacements));
+
+        return in_array($name, $instances);
+    }
 }

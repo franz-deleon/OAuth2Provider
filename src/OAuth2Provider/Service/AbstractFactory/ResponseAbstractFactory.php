@@ -4,16 +4,16 @@ namespace OAuth2Provider\Service\AbstractFactory;
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
 
-use OAuth2\Request;
+use OAuth2\Response;
 
 use Zend\ServiceManager;
 
-class RequestAbstractFactory implements ServiceManager\AbstractFactoryInterface
+class ResponseAbstractFactory implements ServiceManager\AbstractFactoryInterface
 {
     /**
      * @var string
      */
-    const REGEX_REQUEST_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9_]+).request$~';
+    const REGEX_RESPONSE_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9_]+).response$~';
 
     /**
      * @var string
@@ -35,7 +35,7 @@ class RequestAbstractFactory implements ServiceManager\AbstractFactoryInterface
             return false;
         }
 
-        if (preg_match(static::REGEX_REQUEST_PATTERN, $requestedName, $matches)
+        if (preg_match(static::REGEX_RESPONSE_PATTERN, $requestedName, $matches)
             && !empty($matches[1])
         ) {
             $this->serverKey = ($matches[1] === 'main')
@@ -66,9 +66,9 @@ class RequestAbstractFactory implements ServiceManager\AbstractFactoryInterface
      */
     public function createServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        $requestContainer = $serviceLocator->get('OAuth2Provider/Containers/RequestContainer');
-        $requestContainer[$this->serverKey] = Request::createFromGlobals();
+        $responseContainer = $serviceLocator->get('OAuth2Provider/Containers/ResponseContainer');
+        $responseContainer[$this->serverKey] = new Response();
 
-        return $requestContainer->getServerContents($this->serverKey);
+        return $responseContainer->getServerContents($this->serverKey);
     }
 }

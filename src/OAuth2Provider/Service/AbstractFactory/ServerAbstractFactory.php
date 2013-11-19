@@ -10,7 +10,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
     /**
      * @var string
      */
-    const REGEX_REQUEST_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9_]+)$~';
+    const REGEX_SERVER_PATTERN = '~^oauth2provider.server.([a-zA-Z0-9_]+)$~';
 
     /**
      * @var array
@@ -32,6 +32,11 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
      */
     public function canCreateServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
+        // for performance, do a prelim check before checking against regex
+        if (0 !== strpos($requestedName, 'oauth2provider.server.')) {
+            return false;
+        }
+
         if (preg_match(static::REGEX_SERVER_PATTERN, $requestedName, $serverKeyMatch)
             && !empty($serverKeyMatch[1])
         ) {
@@ -91,7 +96,14 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $scopeTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ScopeTypeFactory');
         $scope = $scopeTypeFactory($options->getScopeUtil(), $this->serverKey);
 
+        // initialize the actual server
         $server = $options->getServerClass();
-        return new $server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope);
+        $server = new $server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope);
+
+        if ($server instanceof ServiceManager\ServiceManagerAwareInterface) {
+            $server->setServiceManager($serviceLocator);
+        }
+
+        return $server;
     }
 }

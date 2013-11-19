@@ -10,6 +10,7 @@ return array(
             'OAuth2Provider/Containers/TokenTypeContainer'    => 'OAuth2Provider\Containers\TokenTypeContainer',
             'OAuth2Provider/Containers/ScopeTypeContainer'    => 'OAuth2Provider\Containers\ScopeTypeContainer',
             'OAuth2Provider/Containers/RequestContainer'      => 'OAuth2Provider\Containers\RequestContainer',
+            'OAuth2Provider/Containers/ResponseContainer'     => 'OAuth2Provider\Containers\ResponseContainer',
 
             /** Options configurations **/
             'OAuth2Provider/Options/Server'            => 'OAuth2Provider\Options\ServerConfigurations',
@@ -61,7 +62,9 @@ return array(
         ),
         'abstract_factories' => array(
             'OAuth2Provider\Service\AbstractFactory\ServerAbstractFactory',
-            'OAuth2Provider\Service\AbstractFactory\GrantTypeAbstractFactory',
+            'OAuth2Provider\Service\AbstractFactory\RequestAbstractFactory',
+            'OAuth2Provider\Service\AbstractFactory\ResponseAbstractFactory',
+            'OAuth2Provider\Service\AbstractFactory\ContainerAbstractFactory',
         ),
         'aliases' => array(
             'oauth2provider.server.main' => 'OAuth2Provider/Service/MainServerFactory',

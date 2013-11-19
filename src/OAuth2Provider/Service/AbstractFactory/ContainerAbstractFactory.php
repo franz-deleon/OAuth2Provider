@@ -1,6 +1,8 @@
 <?php
 namespace OAuth2Provider\Service\AbstractFactory;
 
+use OAuth2Provider\Lib\Utilities;
+
 use Zend\ServiceManager;
 
 class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterface
@@ -78,8 +80,8 @@ class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterfac
             $this->container    = $matches[2];
             $this->containerKey = isset($matches[3]) ? $matches[3] : null;
 
-            // initialize the server if its not yet initialized
-            if (!$serviceLocator->has("oauth2provider.server.{$this->serverKey}")) {
+            // initialize the server
+            if (!Utilities::hasSMInstance($serviceLocator, "oauth2provider.server.{$this->serverKey}")) {
                 $serviceLocator->get("oauth2provider.server.{$this->serverKey}");
             }
 

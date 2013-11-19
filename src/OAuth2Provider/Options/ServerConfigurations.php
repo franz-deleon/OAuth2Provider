@@ -99,7 +99,7 @@ class ServerConfigurations extends AbstractOptions
      *
      * @var string;
      */
-    protected $serverClass = 'OAuth2\Server';
+    protected $serverClass = 'OAuth2Provider\Server';
 
 
 	/**
