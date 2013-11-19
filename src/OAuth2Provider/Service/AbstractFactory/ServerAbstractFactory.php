@@ -3,8 +3,6 @@ namespace OAuth2Provider\Service\AbstractFactory;
 
 use OAuth2Provider\Exception;
 
-use OAuth2\Server as OAuth2Server;
-
 use Zend\ServiceManager;
 
 class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
@@ -68,32 +66,33 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
     public function createServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
         $serverKey     = $this->serverKey;
-        $serverConfigs = $serviceLocator->get('OAuth2Provider/Options/Server')->setFromArray($this->serverConfig);
+        $options = $serviceLocator->get('OAuth2Provider/Options/Server')->setFromArray($this->serverConfig);
 
         // initialize storages
         $storageFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/StorageFactory');
-        $storages = $storageFactory($serverConfigs->getStorages(), $serverKey);
+        $storages = $storageFactory($options->getStorages(), $serverKey);
 
         // store config
         $configFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ConfigFactory');
-        $configs = $configFactory($serverConfigs->getConfigs(), $serverKey);
+        $configs = $configFactory($options->getConfigs(), $serverKey);
 
         // initialize grant types
         $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/GrantTypeFactory');
-        $grantTypes = $grantTypeFactory($serverConfigs->getGrantTypes(), $serverKey);
+        $grantTypes = $grantTypeFactory($options->getGrantTypes(), $serverKey);
 
         // initialize response types
         $responseTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ResponseTypeFactory');
-        $responseTypes = $responseTypeFactory($serverConfigs->getResponseTypes(), $serverKey);
+        $responseTypes = $responseTypeFactory($options->getResponseTypes(), $serverKey);
 
         // initialize token type
         $tokenTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/TokenTypeFactory');
-        $tokenTypes = $tokenTypeFactory($serverConfigs->getTokenType(), $serverKey);
+        $tokenTypes = $tokenTypeFactory($options->getTokenType(), $serverKey);
 
         // initialize scope
         $scopeTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ScopeTypeFactory');
-        $scope = $scopeTypeFactory($serverConfigs->getScopeUtil(), $serverKey);
+        $scope = $scopeTypeFactory($options->getScopeUtil(), $serverKey);
 
-        return new OAuth2Server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope);
+        $server = $options->getServerClass();
+        return new $server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope);
     }
 }
