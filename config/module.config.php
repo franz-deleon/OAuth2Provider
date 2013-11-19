@@ -9,6 +9,7 @@ return array(
             'OAuth2Provider/Containers/ResponseTypeContainer' => 'OAuth2Provider\Containers\ResponseTypeContainer',
             'OAuth2Provider/Containers/TokenTypeContainer'    => 'OAuth2Provider\Containers\TokenTypeContainer',
             'OAuth2Provider/Containers/ScopeTypeContainer'    => 'OAuth2Provider\Containers\ScopeTypeContainer',
+            'OAuth2Provider/Containers/RequestContainer'      => 'OAuth2Provider\Containers\RequestContainer',
 
             /** Options configurations **/
             'OAuth2Provider/Options/Server'            => 'OAuth2Provider\Options\ServerConfigurations',

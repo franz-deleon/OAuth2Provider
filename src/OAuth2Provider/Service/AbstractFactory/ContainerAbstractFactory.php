@@ -6,12 +6,18 @@ use Zend\ServiceManager;
 class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterface
 {
     /**
+     * Pattern example (must be underscore separated):
+     *
+     *                      [server] [container] [container_key]
+     * oauth2provider.server.server1.grant_type.user_credentials
+     *
      * @var string
      */
-    const REGEX_PATTERN = '~^oauth2provider.server(?:=([a-zA-Z0-9_]+))(?:.(%s))(?:=([a-zA-Z0-9_]+))*$~';
+    const REGEX_CONTAINER_PATTERN = '~^oauth2provider.server(?:.([a-zA-Z0-9_]+))(?:.(%s))(?:.([a-zA-Z0-9_]+))*$~';
 
     /**
      * List of available containers
+     * container keys/concrete classes mappings
      * @var array
      */
     protected $containers = array(
@@ -23,18 +29,30 @@ class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterfac
         'token_type'   => 'OAuth2Provider/Containers/TokenTypeContainer',
     );
 
+    /**
+     * Matched Server from pattern
+     * @var string
+     */
+    protected $server;
+
+    /**
+     * Matched Container from pattern
+     * @var string
+     */
+    protected $container;
+
+    /**
+     * Matched Container Key from pattern
+     * Note: not all container accept keys
+     * @var string
+     */
     protected $containerKey;
 
     /**
-     * @var string
-     */
-    protected $serverKey;
-    protected $grantTypeKey;
-
-    /**
+     * Actual container contents
      * @var array
      */
-    protected $grantTypeContainer;
+    protected $contents;
 
     /**
      * Determine if we can create a service with name
@@ -46,31 +64,37 @@ class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterfac
      */
     public function canCreateServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        // for performance, do a prelim check before checking agains regex
-        if (0 !== strpos($requestedName, 'oauth2provider')) {
+        // for performance, do a prelim check before checking against regex
+        if (0 !== strpos($requestedName, 'oauth2provider.server.')) {
             return false;
         }
 
-        $pattern = sprintf(static::REGEX_PATTERN, implode('|', array_keys($this->containers)));
+        $pattern = sprintf(static::REGEX_CONTAINER_PATTERN, implode('|', array_keys($this->containers)));
         if (preg_match($pattern, $requestedName, $matches) && !empty($matches)) {
 
             $this->serverKey = ($matches[1] === 'main')
                 ? $serviceLocator->get('OAuth2Provider/Options/Configuration')->getMainServer()
                 : $matches[1];
+            $this->container    = $matches[2];
+            $this->containerKey = isset($matches[3]) ? $matches[3] : null;
 
-            $container = $matches[2];
-            $containerKey = isset($matches[3]) ? $matches[3] : null;
-
-            $this->grantTypeKey = $matches[2];
-
-            $this->grantTypeContainer = $serviceLocator->get('OAuth2Provider/Containers/GrantTypeContainer');
-            if ($this->grantTypeContainer->isExistingServerContentInKey($this->serverKey, $this->grantTypeKey)) {
-                return true;
+            // initialize the server if its not yet initialized
+            if (!$serviceLocator->has("oauth2provider.server.{$this->serverKey}")) {
+                $serviceLocator->get("oauth2provider.server.{$this->serverKey}");
             }
 
-            // attempt to initialize the server then check for the grant type key again
-            $serviceLocator->get("oauth2provider.server.{$this->serverKey}");
-            if ($this->grantTypeContainer->isExistingServerContentInKey($this->serverKey, $this->grantTypeKey)) {
+            if (isset($this->containers[$this->container])) {
+                $container = $serviceLocator->get($this->containers[$this->container]);
+                if (isset($this->containerKey)) {
+                    if ($container->isExistingServerContentInKey($this->serverKey, $this->containerKey)) {
+                        $this->contents = $container->getServerContentsFromKey($this->serverKey, $this->containerKey);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                $this->contents = $container->getServerContents($this->serverKey);
                 return true;
             }
         }
@@ -88,6 +112,6 @@ class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterfac
      */
     public function createServiceWithName(ServiceManager\ServiceLocatorInterface $serviceLocator, $name, $requestedName)
     {
-        return $this->grantTypeContainer->getServerContentsFromKey($this->serverKey, $this->grantTypeKey);
+        return $this->contents;
     }
 }
