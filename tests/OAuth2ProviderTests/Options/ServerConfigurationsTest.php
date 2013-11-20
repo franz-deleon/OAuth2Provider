@@ -218,7 +218,7 @@ class ServerConfigurationsTest extends \PHPUnit_Framework_TestCase
     public function testGetServerClass()
     {
         $r = $this->ServerConfigurations->getServerClass(/* parameters */);
-        $this->assertEquals('OAuth2\Server', $r);
+        $this->assertEquals('OAuth2Provider\Server', $r);
     }
 
     /**
