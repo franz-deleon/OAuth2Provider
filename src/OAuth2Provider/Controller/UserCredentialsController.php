@@ -10,10 +10,9 @@ class UserCredentialsController extends AbstractRestfulController
 {
     public function AuthorizeAction()
     {
-        throw new Exception\NotSupportedException(
-            'Error: The authorize endpoint is not supported for user credentials.'
-        );
-        return new JsonModel();
+        return new JsonModel(array(
+            'error' => 'Error: The authorize endpoint is not supported for user credentials.',
+        ));
     }
 
     public function RequestAction()
@@ -28,7 +27,7 @@ class UserCredentialsController extends AbstractRestfulController
     public function ResourceAction()
     {
         $server  = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $isValid = $server->proxyVerifyResourceRequest();
+        $isValid  = $server->proxyVerifyResourceRequest();
 
         $params = array();
         $params['success'] = $isValid;
