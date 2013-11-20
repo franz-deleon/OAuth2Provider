@@ -100,10 +100,6 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $server = $options->getServerClass();
         $server = new $server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope);
 
-        if ($server instanceof ServiceManager\ServiceManagerAwareInterface) {
-            $server->setServiceManager($serviceLocator);
-        }
-
         return $server;
     }
 }
