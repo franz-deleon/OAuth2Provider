@@ -18,7 +18,7 @@ class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterfac
     const REGEX_CONTAINER_PATTERN = '~^oauth2provider.server(?:.([a-zA-Z0-9_]+))(?:.(%s))(?:.([a-zA-Z0-9_]+))*$~';
 
     /**
-     * List of available containers
+     * List of available server containers
      * container keys/concrete classes mappings
      * @var array
      */
