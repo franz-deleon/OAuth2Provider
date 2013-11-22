@@ -111,9 +111,7 @@ class StrategyBuilder
                         if (in_array($parentClass, $this->concreteClasses)) {
                             $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
                             $strategy     = $this->availableStrategies[$strategyContainerKey];
-                            $strategyName = in_array('__construct', get_class_methods($strategyName))
-                                ? $strategyName
-                                : $this->concreteClasses[$strategyContainerKey];
+                            $strategyName = $strategyName ?: $this->concreteClasses[$strategyContainerKey];
                         }
                     }
 
@@ -167,9 +165,9 @@ class StrategyBuilder
 
                         // because we have an underscored keys, try one last time to loop
                         // through each and find a map and return the first match
-                        foreach (array_flip($this->concreteClasses) as $grantTypeId) {
-                            if (false !== stripos($strategyContainerKey, $grantTypeId)) {
-                                $strategyContainerKey = $grantTypeId;
+                        foreach (array_flip($this->concreteClasses) as $strategyId) {
+                            if (false !== stripos($strategyContainerKey, $strategyId)) {
+                                $strategyContainerKey = $strategyId;
                                 break;
                             }
                         }
