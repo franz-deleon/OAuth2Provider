@@ -19,7 +19,6 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": ">=2.2.0",
-        "doctrine/doctrine-orm-module": "dev-master",
         "bshaffer/oauth2-server-php": "dev-master"
     },
     "autoload": {
