@@ -5,7 +5,7 @@ use OAuth2Provider\Containers\ContainerInterface;
 use OAuth2Provider\Exception;
 use OAuth2Provider\Lib\Utilities;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager;
 
 class StrategyBuilder
 {
@@ -50,7 +50,7 @@ class StrategyBuilder
      * @throws Exception\InvalidServerException
      * @throws Exception\InvalidClassException
      */
-    public function initStrategyFeature(ServiceLocatorInterface $serviceLocator)
+    public function initStrategyFeature(ServiceManager\ServiceManager $serviceLocator)
     {
         $strategies = !is_array($this->strategies) && !empty($this->strategies)
             ? array($this->strategies)
@@ -111,7 +111,9 @@ class StrategyBuilder
                         if (in_array($parentClass, $this->concreteClasses)) {
                             $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
                             $strategy     = $this->availableStrategies[$strategyContainerKey];
-                            $strategyName = $this->concreteClasses[$strategyContainerKey];
+                            $strategyName = in_array('__construct', get_class_methods($strategyName))
+                                ? $strategyName
+                                : $this->concreteClasses[$strategyContainerKey];
                         }
                     }
 
@@ -126,6 +128,13 @@ class StrategyBuilder
                     // forward construction to specific strategy
                     $strategy = $serviceLocator->get($strategy);
                     $strategyObj = $strategy($strategyName, $strategyOptions, $this->serverKey);
+
+                    // as a convenience for closure inject the sm if its an aware interface
+                    if ($strategyObj instanceof ServiceManager\ServiceLocatorAwareInterface) {
+                        $strategyObj->setServiceLocator($serviceLocator);
+                    } elseif ($strategyObj instanceof ServiceManager\ServiceManagerAwareInterface) {
+                        $strategyObj->setServiceManager($serviceLocator);
+                    }
 
                     // unset common vars
                     unset($strategy, $strategyName, $strategyOptions);

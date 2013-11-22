@@ -27,7 +27,7 @@ class UserCredentialsController extends AbstractRestfulController
     public function ResourceAction()
     {
         $server  = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $isValid  = $server->proxyVerifyResourceRequest();
+        $isValid = $server->proxyVerifyResourceRequest();
 
         $params = array();
         $params['success'] = $isValid;
