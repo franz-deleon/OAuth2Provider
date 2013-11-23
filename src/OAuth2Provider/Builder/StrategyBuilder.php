@@ -67,7 +67,7 @@ class StrategyBuilder
 
                 if (!$strategyName) {
                     throw new Exception\InvalidServerException(sprintf(
-                        "Class '%s' error: cannot find 'class' key in array",
+                        "Class '%s' error: cannot find 'name' key in array",
                         __METHOD__
                     ));
                 }

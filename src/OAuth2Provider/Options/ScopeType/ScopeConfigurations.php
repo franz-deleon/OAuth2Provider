@@ -68,7 +68,7 @@ class ScopeConfigurations extends TypeAbstract
     /**
      * @param multitype: $clientSupportedScopes
      */
-    public function setClientSupportedScopes($clientSupportedScopes)
+    public function setClientSupportedScopes(array $clientSupportedScopes)
     {
         $this->clientSupportedScopes = $clientSupportedScopes;
         return $this;
@@ -85,7 +85,7 @@ class ScopeConfigurations extends TypeAbstract
     /**
      * @param multitype: $clientDefaultScopes
      */
-    public function setClientDefaultScopes($clientDefaultScopes)
+    public function setClientDefaultScopes(array $clientDefaultScopes)
     {
         $this->clientDefaultScopes = $clientDefaultScopes;
         return $this;
@@ -102,7 +102,7 @@ class ScopeConfigurations extends TypeAbstract
     /**
      * @param multitype: $supportedScopes
      */
-    public function setSupportedScopes($supportedScopes)
+    public function setSupportedScopes(array $supportedScopes)
     {
         $this->supportedScopes = $supportedScopes;
         return $this;
