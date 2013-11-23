@@ -28,7 +28,7 @@ class ScopeTypeFactory implements ServiceManager\FactoryInterface
      * The interface to validate against
      * @var string FQNS
     */
-    protected $strategyInterface = 'OAuth2\Storage\ScopeInterface';
+    protected $strategyInterface = 'OAuth2\ScopeInterface';
 
     /**
      * Initialize an OAuth Scope object
