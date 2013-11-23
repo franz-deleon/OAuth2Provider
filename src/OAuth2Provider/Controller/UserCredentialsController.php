@@ -27,16 +27,17 @@ class UserCredentialsController extends AbstractRestfulController
     public function ResourceAction()
     {
         $server  = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $isValid = $server->proxyVerifyResourceRequest();
+        $isValid       = $server->proxyVerifyResourceRequest();
+        $responseParam = $server->getResponse()->getParameters();
 
         $params = array();
         $params['success'] = $isValid;
 
         if (!$isValid) {
-            $params['error']   = 'Invalid Access Token';
-            $params['message'] = 'The Access token has either expired or not valid';
+            $params['error']   = isset($responseParam['error']) ? $responseParam['error'] : "Invalid Request";
+            $params['message'] = isset($responseParam['error_description']) ? $responseParam['error_description'] : "Access Token is invalid";
         } else {
-            $params['message'] = 'Valid Access Token';
+            $params['message'] = "Access Token is Valid!";
         }
 
         return new JsonModel($params);

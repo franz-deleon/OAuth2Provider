@@ -22,6 +22,10 @@ class Server extends OAuth2Server implements ServiceManager\ServiceManagerAwareI
     public function proxyVerifyResourceRequest()
     {
         $scope = $this->getRequest()->request('scope');
+        if (empty($scope)) {
+            $scopeContainer = $this->serviceManager->get('oauth2provider.server.main.scope_type');
+            $scope = $scopeContainer['scope']->getDefaultScope();
+        }
         return parent::verifyResourceRequest($this->getRequest(), $this->getResponse(), $scope);
     }
 
