@@ -23,8 +23,9 @@ class Server extends OAuth2Server implements ServiceManager\ServiceManagerAwareI
     {
         $scope = $this->getRequest()->request('scope');
         if (empty($scope)) {
-            $scopeContainer = $this->serviceManager->get('oauth2provider.server.main.scope_type');
-            $scope = $scopeContainer['scope']->getDefaultScope();
+            $scope = $this->serviceManager
+                ->get('oauth2provider.server.main.scope_type.scope')
+                ->getDefaultScope();
         }
         return parent::verifyResourceRequest($this->getRequest(), $this->getResponse(), $scope);
     }
