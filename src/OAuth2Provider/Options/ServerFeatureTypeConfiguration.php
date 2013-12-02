@@ -5,6 +5,8 @@ use Zend\Stdlib\AbstractOptions;
 
 class ServerFeatureTypeConfiguration extends AbstractOptions
 {
+    protected $__strictMode__ = false;
+
     /**
      * The feature name to be used
      *

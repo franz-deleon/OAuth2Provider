@@ -56,26 +56,38 @@ class StrategyBuilder
             ? array($this->strategies)
             : (!empty($this->strategies) ? $this->strategies : array());
 
-        foreach ($strategies as $strategyKey => $strategyValues) {
-            if (is_array($strategyValues)) {
+        foreach ($strategies as $strategyKey => $strategyVal) {
+            if (is_array($strategyVal)) {
                 $options = $serviceLocator
                     ->get('OAuth2Provider/Options/ServerFeatureType')
-                    ->setFromArray($strategyValues);
+                    ->setFromArray($strategyVal);
 
-                $strategyName    = $options->getName() ?: (is_string($strategyKey) ?  $strategyKey : null);
-                $strategyOptions = $options->getOptions();
+                switch (true) {
+                    case $options->getName():
+                        $strategyName = $options->getName();
+                        break;
+                    case is_string($strategyKey):
+                        $strategyName = $strategyKey;
+                        break;
+                    case ($strategyVal = array_shift($strategyVal)) && is_string($strategyVal):
+                        $strategyName = $strategyVal;
+                        break;
+                    default:
+                        $strategyName = null;
+                }
+                $strategyOptions = $options->getOptions() ?: array();
 
                 if (!$strategyName) {
                     throw new Exception\InvalidServerException(sprintf(
-                        "Class '%s' error: cannot find 'name' key in array",
+                        "Class '%s' error: cannot figure strategy key",
                         __METHOD__
                     ));
                 }
-            } elseif (is_string($strategyValues)) {
-                $strategyName   = $strategyValues;
+            } elseif (is_string($strategyVal)) {
+                $strategyName = $strategyVal;
                 $strategyOptions = array();
-            } elseif (is_object($strategyValues)) {
-                $strategyObj = $strategyValues;
+            } elseif (is_object($strategyVal)) {
+                $strategyObj = $strategyVal;
             }
 
             if (isset($strategyName)) {
