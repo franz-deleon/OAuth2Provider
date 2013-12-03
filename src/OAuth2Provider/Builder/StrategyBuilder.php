@@ -139,7 +139,7 @@ class StrategyBuilder
                     $strategy = $serviceLocator->get($strategy);
                     $strategyObj = $strategy($strategyName, $strategyOptions, $this->serverKey);
 
-                    // as a convenience for closure inject the sm if its an aware interface
+                    // as a convenience for closure inject the sm if its of a service aware interface
                     if ($strategyObj instanceof ServiceManager\ServiceLocatorAwareInterface) {
                         $strategyObj->setServiceLocator($serviceLocator);
                     } elseif ($strategyObj instanceof ServiceManager\ServiceManagerAwareInterface) {
@@ -162,22 +162,24 @@ class StrategyBuilder
 
             // figure container server key if not defined, usually will occur on a php obj
             if (!isset($strategyContainerKey)) {
-                $grantTypeClass = get_class($strategyObj);
-                $strategyContainerKey = array_search($grantTypeClass, $this->concreteClasses);
+                $objClassname = get_class($strategyObj);
+                $strategyContainerKey = array_search($objClassname, $this->concreteClasses);
                 if (false === $strategyContainerKey) {
                     // try the parent class if it can be mapped
                     $parentClass = get_parent_class($strategyObj);
                     $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
 
                     // if still no mapping, try to extract from the classname
+                    // note: we need a key in any case even if nothing matches
                     if (false === $strategyContainerKey) {
                         $strategyContainerKey = $serviceLocator->get('FilterManager')
                             ->get('wordcamelcasetounderscore')
-                            ->filter(Utilities::extractClassnameFromFQNS($grantTypeClass));
+                            ->filter(Utilities::extractClassnameFromFQNS($objClassname));
 
                         // because we have an underscored keys, try one last time to loop
                         // through each and find a map and return the first match
-                        foreach (array_flip($this->concreteClasses) as $strategyId) {
+                        // example: 'Grant_Type_Custom_User_Credentials' will match 'user_credentials'
+                        foreach (array_keys($this->concreteClasses) as $strategyId) {
                             if (false !== stripos($strategyContainerKey, $strategyId)) {
                                 $strategyContainerKey = $strategyId;
                                 break;
