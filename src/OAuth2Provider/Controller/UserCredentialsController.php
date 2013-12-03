@@ -8,14 +8,14 @@ use Zend\Mvc\Controller\AbstractRestfulController;
 
 class UserCredentialsController extends AbstractRestfulController
 {
-    public function AuthorizeAction()
+    public function authorizeAction()
     {
         return new JsonModel(array(
             'error' => 'Error: The authorize endpoint is not supported for user credentials.',
         ));
     }
 
-    public function RequestAction()
+    public function requestAction()
     {
         $server   = $this->getServiceLocator()->get('oauth2provider.server.main');
         $response = $server->proxyHandleTokenRequest();
@@ -24,10 +24,10 @@ class UserCredentialsController extends AbstractRestfulController
         return new JsonModel($params);
     }
 
-    public function ResourceAction()
+    public function resourceAction($scope = null)
     {
         $server  = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $isValid       = $server->proxyVerifyResourceRequest();
+        $isValid       = $server->proxyVerifyResourceRequest($scope);
         $responseParam = $server->getResponse()->getParameters();
 
         $params = array();

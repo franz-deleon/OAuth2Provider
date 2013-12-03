@@ -27,13 +27,13 @@ class ControllerFactory implements ServiceManager\FactoryInterface
         $controller    = $configuration->getController();
 
         // check for valid controller
-        if (!in_array($controller, $this->availableControllers)) {
-            throw new Exception\InvalidConfigException(sprintf(
-                "Class '%s': controller '%s' does not exist",
-                __CLASS__ . ":" . __METHOD__,
-                $controller
-            ));
-        }
+//         if (!in_array($controller, $this->availableControllers)) {
+//             throw new Exception\InvalidConfigException(sprintf(
+//                 "Class '%s': controller '%s' does not exist",
+//                 __CLASS__ . ":" . __METHOD__,
+//                 $controller
+//             ));
+//         }
 
         return new $controller();
     }
