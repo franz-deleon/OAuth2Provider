@@ -1,12 +1,10 @@
 <?php
 namespace OAuth2Provider\Controller;
 
-use OAuth2Provider\Exception;
-
 use Zend\View\Model\JsonModel;
 use Zend\Mvc\Controller\AbstractRestfulController;
 
-class UserCredentialsController extends AbstractRestfulController
+class UserCredentialsController extends AbstractRestfulController implements ControllerInterface
 {
     public function authorizeAction()
     {
@@ -26,7 +24,7 @@ class UserCredentialsController extends AbstractRestfulController
 
     public function resourceAction($scope = null)
     {
-        $server  = $this->getServiceLocator()->get('oauth2provider.server.main');
+        $server        = $this->getServiceLocator()->get('oauth2provider.server.main');
         $isValid       = $server->proxyVerifyResourceRequest($scope);
         $responseParam = $server->getResponse()->getParameters();
 

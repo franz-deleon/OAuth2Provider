@@ -2,6 +2,7 @@
 namespace OAuth2Provider\Service\Factory;
 
 use OAuth2Provider\Exception;
+use OAuth2Provider\Controller\ControllerInterface;
 
 use Zend\ServiceManager;
 
@@ -25,16 +26,17 @@ class ControllerFactory implements ServiceManager\FactoryInterface
     {
         $configuration = $serviceLocator->getServiceLocator()->get('OAuth2Provider/Options/Configuration');
         $controller    = $configuration->getController();
+        $controller    = new $controller();
 
         // check for valid controller
-//         if (!in_array($controller, $this->availableControllers)) {
-//             throw new Exception\InvalidConfigException(sprintf(
-//                 "Class '%s': controller '%s' does not exist",
-//                 __CLASS__ . ":" . __METHOD__,
-//                 $controller
-//             ));
-//         }
+        if (!$controller instanceof ControllerInterface) {
+            throw new Exception\InvalidConfigException(sprintf(
+                "Class '%s': controller '%s' is not an intance of ControllerInterface",
+                __CLASS__ . ":" . __METHOD__,
+                get_class($controller)
+            ));
+        }
 
-        return new $controller();
+        return $controller;
     }
 }

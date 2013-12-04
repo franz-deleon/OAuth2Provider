@@ -40,6 +40,7 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
 	 * Tests ControllerFactory->createService()
+	 * @group test1
 	 */
     public function testCreateServiceWithValidController()
     {
@@ -64,6 +65,7 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
 	 * Tests ControllerFactory->createService()
+	 * @group test2
 	 * @expectedException OAuth2Provider\Exception\InvalidConfigException
 	 */
     public function testCreateServiceReturnsException()
@@ -71,7 +73,7 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $controllerStub = $this->getMock('stdClass', array('getController'));
         $controllerStub->expects($this->once())
             ->method('getController')
-            ->will($this->returnValue('I\do\not\exist'));
+            ->will($this->returnValue('OAuth2ProviderTests\Assets\RegularController'));
 
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
         $mainSm->setService('OAuth2Provider/Options/Configuration', $controllerStub);

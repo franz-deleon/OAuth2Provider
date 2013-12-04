@@ -1,9 +1,6 @@
 <?php
 namespace OAuth2Provider;
 
-use OAuth2\ResponseInterface;
-use OAuth2\RequestInterface;
-
 use OAuth2\Server as OAuth2Server;
 
 use Zend\ServiceManager;
