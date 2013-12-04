@@ -21,6 +21,26 @@ class Server extends OAuth2Server implements ServiceManager\ServiceManagerAwareI
         return parent::verifyResourceRequest($this->getRequest(), $this->getResponse(), $scope);
     }
 
+    public function proxyGetAccessTokenData()
+    {
+        return parent::getAccessTokenData($this->getRequest(), $this->getResponse());
+    }
+
+    public function proxyGrantAccessToken()
+    {
+        return parent::grantAccessToken($this->getRequest(), $this->getResponse());
+    }
+
+    public function proxyHandleAuthorizeRequest($isAuthorized, $userId = null)
+    {
+        return parent::handleAuthorizeRequest($this->getRequest(), $this->getResponse(), $isAuthorized, $userId);
+    }
+
+    public function proxyValidateAuthorizeRequest()
+    {
+        return parent::validateAuthorizeRequest($this->getRequest(), $this->getResponse());
+    }
+
     public function getRequest()
     {
         if (null === $this->request) {
