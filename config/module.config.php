@@ -97,6 +97,6 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
-    'oauth2provider' => include_once __DIR__ . '/oauth2provider.config.php',
-    'router'         => include_once __DIR__ . '/routes.config.php',
+    'oauth2provider' => include __DIR__ . '/oauth2provider.config.php',
+    'router'         => include __DIR__ . '/routes.config.php',
 );
