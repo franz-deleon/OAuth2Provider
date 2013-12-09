@@ -11,9 +11,9 @@ class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
     /**
      * Identifiers
      * This will be used for defaults
-     * @var unknown
+     * @var string
      */
-    const AUTHORIZATION_CODE_IDENTIFIER = 'authorization_code';
+    const IDENTIFIER = 'authorization_code';
 
     /**
      * Initialize an OAuth Authorization Code Response type
@@ -32,14 +32,14 @@ class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
                 $options->getAuthorizationCodeStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
-                AuthorizationCodeFactory::AUTHORIZATION_CODE_IDENTIFIER
+                AuthorizationCodeFactory::IDENTIFIER
             );
 
             if (empty($authorizationCodeStorage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for Authorization Code '%s'",
                     __METHOD__,
-                    AuthorizationCodeFactory::AUTHORIZATION_CODE_IDENTIFIER,
+                    AuthorizationCodeFactory::IDENTIFIER,
                     $authorizationCodeClassName
                 ));
             }

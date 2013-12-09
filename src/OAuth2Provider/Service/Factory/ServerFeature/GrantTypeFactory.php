@@ -2,6 +2,7 @@
 namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Builder\StrategyBuilder;
+use OAuth2Provider\Service\Factory\GrantTypeStrategy;
 
 use Zend\ServiceManager;
 
@@ -12,11 +13,11 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
      * @var string
      */
     protected $availableStrategy = array(
-        'authorization_code' => 'OAuth2Provider/GrantTypeStrategy/AuthorizationCode',
-        'client_credentials' => 'OAuth2Provider/GrantTypeStrategy/ClientCredentials',
-        'jwt_bearer'         => 'OAuth2Provider/GrantTypeStrategy/JwtBearer',
-        'refresh_token'      => 'OAuth2Provider/GrantTypeStrategy/RefreshToken' ,
-        'user_credentials'   => 'OAuth2Provider/GrantTypeStrategy/UserCredentials',
+        GrantTypeStrategy\AuthorizationCodeFactory::IDENTIFIER => 'OAuth2Provider/GrantTypeStrategy/AuthorizationCode',
+        GrantTypeStrategy\ClientCredentialsFactory::IDENTIFIER => 'OAuth2Provider/GrantTypeStrategy/ClientCredentials',
+        //'jwt_bearer'         => 'OAuth2Provider/GrantTypeStrategy/JwtBearer',
+        GrantTypeStrategy\RefreshTokenFactory::IDENTIFIER      => 'OAuth2Provider/GrantTypeStrategy/RefreshToken' ,
+        GrantTypeStrategy\UserCredentialsFactory::IDENTIFIER   => 'OAuth2Provider/GrantTypeStrategy/UserCredentials',
     );
 
     /**
@@ -26,7 +27,7 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
     protected $concreteClasses = array(
         'authorization_code' => 'OAuth2\GrantType\AuthorizationCode',
         'client_credentials' => 'OAuth2\GrantType\ClientCredentials',
-        'jwt_bearer'         => 'OAuth2\GrantType\JwtBearer',
+        //'jwt_bearer'         => 'OAuth2\GrantType\JwtBearer',
         'refresh_token'      => 'OAuth2\GrantType\RefreshToken',
         'user_credentials'   => 'OAuth2\GrantType\UserCredentials',
     );

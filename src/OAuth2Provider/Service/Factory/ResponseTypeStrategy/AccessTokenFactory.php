@@ -9,9 +9,14 @@ use Zend\ServiceManager;
 class AccessTokenFactory implements ServiceManager\FactoryInterface
 {
     /**
-     * Identifiers
-     * This will be used for defaults
-     * @var unknown
+     * Main identifier
+     * @var string
+     */
+    const IDENTIFIER = 'access_token';
+
+    /**
+     * Storage identifiers
+     * @var string
      */
     const ACCESS_TOKEN_IDENTIFIER = 'access_token';
     const REFRESH_TOKEN_IDENTIFIER = 'refresh_token';

@@ -13,7 +13,7 @@ class RefreshTokenFactory implements ServiceManager\FactoryInterface
      * This will be used for defaults
      * @var ustring
      */
-    const REFRESH_TOKEN_IDENTIFIER = 'refresh_token';
+    const IDENTIFIER = 'refresh_token';
 
     /**
      * Initialize an OAuth Access Token Response type
@@ -33,14 +33,14 @@ class RefreshTokenFactory implements ServiceManager\FactoryInterface
                 $options->getRefreshTokenStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
-                RefreshTokenFactory::REFRESH_TOKEN_IDENTIFIER
+                RefreshTokenFactory::IDENTIFIER
             );
 
             if (empty($refreshTokenStorage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for '%s'",
                     __METHOD__,
-                    RefreshTokenFactory::REFRESH_TOKEN_IDENTIFIER,
+                    RefreshTokenFactory::IDENTIFIER,
                     $refreshTokenClassName
                 ));
             }

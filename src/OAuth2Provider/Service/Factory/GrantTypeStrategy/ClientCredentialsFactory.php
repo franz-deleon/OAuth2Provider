@@ -8,7 +8,7 @@ use Zend\ServiceManager;
 
 class ClientCredentialsFactory implements ServiceManager\FactoryInterface
 {
-    const CLIENT_CREDENTIALS_IDENTIFIER = 'client_credentials';
+    const IDENTIFIER = 'client_credentials';
 
     /**
      * Initialize an OAuth storage object
@@ -27,14 +27,14 @@ class ClientCredentialsFactory implements ServiceManager\FactoryInterface
                 $options->getClientCredentialsStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
-                ClientCredentialsFactory::CLIENT_CREDENTIALS_IDENTIFIER
+                ClientCredentialsFactory::IDENTIFIER
             );
 
             if (empty($storage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for grant type '%s'",
                     __METHOD__,
-                    ClientCredentialsFactory::CLIENT_CREDENTIALS_IDENTIFIER,
+                    ClientCredentialsFactory::IDENTIFIER,
                     $clientCredentialsClassName
                 ));
             }

@@ -8,7 +8,7 @@ use Zend\ServiceManager;
 
 class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
 {
-    const AUTHORIZATION_CODE_IDENTIFIER = 'authorization_code';
+    const IDENTIFIER = 'authorization_code';
 
     /**
      * Initialize an OAuth storage object
@@ -28,14 +28,14 @@ class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
                 $options->getAuthorizationCodeStorage() ?: $options->getStorage(),
                 $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
-                AuthorizationCodeFactory::AUTHORIZATION_CODE_IDENTIFIER
+                AuthorizationCodeFactory::IDENTIFIER
             );
 
             if (empty($storage)) {
                 throw new Exception\InvalidServerException(sprintf(
                     "Class '%s' error: storage of type '%s' is required for grant type '%s'",
                     __METHOD__,
-                    AuthorizationCodeFactory::AUTHORIZATION_CODE_IDENTIFIER,
+                    AuthorizationCodeFactory::IDENTIFIER,
                     $authorizationCodeClassName
                 ));
             }

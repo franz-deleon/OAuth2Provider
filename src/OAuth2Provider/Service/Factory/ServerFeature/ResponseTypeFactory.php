@@ -2,6 +2,7 @@
 namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Builder\StrategyBuilder;
+use OAuth2Provider\Service\Factory\ResponseTypeStrategy;
 
 use Zend\ServiceManager;
 
@@ -12,8 +13,8 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
      * @var string
      */
     protected $availableStrategy = array(
-        'access_token'       => 'OAuth2Provider/GrantTypeStrategy/AccessToken',
-        'authorization_code' => 'OAuth2Provider/GrantTypeStrategy/AuthorizationCode',
+        ResponseTypeStrategy\AccessTokenFactory::IDENTIFIER       => 'OAuth2Provider/GrantTypeStrategy/AccessToken',
+        ResponseTypeStrategy\AuthorizationCodeFactory::IDENTIFIER => 'OAuth2Provider/GrantTypeStrategy/AuthorizationCode',
     );
 
     /**
@@ -21,8 +22,8 @@ class ResponseTypeFactory implements ServiceManager\FactoryInterface
      * @var array
      */
     protected $concreteClasses = array(
-        'access_token'       => 'OAuth2\ResponseType\AccessToken',
-        'authorization_code' => 'OAuth2\ResponseType\AuthorizationCode',
+        ResponseTypeStrategy\AccessTokenFactory::IDENTIFIER       => 'OAuth2\ResponseType\AccessToken',
+        ResponseTypeStrategy\AuthorizationCodeFactory::IDENTIFIER => 'OAuth2\ResponseType\AuthorizationCode',
     );
 
     /**

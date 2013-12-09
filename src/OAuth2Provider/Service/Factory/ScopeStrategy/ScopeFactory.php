@@ -15,7 +15,7 @@ class ScopeFactory implements ServiceManager\FactoryInterface
      * This will be used for defaults
      * @var string
      */
-    const SCOPE_IDENTIFIER = 'scope';
+    const IDENTIFIER = 'scope';
 
     /**
      * Initialize an OAuth Scope
@@ -32,9 +32,9 @@ class ScopeFactory implements ServiceManager\FactoryInterface
             $storageContainer = $serviceLocator->get('OAuth2Provider/Containers/StorageContainer');
 
             if (true === $options->getUseDefinedScopeStorage()
-                && $storageContainer->isExistingServerContentInKey($serverKey, ScopeFactory::SCOPE_IDENTIFIER)
+                && $storageContainer->isExistingServerContentInKey($serverKey, ScopeFactory::IDENTIFIER)
             ) {
-                $storage = $storageContainer->getServerContentsFromKey($serverKey, ScopeFactory::SCOPE_IDENTIFIER);
+                $storage = $storageContainer->getServerContentsFromKey($serverKey, ScopeFactory::IDENTIFIER);
             } else {
                 // check for a user defined storage for scope
                 $storage = Utilities::storageLookup(

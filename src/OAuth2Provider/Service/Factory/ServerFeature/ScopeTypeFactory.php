@@ -3,6 +3,7 @@ namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Builder\StrategyBuilder;
 use OAuth2Provider\Lib\Utilities;
+use OAuth2Provider\Service\Factory\ScopeStrategy;
 
 use Zend\ServiceManager;
 
@@ -13,7 +14,7 @@ class ScopeTypeFactory implements ServiceManager\FactoryInterface
      * @var string
      */
     protected $availableStrategies = array(
-        'scope' => 'OAuth2Provider/ScopeStrategy/Scope',
+        ScopeStrategy\ScopeFactory::IDENTIFIER => 'OAuth2Provider/ScopeStrategy/Scope',
     );
 
     /**
@@ -21,7 +22,7 @@ class ScopeTypeFactory implements ServiceManager\FactoryInterface
      * @var array
     */
     protected $concreteClasses = array(
-        'scope' => 'OAuth2\Scope',
+        ScopeStrategy\ScopeFactory::IDENTIFIER => 'OAuth2\Scope',
     );
 
     /**
