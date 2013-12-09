@@ -96,9 +96,13 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $scopeTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ScopeTypeFactory');
         $scope = $scopeTypeFactory($options->getScopeUtil(), $this->serverKey);
 
+        // initialize client assertion type
+        $clientAssertionTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ClientAssertionTypeFactory');
+        $clientAssertion = $clientAssertionTypeFactory($options->getClientAssertionType(), $this->serverKey);
+
         // initialize the actual server
         $server = $options->getServerClass();
-        $server = new $server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope);
+        $server = new $server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope, $clientAssertion);
 
         return $server;
     }

@@ -70,6 +70,12 @@ return array(
             'scope_util' => array(
                 'name' => 'scope'
             ),
+            'client_assertion_type' => array(
+                'name' => 'http_basic',
+                'options' => array(
+                    'allow_credentials_in_request_body' => true,
+                ),
+            ),
         ),
     ),
 

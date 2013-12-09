@@ -218,6 +218,7 @@ class ServerConfigurations extends AbstractOptions
     public function setClientAssertionType($clientAssertionType)
     {
         $this->clientAssertionType = $clientAssertionType;
+        return $this;
     }
 
 	/**
@@ -234,5 +235,6 @@ class ServerConfigurations extends AbstractOptions
     public function setServerClass($server)
     {
         $this->serverClass = $server;
+        return $this;
     }
 }
