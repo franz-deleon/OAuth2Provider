@@ -25,11 +25,11 @@ class GrantTypeFactory implements ServiceManager\FactoryInterface
      * @var array
      */
     protected $concreteClasses = array(
-        'authorization_code' => 'OAuth2\GrantType\AuthorizationCode',
-        'client_credentials' => 'OAuth2\GrantType\ClientCredentials',
+        GrantTypeStrategy\AuthorizationCodeFactory::IDENTIFIER => 'OAuth2\GrantType\AuthorizationCode',
+        GrantTypeStrategy\ClientCredentialsFactory::IDENTIFIER => 'OAuth2\GrantType\ClientCredentials',
         //'jwt_bearer'         => 'OAuth2\GrantType\JwtBearer',
-        'refresh_token'      => 'OAuth2\GrantType\RefreshToken',
-        'user_credentials'   => 'OAuth2\GrantType\UserCredentials',
+        GrantTypeStrategy\RefreshTokenFactory::IDENTIFIER      => 'OAuth2\GrantType\RefreshToken',
+        GrantTypeStrategy\UserCredentialsFactory::IDENTIFIER   => 'OAuth2\GrantType\UserCredentials',
     );
 
     /**

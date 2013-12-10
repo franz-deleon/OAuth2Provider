@@ -2,7 +2,7 @@
 namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Builder\StrategyBuilder;
-use OAuth2Provider\Service\Factory\ClientAssertionTypeStrategy as Strategy;
+use OAuth2Provider\Service\Factory\ClientAssertionTypeStrategy;
 use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
@@ -14,7 +14,7 @@ class ClientAssertionTypeFactory implements ServiceManager\FactoryInterface
      * @var string
      */
     protected $availableStrategies = array(
-        Strategy\HttpBasicFactory::IDENTIFIER => 'OAuth2Provider/ClientAssertionStrategy/HttpBasic',
+        ClientAssertionTypeStrategy\HttpBasicFactory::IDENTIFIER => 'OAuth2Provider/ClientAssertionStrategy/HttpBasic',
     );
 
     /**
@@ -22,7 +22,7 @@ class ClientAssertionTypeFactory implements ServiceManager\FactoryInterface
      * @var array
     */
     protected $concreteClasses = array(
-        Strategy\HttpBasicFactory::IDENTIFIER => 'OAuth2\ClientAssertionType\HttpBasic',
+        ClientAssertionTypeStrategy\HttpBasicFactory::IDENTIFIER => 'OAuth2\ClientAssertionType\HttpBasic',
     );
 
     /**
