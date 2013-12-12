@@ -96,6 +96,7 @@ return array(
             'OAuth2Provider/Options/ResponseType/AuthorizationCode' => false,
             'OAuth2Provider/Options/TokenType/Bearer'               => false,
             'OAuth2Provider/Options/ScopeType/Scope'                => false,
+            'OAuth2Provider/Options/ClientAssertionType/HttpBasic'  => false,
         ),
     ),
     'controllers' => array(

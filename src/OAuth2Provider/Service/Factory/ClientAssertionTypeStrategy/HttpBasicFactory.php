@@ -8,7 +8,17 @@ use Zend\ServiceManager;
 
 class HttpBasicFactory implements ServiceManager\FactoryInterface
 {
+    /**
+     * Strategy identifier
+     * @var string
+     */
     const IDENTIFIER = 'http_basic';
+
+    /**
+     * Storage identifier
+     * @var string
+     */
+    const HTTP_BASIC_IDENTIFIER = 'client_credentials';
 
     /**
      * Initialize an OAuth storage object
@@ -21,14 +31,14 @@ class HttpBasicFactory implements ServiceManager\FactoryInterface
         return function ($className, $options, $serverKey) use ($serviceLocator) {
 
             $options = $serviceLocator->get('OAuth2Provider/Options/ClientAssertionType/HttpBasic')->setFromArray($options);
-            $configs  = $options->getConfigs();
+            $configs = $options->getConfigs();
 
             $storage = Utilities::storageLookup(
                 $serverKey,
                 $options->getClientCredentialsStorage() ?: $options->getStorage(),
-                $serviceLocator->get('OAuth2Provider/Containers/ClientAssertionContainer'),
+                $serviceLocator->get('OAuth2Provider/Containers/StorageContainer'),
                 $serviceLocator,
-                HttpBasicFactory::IDENTIFIER
+                HttpBasicFactory::HTTP_BASIC_IDENTIFIER
             );
 
             if (empty($storage)) {

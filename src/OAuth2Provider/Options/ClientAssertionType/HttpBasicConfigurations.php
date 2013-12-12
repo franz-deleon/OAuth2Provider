@@ -13,7 +13,7 @@ class HttpBasicConfigurations extends TypeAbstract
 
     /**
      * Extra configurations to pass
-     * Optional:
+     * Optional
      *
      * Available config:
      * <code>
