@@ -29,7 +29,7 @@ interface ContainerInterface
      * )
      * </code>
      *
-     * @param  string $server
+     * @param  string $server Server index key
      * @return array
      */
     public function getServerContents($server);
@@ -53,7 +53,8 @@ interface ContainerInterface
      * ContainerInterface::getServerContentsFromKey('OAuth_Server1', 'content_key1')
      * returns: new SomeObject1
      *
-     * @param  string $server
+     * @param  string $server Server index
+     * @param  string $key    Content key
      * @return mixed The data to return
      */
     public function getServerContentsFromKey($server, $key);
@@ -62,8 +63,8 @@ interface ContainerInterface
      * Check if there are contents in the specified server for
      * a specific key.
      *
-     * @param string $server
-     * @param string $key
+     * @param string $server Server index
+     * @param string $key    Content key
      * @return boolean
      */
     public function isExistingServerContentInKey($server, $key);

@@ -63,50 +63,43 @@ class Utilities
     /**
      * Checks for a given subject if it is stored in a given storage container
      *
-     * @param mixed  $serverIndex
-     * @param string $server
-     * @param ContainerInterface $container
-     * @param ServiceLocatorInterface $serviceLocator
-     * @param string $identifier
-     * @param string $defaultReturn
+     * 1. Checks if a server index exists in the storage
+     * 2. Checks if given identifier exists in storage
+     * 3. Checks if server index
+     *
+     * @param string                  $serverIndex     Server index
+     * @param mixed                   $contentIndex    Content index
+     * @param ContainerInterface      $container       Container to check against
+     * @param ServiceLocatorInterface $serviceLocator  Service manager
+     * @param string                  $identifier      Strategy identifier
+     * @param string                  $defaultReturn   Default value to return. Defaults to null
      * @return object|null
      */
     public static function storageLookup(
-        $server = null,
-        $serverIndex = null,
-        ContainerInterface $container = null,
-        ServiceLocatorInterface $serviceLocator = null,
-        $identifier = null,
+        $serverIndex,
+        $contentIndex,
+        ContainerInterface $container,
+        ServiceLocatorInterface $serviceLocator,
+        $identifier = '',
         $defaultReturn = null
     ) {
-        $result = null;
-
-        // check if serverIndex is in the container
         if (isset($container)
-            && $container->isExistingServerContentInKey($server, $serverIndex)
+            && $container->isExistingServerContentInKey($serverIndex, $contentIndex)
         ) {
-            $result = $container->getServerContentsFromKey($server, $serverIndex);
-
-        // check if identifier is present in the storage
+            return $container->getServerContentsFromKey($serverIndex, $contentIndex);
         } elseif (isset($container)
-            && $container->isExistingServerContentInKey($server, $identifier)
+            && $container->isExistingServerContentInKey($serverIndex, $identifier)
         ) {
-            $result = $container->getServerContentsFromKey($server, $identifier);
-
-        // check if the serverIndex is a service manager element
-        } elseif (is_string($serverIndex) && isset($serviceLocator)
-            && $serviceLocator->has($serverIndex)
+            return $container->getServerContentsFromKey($serverIndex, $identifier);
+        } elseif (is_string($contentIndex) && isset($serviceLocator)
+            && $serviceLocator->has($contentIndex)
         ) {
-            $result = $serviceLocator->get($serverIndex);
-
-        // check if the subject is an object
-        } elseif (is_object($serverIndex)) {
-            $result = $serverIndex;
-        } else {
-            $result = $defaultReturn;
+            return $serviceLocator->get($contentIndex);
+        } elseif (is_object($contentIndex)) {
+            return $contentIndex;
         }
 
-        return $result;
+        return $defaultReturn;
     }
 
     /**
