@@ -3,12 +3,13 @@ namespace OAuth2ProviderTests;
 
 use OAuth2Provider\Service\Factory\MainServerFactory;
 
+use Zend\Stdlib\ArrayUtils;
+
 /**
  * MainServerFactory test case.
  */
 class MainServerFactoryTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      *
      * @var MainServerFactory
@@ -21,9 +22,6 @@ class MainServerFactoryTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-
-        // TODO Auto-generated MainServerFactoryTest::setUp()
-
         $this->MainServerFactory = new MainServerFactory(/* parameters */);
     }
 
@@ -32,9 +30,7 @@ class MainServerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        // TODO Auto-generated MainServerFactoryTest::tearDown()
         $this->MainServerFactory = null;
-
         parent::tearDown();
     }
 
@@ -43,7 +39,6 @@ class MainServerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function __construct()
     {
-        // TODO Auto-generated constructor
     }
 
     /**
@@ -51,7 +46,7 @@ class MainServerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateService()
     {
-        $config = array(
+        $oauthconfig = array(
             'oauth2provider' => array(
                 'servers' => array(
                     'default' => array(
@@ -59,23 +54,17 @@ class MainServerFactoryTest extends \PHPUnit_Framework_TestCase
                             'user_credentials' => new Assets\StorageUserCredentials(),
                         ),
                         'grant_types' => array(
-                            array(
-                                'class' => 'OAuth2\GrantType\UserCredentials',
-                                'options' => array(
-                                    'storage' => 'user_credentials',
-                                ),
-                            ),
+                            'user_credentials'
                         ),
                     ),
                 ),
             ),
         );
 
-        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('Config', $config);
+        $mainSm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
+        $mainSm->setService('Config', $oauthconfig);
 
-        //$r = $this->MainServerFactory->createService($mainSm);
-        $this->markTestIncomplete("createServiceWithName test not implemented");
+        $r = $this->MainServerFactory->createService($mainSm);
+        $this->assertInstanceOf('OAuth2Provider\Server', $r);
     }
 }
-

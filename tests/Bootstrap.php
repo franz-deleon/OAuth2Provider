@@ -52,10 +52,14 @@ class Bootstrap
     }
 
     /**
+     * @param $initialize Reinitialize the bootstrap
      * @return \Zend\ServiceManager\ServiceManager
      */
-    public static function getServiceManager()
+    public static function getServiceManager($initialize = false)
     {
+        if (true == $initialize) {
+            static::init();
+        }
         return static::$serviceManager;
     }
 

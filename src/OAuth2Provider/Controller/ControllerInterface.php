@@ -5,6 +5,7 @@ interface ControllerInterface
 {
     /**
      * Authorize endpoint
+     *
      * @param null|mixed
      * @return Zend\View\Model\JsonModel
      */
@@ -13,6 +14,7 @@ interface ControllerInterface
     /**
      * Request endpoint
      * End point to request Access Tokens and Refresh Tokens
+     *
      * @param null|mixed
      * @return Zend\View\Model\JsonModel
      */
