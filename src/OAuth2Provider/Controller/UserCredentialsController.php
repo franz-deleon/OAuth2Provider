@@ -16,7 +16,7 @@ class UserCredentialsController extends AbstractRestfulController implements Con
     public function requestAction()
     {
         $server   = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $response = $server->proxyHandleTokenRequest();
+        $response = $server->handleTokenRequest();
         $params   = $response->getParameters();
 
         return new JsonModel($params);
@@ -25,7 +25,7 @@ class UserCredentialsController extends AbstractRestfulController implements Con
     public function resourceAction($scope = null)
     {
         $server        = $this->getServiceLocator()->get('oauth2provider.server.main');
-        $isValid       = $server->proxyVerifyResourceRequest($scope);
+        $isValid       = $server->verifyResourceRequest($scope);
         $responseParam = $server->getResponse()->getParameters();
 
         $params = array();

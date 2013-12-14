@@ -2,6 +2,9 @@
 namespace OAuth2Provider\Service\AbstractFactory;
 
 use OAuth2Provider\Exception;
+use OAuth2Provider\ServerInterface;
+
+use OAuth2\Server as OAuth2Server;
 
 use Zend\ServiceManager;
 
@@ -72,37 +75,34 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
     {
         $options = $serviceLocator->get('OAuth2Provider/Options/Server')->setFromArray($this->serverConfig);
 
-        // initialize storages
-        $storageFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/StorageFactory');
-        $storages = $storageFactory($options->getStorages(), $this->serverKey);
-
-        // store config
-        $configFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ConfigFactory');
-        $configs = $configFactory($options->getConfigs(), $this->serverKey);
-
-        // initialize grant types
-        $grantTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/GrantTypeFactory');
-        $grantTypes = $grantTypeFactory($options->getGrantTypes(), $this->serverKey);
-
-        // initialize response types
-        $responseTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ResponseTypeFactory');
-        $responseTypes = $responseTypeFactory($options->getResponseTypes(), $this->serverKey);
-
-        // initialize token type
-        $tokenTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/TokenTypeFactory');
-        $tokenTypes = $tokenTypeFactory($options->getTokenType(), $this->serverKey);
-
-        // initialize scope
-        $scopeTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ScopeTypeFactory');
-        $scope = $scopeTypeFactory($options->getScopeUtil(), $this->serverKey);
-
-        // initialize client assertion type
-        $clientAssertionTypeFactory = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ClientAssertionTypeFactory');
-        $clientAssertion = $clientAssertionTypeFactory($options->getClientAssertionType(), $this->serverKey);
-
-        // initialize the actual server
         $server = $options->getServerClass();
-        $server = new $server($storages, $configs, $grantTypes, $responseTypes, $tokenTypes, $scope, $clientAssertion);
+        $server = new $server();
+
+        if (!$server instanceof ServerInterface) {
+            throw new Exception\InvalidClassException(sprintf(
+                "Error: %s: Server '%s' should implement OAuth2Provider\ServerInterface",
+                __METHOD__,
+                get_class($server)
+            ));
+        }
+
+        $storage      = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/StorageFactory');
+        $config       = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ConfigFactory');
+        $grantType    = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/GrantTypeFactory');
+        $responseType = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ResponseTypeFactory');
+        $tokenType    = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/TokenTypeFactory');
+        $scopeType    = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ScopeTypeFactory');
+        $clientAssertionType = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ClientAssertionTypeFactory');
+
+        $server->setOAuth2Server(new OAuth2Server(
+            $storage($options->getStorages(), $this->serverKey),
+            $config($options->getConfigs(), $this->serverKey),
+            $grantType($options->getGrantTypes(), $this->serverKey),
+            $responseType($options->getResponseTypes(), $this->serverKey),
+            $tokenType($options->getTokenType(), $this->serverKey),
+            $scopeType($options->getScopeUtil(), $this->serverKey),
+            $clientAssertionType($options->getClientAssertionType(), $this->serverKey)
+        ));
 
         return $server;
     }

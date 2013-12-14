@@ -1,44 +1,72 @@
 <?php
 namespace OAuth2Provider;
 
-use OAuth2\Server as OAuth2Server;
-
 use Zend\ServiceManager;
 
-class Server extends OAuth2Server implements ServiceManager\ServiceManagerAwareInterface
+use OAuth2\Server as OAuth2Server;
+
+use ReflectionClass;
+
+class Server implements ServiceManager\ServiceManagerAwareInterface, ServerInterface
 {
+    protected $server;
     protected $serviceManager;
     protected $request;
     protected $response;
 
-    public function proxyHandleTokenRequest()
+    /**
+     * Forwards the method calls to OAuth2\Server
+     * @param string $method
+     * @param array  $args
+     * @return mixed
+     */
+    public function __call($method, $args)
     {
-        return parent::handleTokenRequest($this->getRequest(), $this->getResponse());
+        $callable = array($this->getOAuth2Server(), $method);
+        if (is_callable($callable)) {
+            return call_user_func_array($callable, $args);
+        }
     }
 
-    public function proxyVerifyResourceRequest($scope = null)
+    public function handleTokenRequest()
     {
-        return parent::verifyResourceRequest($this->getRequest(), $this->getResponse(), $scope);
+        return $this->getOAuth2Server()->handleTokenRequest($this->getRequest(), $this->getResponse());
     }
 
-    public function proxyGetAccessTokenData()
+    public function verifyResourceRequest($scope = null)
     {
-        return parent::getAccessTokenData($this->getRequest(), $this->getResponse());
+        return $this->getOAuth2Server()->verifyResourceRequest($this->getRequest(), $this->getResponse(), $scope);
     }
 
-    public function proxyGrantAccessToken()
+    public function getAccessTokenData()
     {
-        return parent::grantAccessToken($this->getRequest(), $this->getResponse());
+        return $this->getOAuth2Server()->getAccessTokenData($this->getRequest(), $this->getResponse());
     }
 
-    public function proxyHandleAuthorizeRequest($isAuthorized, $userId = null)
+    public function grantAccessToken()
     {
-        return parent::handleAuthorizeRequest($this->getRequest(), $this->getResponse(), $isAuthorized, $userId);
+        return $this->getOAuth2Server()->grantAccessToken($this->getRequest(), $this->getResponse());
     }
 
-    public function proxyValidateAuthorizeRequest()
+    public function handleAuthorizeRequest($isAuthorized, $userId = null)
     {
-        return parent::validateAuthorizeRequest($this->getRequest(), $this->getResponse());
+        return $this->getOAuth2Server()->handleAuthorizeRequest($this->getRequest(), $this->getResponse(), $isAuthorized, $userId);
+    }
+
+    public function validateAuthorizeRequest()
+    {
+        return $this->getOAuth2Server()->validateAuthorizeRequest($this->getRequest(), $this->getResponse());
+    }
+
+    public function getOAuth2Server()
+    {
+        return $this->server;
+    }
+
+    public function setOAuth2Server(OAuth2Server $server)
+    {
+        $this->server = $server;
+        return $this;
     }
 
     public function getRequest()
