@@ -15,7 +15,7 @@ return array(
                 'v1' => array(
                     'type' => 'literal',
                     'options' => array(
-                        'route' => '/v1',
+                        'route' => '/' . \OAuth2Provider\Version::API_VERSION,
                     ),
                     'child_routes' => array(
                         'request_token' => array(
