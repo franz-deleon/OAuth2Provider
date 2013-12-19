@@ -100,7 +100,9 @@ class StrategyBuilder
                     if (isset($this->availableStrategies[$strategyKey])) {
                         $strategyContainerKey = $strategyKey;
                         $strategy     = $this->availableStrategies[$strategyContainerKey];
-                        $strategyName = $this->concreteClasses[$strategyContainerKey];
+                        $strategyName = (is_string($strategyName) && class_exists($strategyName))
+                            ? $strategyName
+                            : $this->concreteClasses[$strategyContainerKey];
                         if (!isset($strategyOptions['storage'])) {
                             $strategyOptions['storage'] = $strategyContainerKey;
                         }

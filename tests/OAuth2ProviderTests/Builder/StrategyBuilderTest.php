@@ -357,6 +357,34 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests GrantTypeFactory->createService()
+     * @group test7aa
+     */
+    public function testInitStrategyFeatureWithParentAsConcreteGrantTypeAndKeyasExtendedConcrete()
+    {
+        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
+
+        // seed the storagecontainer
+        $storageContainer = $mainSm->get('OAuth2Provider/Containers/StorageContainer');
+        $storageContainer['server1']['user_credentials'] = new Assets\StorageUserCredentials();
+
+        $config = array(
+            'user_credentials' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
+        );
+
+        $subjects  = $config;
+        $serverKey = 'server1';
+        $container = $mainSm->get('OAuth2Provider/Containers/GrantTypeContainer');
+        $strategies = array('user_credentials' => 'OAuth2Provider/GrantTypeStrategy/UserCredentials');
+        $concreteClasses = array('user_credentials'   => 'OAuth2\GrantType\UserCredentials');
+        $interface = 'OAuth2\GrantType\GrantTypeInterface';
+        $builder = new StrategyBuilder($subjects, $serverKey, $strategies, $concreteClasses, $container, $interface);
+
+        $r = $builder->initStrategyFeature($mainSm);
+        $this->assertInstanceOf('OAuth2\GrantType\UserCredentials', $r['user_credentials']);
+    }
+
+    /**
+     * Tests GrantTypeFactory->createService()
      * @group test7ab
      */
     public function testInitStrategyFeatureWithNameAsAliasedKeyAndDirectArrayUse()
