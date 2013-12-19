@@ -143,10 +143,9 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests ServerAbstractFactory->createServiceWithName()
-     * @expectedException OAuth2Provider\Exception\InvalidClassException
      * @group test6
      */
-    public function testCreateServiceWithNameWillReturnException()
+    public function testCreateServiceWithNameWillOriginalServer()
     {
         $serverKey = uniqid();
 
@@ -174,5 +173,6 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $this->ServerAbstractFactory->canCreateServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
 
         $r = $this->ServerAbstractFactory->createServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
+        $this->assertInstanceOf('OAuth2\Server', $r);
     }
 }

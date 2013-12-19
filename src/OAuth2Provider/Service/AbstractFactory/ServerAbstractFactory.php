@@ -78,14 +78,6 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $server = $options->getServerClass();
         $server = new $server();
 
-        if (!$server instanceof ServerInterface) {
-            throw new Exception\InvalidClassException(sprintf(
-                "Error: %s: Server '%s' should implement OAuth2Provider\ServerInterface",
-                __METHOD__,
-                get_class($server)
-            ));
-        }
-
         $storage      = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/StorageFactory');
         $config       = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ConfigFactory');
         $grantType    = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/GrantTypeFactory');
@@ -94,7 +86,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         $scopeType    = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ScopeTypeFactory');
         $clientAssertionType = $serviceLocator->get('OAuth2Provider/Service/ServerFeature/ClientAssertionTypeFactory');
 
-        $server->setOAuth2Server(new OAuth2Server(
+        $ouath2server = new OAuth2Server(
             $storage($options->getStorages(), $this->serverKey),
             $config($options->getConfigs(), $this->serverKey),
             $grantType($options->getGrantTypes(), $this->serverKey),
@@ -102,8 +94,13 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
             $tokenType($options->getTokenType(), $this->serverKey),
             $scopeType($options->getScopeUtil(), $this->serverKey),
             $clientAssertionType($options->getClientAssertionType(), $this->serverKey)
-        ));
+        );
 
-        return $server;
+        if ($server instanceof ServerInterface) {
+            $server->setOAuth2Server($ouath2server);
+            return $server;
+        }
+
+        return $ouath2server;
     }
 }
