@@ -17,7 +17,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.3.9",
         "zendframework/zendframework": ">=2.2.0",
         "bshaffer/oauth2-server-php": ">=1.0",
     },
