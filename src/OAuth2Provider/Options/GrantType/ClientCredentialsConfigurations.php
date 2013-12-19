@@ -13,6 +13,12 @@ class ClientCredentialsConfigurations extends TypeAbstract
 
     /**
      * Additional configurations
+     * Available configuration key
+     * <code>
+     * array(
+     *     'allow_credentials_in_request_body' => true,
+     * );
+     * </code>
      * @var array
      */
     protected $configs = array();

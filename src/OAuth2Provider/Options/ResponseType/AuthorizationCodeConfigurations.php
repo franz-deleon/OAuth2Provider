@@ -14,6 +14,12 @@ class AuthorizationCodeConfigurations extends TypeAbstract
     /**
      * Extra Configurations to pass
      * Optional
+     * <code>
+     * array(
+     *    'enforce_redirect'   => false,
+     *    'auth_code_lifetime' => 30,
+     * )
+     * </code>
      * @var array
      */
     protected $config = array();

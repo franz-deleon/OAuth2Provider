@@ -24,6 +24,13 @@ class AccessTokenConfigurations extends TypeAbstract
     /**
      * Extra configurations
      * Optional
+     * <code>
+     * array(
+     *    'token_type' => 'bearer',
+     *    'access_lifetime'        => 3600,
+     *    'refresh_token_lifetime' => 1209600,
+     * )
+     * </code>
      *
      * @var array
      */

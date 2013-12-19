@@ -13,6 +13,11 @@ class RefreshTokenConfigurations extends TypeAbstract
 
     /**
      * Additional configurations
+     * <code>
+     * array(
+     *    'always_issue_new_refresh_token' => false
+     * )
+     * </code>
      * @var string
      */
     protected $configs = array();
