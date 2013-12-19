@@ -2,6 +2,7 @@
 namespace OAuth2Provider\Service\Factory\ServerFeature;
 
 use OAuth2Provider\Builder\StrategyBuilder;
+use OAuth2Provider\Service\Factory\TokenTypeStrategy;
 use OAuth2Provider\Lib\Utilities;
 
 use Zend\ServiceManager;
@@ -13,7 +14,7 @@ class TokenTypeFactory implements ServiceManager\FactoryInterface
      * @var string
      */
     protected $availableStrategies = array(
-        'bearer' => 'OAuth2Provider/TokenTypeStrategy/Bearer',
+        TokenTypeStrategy\BearerFactory::IDENTIFIER => 'OAuth2Provider/TokenTypeStrategy/Bearer',
     );
 
     /**
@@ -21,7 +22,7 @@ class TokenTypeFactory implements ServiceManager\FactoryInterface
      * @var array
      */
     protected $concreteClasses = array(
-        'bearer' => 'OAuth2\TokenType\Bearer',
+        TokenTypeStrategy\BearerFactory::IDENTIFIER => 'OAuth2\TokenType\Bearer',
     );
 
     /**
