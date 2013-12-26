@@ -20,6 +20,9 @@ OAuth2Provider module integrates Brent Shaffer's [OAuth2 Server](https://github.
     - Create 'oauth2provider' config key in your application's module.config.php
     - Copy the contents from OAuth2Provider/config/module.config.php.dist or rename this file to module.config.php if you dont have an existing module.config.php. If copying, make sure to copy only the data inside the 'oauth2provider' config key.
     - Fill up the configuration with your own settings. Refer to oauth2provider.config.php for documentation.
+3. Define the main_server
+    - Under the `oauth2provider` config key should be a `main_server` configuration.
+    - Fill the `main_server` key with the custom server name you defined from step 2. The main_server will use the name `default` as the default name for a server key.
 
 3. Enable the OAuth2Provider module in your `application.config.php`
     ```php
@@ -357,3 +360,34 @@ return array(
     'controller' => 'OAuth2Provider\Controller\UserCredentialsController',
 );
 ```
+
+### Usage
+
+- You can access the server through the main Service Manager by:  
+    `$sm->get('oauth2provider.server.main');`  
+    or if you have a specific server key will be:  
+    `$sm->get('oauth2provider.server.CustomServer');`
+- You can also access each configuration (for example: 'grant_type') object by:  
+    `$sm->get('oauth2provider.server.main.grant_type.user_credentials');`
+- Access the server's Request object by:  
+    `$sm->get('oauth2provider.server.main.request');`
+- Access the server's Response object by:  
+    `$sm->get('oauth2provider.server.main.response');`
+
+### Routing
+
+- The url below will automatically be created:
+    - Request end point: `http://[domain]/oauth2/v1/request`
+    - Resource end point: `http://[domain]/oauth2/v1/resource`
+    - Authorize end point: `http://[domain]/oauth2/v1/authorize`
+- Currently only a 2 legged with grant_type 'user_credentials' controller is available but you can apply your own controller by implementing interface `OAuth2Provider\Controller\ControllerInterface` and defining the controler in:
+
+    ```php
+    <?php
+    array(
+        'oauth2provider' => array(
+            'controller' => 'ApiOauth2Server\Controller\SomeCustomController'
+        )
+    )
+    ```
+    * the endpoints above will still be valid
