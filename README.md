@@ -4,36 +4,36 @@ OAuth2Provider module integrates Brent Shaffer's [OAuth2 Server](https://github.
 
 ## Installation
 
-    1. Easiest is through composer.
-        ```sh
-        php composer.phar require franz-deleon/fdl-oauth2-provider
-        ```
-        or in composer.json
-        ```
-        "require": {
-            "franz-deleon/fdl-oauth2-provider": "dev-master"
-        }
-        ```
-        then run `composer update`
+1. Easiest is through composer.
+    ```sh
+    php composer.phar require franz-deleon/fdl-oauth2-provider
+    ```
+    or in composer.json
+    ```
+    "require": {
+        "franz-deleon/fdl-oauth2-provider": "dev-master"
+    }
+    ```
+    then run `composer update`
 
-    2. Setup your configuration
-        - create 'oauth2provider' config key in your application's module.config.php
-        - copy the contents from OAuth2Provider/config/module.config.php.dist
-        - fill up the configuration with your own settings. Refer to oauth2provider.config.php for documentation
+2. Setup your configuration
+    - Create 'oauth2provider' config key in your application's module.config.php
+    - Copy the contents from OAuth2Provider/config/module.config.php.dist or rename this file to module.config.php if you dont have an existing module.config.php. If copying, make sure to copy only the data inside the 'oauth2provider' config key.
+    - Fill up the configuration with your own settings. Refer to oauth2provider.config.php for documentation.
 
-    3. Enable the OAuth2Provider module in your `application.config.php`
-        ```php
-        return array(
-            'modules' => array(
-                'OAuth2Provider',
-            ),
-            [...]
-        ```
+3. Enable the OAuth2Provider module in your `application.config.php`
+    ```php
+    return array(
+        'modules' => array(
+            'OAuth2Provider',
+        ),
+        [...]
+    ```
 
 ## Configuration Options
 
-    You can also view the configuration documentation in `configs/oauth2provider.config.php`
-    ```php
+You can also view the configuration documentation in `configs/oauth2provider.config.php`. Each configuration section has its own config options that can be viewed separately in `OAuth2Provider\Options\*`
+```php
 <?php
 return array(
     /**
@@ -356,4 +356,4 @@ return array(
      */
     'controller' => 'OAuth2Provider\Controller\UserCredentialsController',
 );
-    ```
+```
