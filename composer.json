@@ -3,8 +3,9 @@
     "type": "library",
     "description": "ZF2 OAuth2 Provider module",
     "keywords": [
-        "Gateway Manager",
-        "Zend Framework",
+        "OAuth2",
+        "OAuth2 Module",
+        "Zend Framework 2",
         "zf2"
     ],
     "homepage": "https://github.com/franz-deleon/FdlOAuth2Provider",
