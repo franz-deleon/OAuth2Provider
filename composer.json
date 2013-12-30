@@ -6,7 +6,7 @@
         "OAuth2",
         "OAuth2 Module",
         "Zend Framework 2",
-        "zf2"
+        "zf2 module"
     ],
     "homepage": "https://github.com/franz-deleon/OAuth2Provider",
     "license": "MIT",
@@ -19,8 +19,11 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.9",
-        "zendframework/zendframework": ">=2.2.0",
-        "bshaffer/oauth2-server-php": ">=1.1"
+        "bshaffer/oauth2-server-php": "~1.1",
+        "zendframework/zend-mvc": "~2.1",
+        "zendframework/zend-servicemanager": "~2.1",
+        "zendframework/zend-stdlib": "~2.1",
+        "zendframework/zend-view": "~2.1"
     },
     "autoload": {
         "psr-0": {
