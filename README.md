@@ -52,18 +52,21 @@ return array(
      * if you have no idea what an OAuth 'server' is :)
      *
      * In a nutshell, all you have to do is define your storages in the 'storages' configuration.
+     * (Please look at module.config.php.dist for a template example)
      *
      * The available configuration keys provided for 'servers' are:
      *
      * a. storages
      * b. configs
-     * c. grant_types
-     * d. response_types
-     * e. token_type
-     * f. scope_util
-     * g. client_assertion_type
+     * c. server_class
+     * d. grant_types
+     * e. response_types
+     * f. token_type
+     * g. scope_util
+     * h. client_assertion_type
      *
      * You can view the list of configurations in: OAuth2Provider\Options\ServerConfigurations
+     * You can also define multiple server keys for different configurations.
      */
     'servers' => array(
         // *********************************************************************************
@@ -71,11 +74,26 @@ return array(
         //                             DO NOT USE AS IS!!
         // *********************************************************************************
 
-        // Assigned server key name for each server you want to initialize
+        // Assigned server key name for each server you want to initialize.
+        //     - Configurations can be found in OAuth2Provider\Options\ServerConfigurations
+        //     - The servers are initialized by OAuth2Provider\Service\AbstractFactory\ServerAbstractFactory
+        //
+        // Rename to 'default' if you want to set as the default server configuration
+        // then you will be able to access it as:
+        // <code>
+        // $sm->get('oauth2provider.server.main');
+        // </code>
+        //
+        // Otherwise, you can access the server by:
+        // <code>
+        // $sm->get('oauth2provider.server.my_custom_server_key');
+        // </code>
+        //
         'my_custom_server_key' => array(
+
              // a. Storages - A key where to define the OAuth2 storages to be implemented.
-             //    The 'storages' key is managed by Service\Factory\ServerFeature\StorageFactory
-             //    and initialized storages are stored in container Container\StorageContainer.
+             //    - The 'storages' key is initialized by Service\Factory\ServerFeature\StorageFactory
+             //    - Initialized storages are stored in container Container\StorageContainer
              //
              //    List of supported storages (please refer to OAuth2\Storage):
              //
@@ -87,6 +105,7 @@ return array(
              //    6. 'user_credentials'
              //    7. 'jwt_bearer'
              //    8. 'scope'
+             //
             'storages' => array(
                 // *********************************************************
                 // ** Bellow are variances on how you can define a storage
@@ -107,9 +126,10 @@ return array(
                 }
             ),
 
-            // b. Configs - A key for optional configuration overrides
-            //    The 'configs' key is managed by Service\Factory\ServerFeature\ConfigFactory
-            //    and initialized configs are stored in container Container\ConfigContainer.
+            // b. Configs - A key for optional OAuth2 server configuration overrides.
+            //    - The 'configs' key is initialized by Service\Factory\ServerFeature\ConfigFactory
+            //    - Initialized configs are stored in container Container\ConfigContainer
+            //
             //    The list below shows the available and default configuration settings:
             'configs' => array(
                 'access_lifetime'            => 3600,
@@ -122,16 +142,19 @@ return array(
                 'allow_credentials_in_request_body' => true,
             ),
 
+            // c. Server Class - The concrete server class where the OAuth2 server is initialized.
+            //    You can override this by providing an fqns classname.
+            //
+            //    Defaults to: OAuth2Provider\Server
+            'server_class' => 'OAuth2Provider\Server',
 
             // ****************************************************************************************************************************
-            // ** Config variations are applied for 'grant_types', 'response_types', 'token_type', 'scope_util', 'client_assertion_type' **
+            // ** Optional config variations below are applied for 'grant_types', 'response_types', 'token_type', 'scope_util', 'client_assertion_type' **
             //
             // The config options are backed by a mapper class that supports configurations with different variations
-            // or config formats for flexibility. As an example for the different variations below, a 'user_credentials' key is used for
-            // demonstration on application of the 'grant_type' strategy.
+            // or config formats for flexibility. As an example for the different variations that you will see below, a 'user_credentials'
+            // key is used for demonstration on application of the 'grant_type' strategy.
             //
-            // Again, the variations example below also applies for any strategies under the following server keys:
-            // 'grant_types', 'response_types', 'token_type', 'scope_util' and 'client_assertion_type'
             // ****************************************************************************************************************************
             'grant_types' => array(
                 // a. Using 'user_credentials' as hash key with a specific user storage
@@ -169,26 +192,30 @@ return array(
                 'user_credentials',
             ),
             // ************************************************************************************************************************
-            // *** End of VARIATIONS example
+            // *** End of optional config variation example
+            // ***
+            // *** Again, the config variations above can be applied to the following strategies below
             // ************************************************************************************************************************
 
-            // c. Grant Types - A key for Grant Type configurations
-            //    The 'grant_types' key is managed by Service\Factory\ServerFeature\GrantTypeFactory
-            //    and initialized objects are stored in container Container\GrantTypeContainer.
+            // d. Grant Types - A key for Grant Type configurations
+            //    - The 'grant_types' key is initialized by Service\Factory\ServerFeature\GrantTypeFactory
+            //    - Initialized objects are stored in container Container\GrantTypeContainer.
+            //    - The configuration objects can be found in OAuth2Provider\Options\GrantType\*
             //
-            //    The list below shows the available grant types and usages:
+            //    The list below shows the available grant types strategies and usages:
             //
             //    1. authorization_code
             //    2. client_credentials
             //    3. refresh_token
             //    4. user_credentials
+            //
             'grant_types' => array(
                 // 1. authorization_code strategy
                 array(
                     'name' => 'authorization_code',
                     // list of available options:
                     'options' => array(
-                        // *_storage are mapped automatically using the 'storages' config. Use only if using a unique storage
+                        // *_storage are mapped automatically to the defined 'storages' config. Use only if using a unique storage.
                         'authorization_code_storage' => 'OAuth2ProviderTests\Assets\Storage\AuthorizationCodeStorage',
                     ),
                 ),
@@ -197,7 +224,7 @@ return array(
                     'name' => 'client_credentials',
                     // list of available options:
                     'options' => array(
-                        // *_storage are mapped automatically using the 'storages' config. Use only if using a unique storage
+                        // *_storage are mapped automatically to the defined 'storages' config. Use only if using a unique storage.
                         'client_credentials_storage' => 'OAuth2ProviderTests\Assets\Storage\ClientCredentialsStorage',
                         // list of available configs:
                         'configs' => array(
@@ -210,7 +237,7 @@ return array(
                     'name' => 'refresh_token',
                     // list of available options:
                     'options' => array(
-                        // *_storage are mapped automatically using the 'storages' config. Use only if using a unique storage
+                        // *_storage are mapped automatically to the defined 'storages' config. Use only if using a unique storage.
                         'refresh_token_storage' => 'OAuth2ProviderTests\Assets\Storage\RefreshTokenStorage',
                         // list of available configs:
                         'configs' => array(
@@ -223,31 +250,33 @@ return array(
                     'name' => 'user_credentials',
                     // list of available options:
                     'options' => array(
-                        // *_storage are mapped automatically using the 'storages' config. Use only if using a unique storage
+                        // *_storage are mapped automatically to the defined 'storages' config. Use only if using a unique storage.
                         'user_credentials_storage' => 'OAuth2ProviderTests\Assets\Storage\UserCredentialsStorage',
                     ),
                 ),
             ),
 
-            // d. Response Types
-            //    The 'response_types' key is managed by Service\Factory\ServerFeature\ResponseTypeFactory
-            //    and initialized objects are stored in container Container\ResponseTypeContainer.
+            // e. Response Types
+            //    - The 'response_types' key is initialized by Service\Factory\ServerFeature\ResponseTypeFactory
+            //    - Initialized objects are stored in container Container\ResponseTypeContainer.
+            //    - The configuration objects can be found in OAuth2Provider\Options\ResponseType\*
             //
             //    The list below shows the available response types strategies and usages:
             //
             //    1. access_token
             //    2. authorization_code
+            //
             'response_types' => array(
                 // 1. access_token
                 array(
                     'name' => 'access_token',
                     // list of available options:
                     'options' => array(
-                        // *_storage are mapped automatically using the 'storages' config. Use only if using a unique storage
+                        // *_storage are mapped automatically to the defined 'storages' config. Use only if using a unique storage.
                         'token_storage'   => 'OAuth2ProviderTests\Assets\Storage\AccessTokenStorage',
                         'refresh_storage' => 'OAuth2ProviderTests\Assets\Storage\RefreshTokenStorage',
                         // list of available configs:
-                        'config' => array(
+                        'configs' => array(
                             'token_type'             => 'bearer',
                             'access_lifetime'        => 3600,
                             'refresh_token_lifetime' => 1209600,
@@ -259,9 +288,10 @@ return array(
                     'name' => 'authorization_code',
                     // list of available options:
                     'options' => array(
-                        // *_storage are mapped automatically using the 'storages' config. Use only if using a unique storage
+                        // *_storage are mapped automatically to the defined 'storages' config. Use only if using a unique storage.
                         'authorization_code_storage' => 'OAuth2ProviderTests\Assets\Storage\AuthorizationCodeStorage',
-                        'config' => array(
+                        // list of available configs:
+                        'configs' => array(
                             'enforce_redirect'   => false,
                             'auth_code_lifetime' => 30,
                         ),
@@ -269,13 +299,15 @@ return array(
                 ),
             ),
 
-            // e. Token Types
-            //    The 'token_type' key is managed by Service\Factory\ServerFeature\TokenTypeFactory
-            //    and initialized objects are stored in container Container\TokenTypeContainer.
+            // f. Token Types
+            //    - The 'token_type' key is initialized by Service\Factory\ServerFeature\TokenTypeFactory
+            //    - Initialized objects are stored in container Container\TokenTypeContainer.
+            //    - The configuration objects can be found in OAuth2Provider\Options\TokenType\*
             //
             //    The list below shows the available Token type(s) strategies and usages:
             //
             //    1. bearer
+            //
             'token_type' => array(
                 // 1. bearer
                 'name' => 'bearer',
@@ -289,13 +321,15 @@ return array(
                 ),
             ),
 
-            // f. Scope Util
-            //    The 'scope_util' key is managed by Service\Factory\ServerFeature\ScopeTypeFactory
-            //    and initialized objects are stored in container Container\ScopeTypeContainer.
+            // g. Scope Util
+            //    - The 'scope_util' key is initialized by Service\Factory\ServerFeature\ScopeTypeFactory
+            //    - Initialized objects are stored in container Container\ScopeTypeContainer.
+            //    - The configuration objects can be found in OAuth2Provider\Options\ScopeType\*
             //
             //    The list below shows the available Scope Util type(s) strategies and usages:
             //
             //    1. scope
+            //
             'scope_util' => array(
                 // 1. scope
                 'name' => 'scope',
@@ -315,19 +349,21 @@ return array(
                 ),
             ),
 
-            // g. Client Assertion Type
-            //    The 'client_assertion_type' key is managed by Service\Factory\ServerFeature\ClientAssertionTypeFactory
-            //    and initialized objects are stored in container Container\ClientAssertionTypeContainer.
+            // h. Client Assertion Type
+            //    - The 'client_assertion_type' key is initialized by Service\Factory\ServerFeature\ClientAssertionTypeFactory
+            //    - Initialized objects are stored in container Container\ClientAssertionTypeContainer.
+            //    - The configuration objects can be found in OAuth2Provider\Options\ClientAssertionType\*
             //
             //    The list below shows the available Client Assertion type(s) strategies and usages:
             //
             //    1. http_basic
+            //
             'client_assertion_type' => array(
                 // 1. http_basic
                 'name' => 'http_basic',
                 // list of available options:
                 'options' => array(
-                    // *_storage are mapped automatically using the 'storages' config. Use only if using a unique storage
+                    // *_storage are mapped automatically to the defined 'storages' config. Use only if using a unique storage.
                     'client_credentials_storage' => 'OAuth2ProviderTests\Assets\Storage\ClientCredentialsStorage',
                     // list of available configs:
                     'configs' => array(
@@ -354,6 +390,7 @@ return array(
 
     /**
      * Controller
+     * Contains the routes to server endpoints
      *
      * Define which controller to use:
      */
@@ -366,7 +403,7 @@ return array(
 - You can access the server through the main Service Manager by:  
     `$sm->get('oauth2provider.server.main');`  
     or if you have a specific server key will be:  
-    `$sm->get('oauth2provider.server.CustomServer');`
+    `$sm->get('oauth2provider.server.my_custom_server_key');`
 - You can also access each configuration (for example: 'grant_type') object by:  
     `$sm->get('oauth2provider.server.main.grant_type.user_credentials');`
 - Access the server's Request object by:  
