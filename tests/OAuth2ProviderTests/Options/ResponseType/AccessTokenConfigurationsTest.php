@@ -79,24 +79,24 @@ class AccessTokenConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenConfigurations->getConfig()
+	 * Tests AccessTokenConfigurations->getConfigs()
 	 */
-    public function testGetConfig()
+    public function testGetConfigs()
     {
-        $r = $this->AccessTokenConfigurations->getConfig(/* parameters */);
+        $r = $this->AccessTokenConfigurations->getConfigs(/* parameters */);
         $this->assertInternalType('array', $r);
     }
 
     /**
 	 * Tests AccessTokenConfigurations->setConfig()
 	 */
-    public function testSetConfig()
+    public function testSetConfigs()
     {
         $d = array('key' => 'val');
-        $s = $this->AccessTokenConfigurations->setConfig($d);
+        $s = $this->AccessTokenConfigurations->setConfigs($d);
         $this->assertSame($this->AccessTokenConfigurations, $s);
 
-        $r = $this->AccessTokenConfigurations->getConfig();
+        $r = $this->AccessTokenConfigurations->getConfigs();
         $this->assertEquals($d, $r);
     }
 }

@@ -44,7 +44,7 @@ class AuthorizationCodeFactory implements ServiceManager\FactoryInterface
                 ));
             }
 
-            return new $authorizationCodeClassName($authorizationCodeStorage, $options->getConfig());
+            return new $authorizationCodeClassName($authorizationCodeStorage, $options->getConfigs());
         };
     }
 }

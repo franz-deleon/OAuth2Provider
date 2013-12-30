@@ -34,7 +34,7 @@ class AccessTokenConfigurations extends TypeAbstract
      *
      * @var array
      */
-    protected $config = array();
+    protected $configs = array();
 
 	/**
      * @return the $tokenStorage
@@ -73,17 +73,17 @@ class AccessTokenConfigurations extends TypeAbstract
 	/**
      * @return the $config
      */
-    public function getConfig()
+    public function getConfigs()
     {
-        return $this->config;
+        return $this->configs;
     }
 
 	/**
      * @param multitype: $config
      */
-    public function setConfig(array $config)
+    public function setConfigs(array $configs)
     {
-        $this->config = $config;
+        $this->configs = $configs;
         return $this;
     }
 

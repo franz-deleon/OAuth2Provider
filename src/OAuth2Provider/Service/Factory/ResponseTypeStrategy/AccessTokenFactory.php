@@ -64,7 +64,7 @@ class AccessTokenFactory implements ServiceManager\FactoryInterface
                 ));
             }
 
-            return new $accessTokenClassName($tokenStorage, $refreshTokenStorage, $options->getConfig());
+            return new $accessTokenClassName($tokenStorage, $refreshTokenStorage, $options->getConfigs());
         };
     }
 }

@@ -63,21 +63,21 @@ class AuthorizationCodeConfigurationsTest extends \PHPUnit_Framework_TestCase
     /**
 	 * Tests AuthorizationCodeConfigurations->getConfig()
 	 */
-    public function testGetConfig()
+    public function testGetConfigs()
     {
-        $r = $this->AuthorizationCodeConfigurations->getConfig(/* parameters */);
+        $r = $this->AuthorizationCodeConfigurations->getConfigs(/* parameters */);
         $this->assertInternalType('array', $r);
     }
 
     /**
 	 * Tests AuthorizationCodeConfigurations->setConfig()
 	 */
-    public function testSetConfig()
+    public function testSetConfigs()
     {
-        $s = $this->AuthorizationCodeConfigurations->setConfig(array('config'));
+        $s = $this->AuthorizationCodeConfigurations->setConfigs(array('config'));
         $this->assertSame($this->AuthorizationCodeConfigurations, $s);
 
-        $r = $this->AuthorizationCodeConfigurations->getConfig();
+        $r = $this->AuthorizationCodeConfigurations->getConfigs();
         $this->assertSame(array('config'), $r);
     }
 }
