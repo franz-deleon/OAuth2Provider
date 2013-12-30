@@ -8,7 +8,7 @@
         "Zend Framework 2",
         "zf2"
     ],
-    "homepage": "https://github.com/franz-deleon/FdlOAuth2Provider",
+    "homepage": "https://github.com/franz-deleon/OAuth2Provider",
     "license": "MIT",
     "authors": [
         {
@@ -20,7 +20,7 @@
     "require": {
         "php": ">=5.3.9",
         "zendframework/zendframework": ">=2.2.0",
-        "bshaffer/oauth2-server-php": ">=1.0"
+        "bshaffer/oauth2-server-php": ">=1.1"
     },
     "autoload": {
         "psr-0": {
