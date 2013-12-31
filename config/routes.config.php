@@ -12,7 +12,7 @@ return array(
                 ),
             ),
             'child_routes' => array(
-                'v1' => array(
+                array(
                     'type' => 'literal',
                     'options' => array(
                         'route' => '/' . \OAuth2Provider\Version::API_VERSION,

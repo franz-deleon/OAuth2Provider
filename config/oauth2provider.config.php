@@ -356,4 +356,12 @@ return array(
      * Define which controller to use:
      */
     'controller' => 'OAuth2Provider\Controller\UserCredentialsController',
+
+    /**
+     * The api version.
+     * The api version will affect the routing.
+     * Defaults to 'v1' hence the url endpoint will be (as an example):
+     * http://[domain]/oauth2/v1/authorize
+     */
+    'version' => '',
 );
