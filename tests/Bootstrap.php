@@ -18,7 +18,7 @@ class Bootstrap
 {
     protected static $serviceManager;
 
-    public static function init()
+    public static function init($runBootstrap = false)
     {
         $zf2ModulePaths = array(dirname(dirname(__DIR__)));
         if (($path = static::findParentPath('vendor'))) {
@@ -41,9 +41,14 @@ class Bootstrap
         );
 
         $moduleloader = new ModuleLoader($config);
-        static::$serviceManager = $moduleloader->getServiceManager();
-    }
+        $serviceManager = $moduleloader->getServiceManager();
 
+        if ($runBootstrap == true) {
+            $serviceManager->get('Application')->bootstrap();
+        }
+
+        static::$serviceManager = $serviceManager;
+    }
 
     public static function chroot()
     {
@@ -55,10 +60,10 @@ class Bootstrap
      * @param $initialize Reinitialize the bootstrap
      * @return \Zend\ServiceManager\ServiceManager
      */
-    public static function getServiceManager($initialize = false)
+    public static function getServiceManager($initialize = false, $runBootstrap = false)
     {
         if (true == $initialize) {
-            static::init();
+            static::init($runBootstrap);
         }
         return static::$serviceManager;
     }

@@ -101,6 +101,11 @@ class ServerConfigurations extends AbstractOptions
      */
     protected $serverClass = 'OAuth2Provider\Server';
 
+    /**
+     * The version of the server
+     * @var string
+     */
+    protected $version;
 
 	/**
      * @return the $config
@@ -236,5 +241,21 @@ class ServerConfigurations extends AbstractOptions
     {
         $this->serverClass = $server;
         return $this;
+    }
+
+	/**
+     * @return the $version
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+	/**
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
     }
 }

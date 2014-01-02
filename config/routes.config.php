@@ -12,10 +12,16 @@ return array(
                 ),
             ),
             'child_routes' => array(
-                array(
-                    'type' => 'literal',
+                'version' => array(
+                    'type' => 'Segment',
                     'options' => array(
-                        'route' => '/' . \OAuth2Provider\Version::API_VERSION,
+                        'route' => '[/:version]',
+                        'constraints' => array(
+                            'version' => 'v[a-zA-Z0-9._-]+',
+                        ),
+                        'defaults' => array(
+                            'version' => null
+                        ),
                     ),
                     'child_routes' => array(
                         'request_token' => array(

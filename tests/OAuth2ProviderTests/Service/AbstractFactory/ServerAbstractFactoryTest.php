@@ -145,7 +145,7 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
      * Tests ServerAbstractFactory->createServiceWithName()
      * @group test6
      */
-    public function testCreateServiceWithNameWillOriginalServer()
+    public function testCreateServiceWithNameWillReturnOriginalServer()
     {
         $serverKey = uniqid();
 
@@ -162,6 +162,58 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
                             'user_credentials'
                         ),
                         'server_class' => 'OAuth2ProviderTests\Assets\Foo',
+                    ),
+                ),
+            ),
+        );
+
+        $sm->setService('Config', $oauthconfig);
+
+        // initialize
+        $this->ServerAbstractFactory->canCreateServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
+
+        $r = $this->ServerAbstractFactory->createServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
+        $this->assertInstanceOf('OAuth2\Server', $r);
+    }
+
+    /**
+     * Tests ServerAbstractFactory->createServiceWithName()
+     * @group test7
+     */
+    public function testCreateServiceWithNameWillReturnServerWithMultipleVersion()
+    {
+        $serverKey = uniqid();
+
+        $sm = Bootstrap::getServiceManager(true, true)->setAllowOverride(true);
+
+        // mock the route match
+        $routeMatch = new \Zend\Mvc\Router\RouteMatch(array('version' => 'v2'));
+        $sm->get('Application')->getMvcEvent()->setRouteMatch($routeMatch);
+
+        $oauthconfig = array(
+            'oauth2provider' => array(
+                'servers' => array(
+                    $serverKey => array(
+                        array(
+                            'storages' => array(
+                                'user_credentials' => new Assets\StorageUserCredentials(),
+                            ),
+                            'grant_types' => array(
+                                'user_credentials'
+                            ),
+                            'server_class' => 'OAuth2ProviderTests\Assets\Foo',
+                            'version' => 'v1',
+                        ),
+                        array(
+                            'storages' => array(
+                                'user_credentials' => new Assets\StorageUserCredentials(),
+                            ),
+                            'grant_types' => array(
+                                'user_credentials'
+                            ),
+                            'server_class' => 'OAuth2ProviderTests\Assets\Foo',
+                            'version' => 'v2',
+                        ),
                     ),
                 ),
             ),
