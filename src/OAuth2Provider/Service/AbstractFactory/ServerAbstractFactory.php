@@ -45,13 +45,20 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
         ) {
             $serverKey = $serverKeyMatch[1];
 
-            $serverConfigs = $serviceLocator->get('OAuth2Provider/Options/Configuration')->getServers();
+            $configs       = $serviceLocator->get('OAuth2Provider/Options/Configuration');
+            $serverConfigs = $configs->getServers();
             if (isset($serverConfigs[$serverKey])) {
                 $this->serverKey = $serverKey;
 
                 // checks for a version. If no version exists use the first server found
                 $mvcEvent = $serviceLocator->get('Application')->getMvcEvent();
-                $version  = $mvcEvent !== null ? $mvcEvent->getRouteMatch()->getParam('version') : null;
+                if (!empty($mvcEvent)) {
+                    $version = $mvcEvent->getRouteMatch()->getParam('version');
+                }
+                if (empty($version)) {
+                    $version = $configs->getMainVersion();
+                }
+
                 if (null !== $version) {
                     if (isset($serverConfigs[$serverKey]['version']) && $version === $serverConfigs[$serverKey]['version']) {
                         $this->serverConfig = $serverConfigs[$serverKey];

@@ -29,7 +29,7 @@ class Configuration extends AbstractOptions
      * The default api version
      * @var string
      */
-    protected $version = Version::API_VERSION;
+    protected $mainVersion;
 
 	/**
      * @return the $defaultServer
@@ -87,19 +87,17 @@ class Configuration extends AbstractOptions
     /**
      * @param the $apiVersion
      */
-    public function getVersion()
+    public function getMainVersion()
     {
-        return $this->version;
+        return $this->mainVersion;
     }
 
     /**
      * @param field_type $controller
      */
-    public function setVersion($version)
+    public function setMainVersion($version)
     {
-        if (!empty($version)) {
-            $this->version = $version;
-        }
+        $this->mainVersion = $version;
         return $this;
     }
 }

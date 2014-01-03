@@ -42,27 +42,39 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Tests ServerAbstractFactory->canCreateServiceWithName()
+     * @group test1
      */
     public function testCanCreateServiceWithName()
     {
-        $config = array(
-            'myconfig' => array(),
+        $serverKey = uniqid();
+
+        $sm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
+
+        $oauthconfig = array(
+            'oauth2provider' => array(
+                'servers' => array(
+                    $serverKey => array(
+                        'storages' => array(
+                            'user_credentials' => new Assets\StorageUserCredentials(),
+                        ),
+                        'grant_types' => array(
+                            'user_credentials'
+                        ),
+                        'server_class' => 'OAuth2ProviderTests\Assets\Foo',
+                    ),
+                ),
+            ),
         );
 
-        $configMock = $this->getMock('stdClass', array('getServers'));
-        $configMock->expects($this->once())
-            ->method('getServers')
-            ->will($this->returnValue($config));
+        $sm->setService('Config', $oauthconfig);
 
-        $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
-        $mainSm->setService('OAuth2Provider/Options/Configuration', $configMock);
-
-        $r = $this->ServerAbstractFactory->canCreateServiceWithName($mainSm, null, 'oauth2provider.server.myconfig');
+        $r = $this->ServerAbstractFactory->canCreateServiceWithName($sm, null, "oauth2provider.server.{$serverKey}");
         $this->assertTrue($r);
     }
 
     /**
      * Tests ServerAbstractFactory->canCreateServiceWithName()
+     * @group test2
      * @expectedException OAuth2Provider\Exception\InvalidServerException
      */
     public function testCanCreateServiceWithNameReturnException()
@@ -180,6 +192,46 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
      * Tests ServerAbstractFactory->createServiceWithName()
      * @group test7
      */
+    public function testCreateServiceWithNameWillMatchServerWithVersion()
+    {
+        $serverKey = uniqid();
+
+        $sm = Bootstrap::getServiceManager(true, true)->setAllowOverride(true);
+
+        // mock the route match
+        $routeMatch = new \Zend\Mvc\Router\RouteMatch(array('version' => 'v2'));
+        $sm->get('Application')->getMvcEvent()->setRouteMatch($routeMatch);
+
+        $oauthconfig = array(
+            'oauth2provider' => array(
+                'servers' => array(
+                    $serverKey => array(
+                        'storages' => array(
+                            'user_credentials' => new Assets\StorageUserCredentials(),
+                        ),
+                        'grant_types' => array(
+                            'user_credentials'
+                        ),
+                        'server_class' => 'OAuth2ProviderTests\Assets\Foo',
+                        'version' => 'v2',
+                    ),
+                ),
+            ),
+        );
+
+        $sm->setService('Config', $oauthconfig);
+
+        // initialize
+        $this->ServerAbstractFactory->canCreateServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
+
+        $r = $this->ServerAbstractFactory->createServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
+        $this->assertInstanceOf('OAuth2\Server', $r);
+    }
+
+    /**
+     * Tests ServerAbstractFactory->createServiceWithName()
+     * @group test8
+     */
     public function testCreateServiceWithNameWillReturnServerWithMultipleVersion()
     {
         $serverKey = uniqid();
@@ -216,6 +268,44 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
                         ),
                     ),
                 ),
+            ),
+        );
+
+        $sm->setService('Config', $oauthconfig);
+
+        // initialize
+        $this->ServerAbstractFactory->canCreateServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
+
+        $r = $this->ServerAbstractFactory->createServiceWithName($sm, '', "oauth2provider.server.{$serverKey}");
+        $this->assertInstanceOf('OAuth2\Server', $r);
+    }
+
+    /**
+     * Tests ServerAbstractFactory->createServiceWithName()
+     * @group test9
+     */
+    public function testCreateServiceWithNameWillMatchServerWithMainVersion()
+    {
+        $serverKey = uniqid();
+
+        $sm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
+
+        $oauthconfig = array(
+            'oauth2provider' => array(
+                'servers' => array(
+                    $serverKey => array(
+                        'storages' => array(
+                            'user_credentials' => new Assets\StorageUserCredentials(),
+                        ),
+                        'grant_types' => array(
+                            'user_credentials'
+                        ),
+                        'server_class' => 'OAuth2ProviderTests\Assets\Foo',
+                        'version' => 'v2',
+                    ),
+                ),
+                'main_server'  => $serverKey,
+                'main_version' => 'v2',
             ),
         );
 

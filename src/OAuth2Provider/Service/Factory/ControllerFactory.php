@@ -9,14 +9,6 @@ use Zend\ServiceManager;
 class ControllerFactory implements ServiceManager\FactoryInterface
 {
     /**
-     * List of available OAuth2 controllers
-     * @var array
-     */
-    protected $availableControllers = array(
-        'OAuth2Provider\Controller\UserCredentialsController',
-    );
-
-    /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator

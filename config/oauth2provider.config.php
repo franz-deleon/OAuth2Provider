@@ -361,18 +361,17 @@ return array(
     'main_server' => '',
 
     /**
+     * The main api version.
+     * Defaults to 'v1' hence the url endpoint will be (as an example):
+     * http://[domain]/oauth2/v1/authorize
+     */
+    'main_version' => '',
+
+    /**
      * Controller
      * Contains the routes to server endpoints
      *
      * Define which controller to use:
      */
     'controller' => 'OAuth2Provider\Controller\UserCredentialsController',
-
-    /**
-     * The api version.
-     * The api version will affect the routing.
-     * Defaults to 'v1' hence the url endpoint will be (as an example):
-     * http://[domain]/oauth2/v1/authorize
-     */
-    'version' => '',
 );
