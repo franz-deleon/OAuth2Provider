@@ -21,26 +21,27 @@ return array(
      * b. configs
      * c. server_class
      * d. version
-     * e. grant_types
-     * f. response_types
-     * g. token_type
-     * h. scope_util
-     * i. client_assertion_type
+     * e. controller
+     * f. grant_types
+     * g. response_types
+     * h. token_type
+     * i. scope_util
+     * j. client_assertion_type
      *
      * You can view the list of configurations in: OAuth2Provider\Options\ServerConfigurations
      * You can also define multiple server keys for different configurations.
      */
     'servers' => array(
         // *********************************************************************************
-        // This is for demonstration purposes only to show the server keys' usage variations.
+        // This is for demonstration purposes only to show the servers usage variations.
         //                             DO NOT USE AS IS!!
         // *********************************************************************************
 
-        // Assigned server key name for each server you want to initialize.
+        // The assigned server key name. Each server is required an array key to initialize.
         //     - Configurations can be found in OAuth2Provider\Options\ServerConfigurations
         //     - The servers are initialized by OAuth2Provider\Service\AbstractFactory\ServerAbstractFactory
         //
-        // Rename to 'default' or 'main' if you want to set as the default server configuration
+        // Rename to 'default' if you want to set as the default server configuration
         // then you will be able to access it as:
         // <code>
         // $sm->get('oauth2provider.server.main');
@@ -110,7 +111,7 @@ return array(
             //    Defaults to: OAuth2Provider\Server
             'server_class' => 'OAuth2Provider\Server',
 
-            // d. Version - The server version
+            // d. Version - The server version tag
             //    Version should always start with a 'v'
             //    example: v1, v1.1, v1.1.2
             //
@@ -120,8 +121,13 @@ return array(
             //    The above example access the server version 1 of the main server
             'version' => '',
 
+            // e. Controller - The specific controller to use for this server
+            //    Controller should be fqns
+            'controller' => '',
+
             // ****************************************************************************************************************************
-            // ** Optional config variations below are applied for 'grant_types', 'response_types', 'token_type', 'scope_util', 'client_assertion_type' **
+            // ** Optional config variations below are applied for configurations:
+            // ** 'grant_types', 'response_types', 'token_type', 'scope_util', 'client_assertion_type'
             //
             // The config options are backed by a mapper class that supports configurations with different variations
             // or config formats for flexibility. As an example for the different variations that you will see below, a 'user_credentials'
@@ -169,7 +175,7 @@ return array(
             // *** Again, the config variations above can be applied to the following strategies below
             // ************************************************************************************************************************
 
-            // e. Grant Types - A key for Grant Type configurations
+            // f. Grant Types - A key for Grant Type configurations
             //    - The 'grant_types' key is initialized by Service\Factory\ServerFeature\GrantTypeFactory
             //    - Initialized objects are stored in container Container\GrantTypeContainer.
             //    - The configuration objects can be found in OAuth2Provider\Options\GrantType\*
@@ -228,7 +234,7 @@ return array(
                 ),
             ),
 
-            // f. Response Types
+            // g. Response Types
             //    - The 'response_types' key is initialized by Service\Factory\ServerFeature\ResponseTypeFactory
             //    - Initialized objects are stored in container Container\ResponseTypeContainer.
             //    - The configuration objects can be found in OAuth2Provider\Options\ResponseType\*
@@ -271,7 +277,7 @@ return array(
                 ),
             ),
 
-            // g. Token Types
+            // h. Token Types
             //    - The 'token_type' key is initialized by Service\Factory\ServerFeature\TokenTypeFactory
             //    - Initialized objects are stored in container Container\TokenTypeContainer.
             //    - The configuration objects can be found in OAuth2Provider\Options\TokenType\*
@@ -293,7 +299,7 @@ return array(
                 ),
             ),
 
-            // h. Scope Util
+            // i. Scope Util
             //    - The 'scope_util' key is initialized by Service\Factory\ServerFeature\ScopeTypeFactory
             //    - Initialized objects are stored in container Container\ScopeTypeContainer.
             //    - The configuration objects can be found in OAuth2Provider\Options\ScopeType\*
@@ -321,7 +327,7 @@ return array(
                 ),
             ),
 
-            // i. Client Assertion Type
+            // j. Client Assertion Type
             //    - The 'client_assertion_type' key is initialized by Service\Factory\ServerFeature\ClientAssertionTypeFactory
             //    - Initialized objects are stored in container Container\ClientAssertionTypeContainer.
             //    - The configuration objects can be found in OAuth2Provider\Options\ClientAssertionType\*
@@ -361,17 +367,28 @@ return array(
     'main_server' => '',
 
     /**
-     * The main api version.
-     * Defaults to 'v1' hence the url endpoint will be (as an example):
-     * http://[domain]/oauth2/v1/authorize
+     * The main server version.
+     * Useful if you have multiple server definitions like below:
+     *
+     * <code>
+     * array(
+     *     'servers' => array(
+     *         'serverkey_1' => array('version' => 'v1'),
+     *         'serverkey_2' => array('version' => 'v2'),
+     *     ),
+     *     'main_version' => 'v2',
+     * )
+     * </code>
+     *
+     * Hence with the configuration above, a url endpoint with:
+     * http://[domain]/oauth2/authorize
+     * will automatically use 'serverkey_2'
      */
     'main_version' => '',
 
     /**
-     * Controller
+     * Default Controller to use if no controller is definded in server settings
      * Contains the routes to server endpoints
-     *
-     * Define which controller to use:
      */
-    'controller' => 'OAuth2Provider\Controller\UserCredentialsController',
+    'default_controller' => 'OAuth2Provider\Controller\UserCredentialsController',
 );

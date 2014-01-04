@@ -107,7 +107,13 @@ class ServerConfigurations extends AbstractOptions
      */
     protected $version;
 
-	/**
+    /**
+     * The controller the server should use
+     * @var string
+     */
+    protected $controller;
+
+    /**
      * @return the $config
      */
     public function getConfigs()
@@ -115,7 +121,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->configs;
     }
 
-	/**
+    /**
      * @param multitype: $config
      */
     public function setConfigs(array $configs)
@@ -124,7 +130,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $storage
      */
     public function getStorages()
@@ -132,7 +138,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->storages;
     }
 
-	/**
+    /**
      * @param multitype: $storage
      */
     public function setStorages(array $storages)
@@ -141,7 +147,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $grantTypes
      */
     public function getGrantTypes()
@@ -149,7 +155,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->grantTypes;
     }
 
-	/**
+    /**
      * @param multitype: $grantTypes
      */
     public function setGrantTypes(array $grantTypes)
@@ -158,7 +164,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $responseTypes
      */
     public function getResponseTypes()
@@ -166,7 +172,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->responseTypes;
     }
 
-	/**
+    /**
      * @param multitype: $responseTypes
      */
     public function setResponseTypes(array $responseTypes)
@@ -175,7 +181,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $tokeType
      */
     public function getTokenType()
@@ -183,7 +189,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->tokenType;
     }
 
-	/**
+    /**
      * @param field_type $tokenType
      */
     public function setTokenType($tokenType)
@@ -192,7 +198,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $scopeUtil
      */
     public function getScopeUtil()
@@ -200,7 +206,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->scopeUtil;
     }
 
-	/**
+    /**
      * @param field_type $scopeUtil
      */
     public function setScopeUtil($scopeUtil)
@@ -209,7 +215,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $clientAssertionType
      */
     public function getClientAssertionType()
@@ -217,7 +223,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->clientAssertionType;
     }
 
-	/**
+    /**
      * @param field_type $clientAssertionType
      */
     public function setClientAssertionType($clientAssertionType)
@@ -226,7 +232,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $server
      */
     public function getServerClass()
@@ -234,7 +240,7 @@ class ServerConfigurations extends AbstractOptions
         return $this->serverClass;
     }
 
-	/**
+    /**
      * @param string $server
      */
     public function setServerClass($server)
@@ -243,7 +249,7 @@ class ServerConfigurations extends AbstractOptions
         return $this;
     }
 
-	/**
+    /**
      * @return the $version
      */
     public function getVersion()
@@ -251,11 +257,29 @@ class ServerConfigurations extends AbstractOptions
         return $this->version;
     }
 
-	/**
+    /**
      * @param string $version
      */
     public function setVersion($version)
     {
         $this->version = $version;
+        return $this;
+    }
+
+    /**
+     * @return the $controller
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
+
+    /**
+     * @param string $controller
+     */
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+        return $this;
     }
 }

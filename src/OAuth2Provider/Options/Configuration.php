@@ -23,7 +23,7 @@ class Configuration extends AbstractOptions
      * The Default controller strategy to use
      * @var string
      */
-    protected $controller;
+    protected $defaultController;
 
     /**
      * The default api version
@@ -70,17 +70,17 @@ class Configuration extends AbstractOptions
 	/**
      * @return the $controller
      */
-    public function getController()
+    public function getDefaultController()
     {
-        return $this->controller;
+        return $this->defaultController;
     }
 
 	/**
      * @param field_type $controller
      */
-    public function setController($controller)
+    public function setDefaultController($controller)
     {
-        $this->controller = $controller;
+        $this->defaultController = $controller;
         return $this;
     }
 
