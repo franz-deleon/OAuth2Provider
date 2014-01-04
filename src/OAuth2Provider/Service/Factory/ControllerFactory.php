@@ -9,14 +9,6 @@ use Zend\ServiceManager;
 class ControllerFactory implements ServiceManager\FactoryInterface
 {
     /**
-     * List of available OAuth2 controllers
-     * @var array
-     */
-    protected $availableControllers = array(
-        'OAuth2Provider\Controller\UserCredentialsController',
-    );
-
-    /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
@@ -25,8 +17,31 @@ class ControllerFactory implements ServiceManager\FactoryInterface
     public function createService(ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
         $configuration = $serviceLocator->getServiceLocator()->get('OAuth2Provider/Options/Configuration');
-        $controller    = $configuration->getController();
-        $controller    = new $controller();
+
+        // check for a specific defined server controller
+        $servers   = $configuration->getServers();
+        $serverKey = $configuration->getMainServer();
+        if (isset($servers[$serverKey]['controller'])) {
+            $controller = $servers[$serverKey]['controller'];
+        } else {
+            $version = $configuration->getMainVersion();
+            if (isset($servers[$serverKey])) {
+                foreach ($servers[$serverKey] as $server) {
+                    // fix for php 5.3 bug which isset outputs true if var is string
+                    if (is_array($server) && isset($server['controller'])
+                        && (isset($server['version']) && $server['version'] === $version)
+                    ) {
+                        $controller = $server['controller'];
+                    }
+                }
+            }
+        }
+
+        if (empty($controller)) {
+            $controller = $configuration->getDefaultController();
+        }
+
+        $controller = new $controller();
 
         // check for valid controller
         if (!$controller instanceof ControllerInterface) {
