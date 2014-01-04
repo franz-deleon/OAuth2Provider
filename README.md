@@ -470,12 +470,12 @@ return array(
                     )
                 ),
             ),
-            'main_version' => v2,
+            'main_version' => 'v2',
         )
     )
     ```
-    - With the above config setup, an end point `http://[domain]/oauth2/request` will automatically point to 'v2'
-    - You should still be able to access version1 (v1) by specfyting the version in the url as such:  
+    - With the above config setup, an end point of `http://[domain]/oauth2/request` will automatically point to 'v2'
+    - You should still be able to access version1 (v1) by specifying the version in the url as such:  
     `http://[domain]/oauth2/v1/request` 
 
 - Currently only a 2 legged with grant_type 'user_credentials' controller is available but you can apply your own controller by implementing interface `OAuth2Provider\Controller\ControllerInterface` and defining the controler in:
