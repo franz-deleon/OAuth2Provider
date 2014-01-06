@@ -62,7 +62,7 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $pluginSM = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
             ->setMethods(array('getServiceLocator'))
             ->getMock();
-        $pluginSM->expects($this->once())
+        $pluginSM->expects($this->any())
             ->method('getServiceLocator')
             ->will($this->returnValue($mainSm));
 
@@ -78,6 +78,8 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serverKey = uniqid();
 
+        $mainSm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
+
         $config = array(
             'oauth2provider' => array(
                 'servers' => array(
@@ -89,13 +91,12 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $mainSm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
         $mainSm->setService('Config', $config);
 
         $pluginSM = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
             ->setMethods(array('getServiceLocator'))
             ->getMock();
-        $pluginSM->expects($this->once())
+        $pluginSM->expects($this->any())
             ->method('getServiceLocator')
             ->will($this->returnValue($mainSm));
 
@@ -110,6 +111,11 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreateServiceWithValidControllerUsesServerSpecificControllerOnMultiServers()
     {
         $serverKey = uniqid();
+
+        $mainSm = Bootstrap::getServiceManager(true, true)->setAllowOverride(true);
+
+        $routeMatch = new \Zend\Mvc\Router\RouteMatch(array('version' => 'v2'));
+        $mainSm->get('Application')->getMvcEvent()->setRouteMatch($routeMatch);
 
         $config = array(
             'oauth2provider' => array(
@@ -130,13 +136,12 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $mainSm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
         $mainSm->setService('Config', $config);
 
         $pluginSM = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')
             ->setMethods(array('getServiceLocator'))
             ->getMock();
-        $pluginSM->expects($this->once())
+        $pluginSM->expects($this->exactly(2))
             ->method('getServiceLocator')
             ->will($this->returnValue($mainSm));
 
@@ -153,6 +158,8 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $serverKey = uniqid();
 
+        $mainSm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
+
         $config = array(
             'oauth2provider' => array(
                 'servers' => array(
@@ -164,7 +171,6 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
-        $mainSm = Bootstrap::getServiceManager(true)->setAllowOverride(true);
         $mainSm->setService('Config', $config);
 
         $pluginSM = $this->getMockBuilder('Zend\ServiceManager\ServiceManager')

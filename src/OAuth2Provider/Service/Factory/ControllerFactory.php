@@ -24,7 +24,14 @@ class ControllerFactory implements ServiceManager\FactoryInterface
         if (isset($servers[$serverKey]['controller'])) {
             $controller = $servers[$serverKey]['controller'];
         } else {
-            $version = $configuration->getMainVersion();
+            $mvcEvent = $serviceLocator->getServiceLocator()->get('Application')->getMvcEvent();
+            if (!empty($mvcEvent)) {
+                $version = $mvcEvent->getRouteMatch()->getParam('version');
+            }
+            if (empty($version)) {
+                $version = $configuration->getMainVersion();
+            }
+
             if (isset($servers[$serverKey])) {
                 foreach ($servers[$serverKey] as $server) {
                     // fix for php 5.3 bug which isset outputs true if var is string

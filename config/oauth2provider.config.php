@@ -373,22 +373,26 @@ return array(
      * <code>
      * array(
      *     'servers' => array(
-     *         'serverkey_1' => array('version' => 'v1'),
-     *         'serverkey_2' => array('version' => 'v2'),
+     *         'serverkey_1' => array(
+     *             array('version' => 'v1'),
+     *             array('version' => 'v2'),
+     *         ),
      *     ),
+     *     'main_server'  => 'serverkey_1',
      *     'main_version' => 'v2',
      * )
      * </code>
      *
      * Hence with the configuration above, a url endpoint with:
      * http://[domain]/oauth2/authorize
-     * will automatically use 'serverkey_2'
+     * will automatically use 'serverkey_1' with version 2 ('v2')
      */
     'main_version' => '',
 
     /**
      * Default Controller to use if no controller is definded in server settings
-     * Contains the routes to server endpoints
+     * Contains the routes to server endpoints.
+     * Controller needs to be FQNS.
      */
     'default_controller' => 'OAuth2Provider\Controller\UserCredentialsController',
 );

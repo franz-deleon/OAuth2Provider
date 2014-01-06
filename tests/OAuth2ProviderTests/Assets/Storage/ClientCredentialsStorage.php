@@ -52,4 +52,9 @@ class ClientCredentialsStorage implements ClientCredentialsInterface
     {
 
     }
+
+    public function isPublicClient($client_id)
+    {
+
+    }
 }
