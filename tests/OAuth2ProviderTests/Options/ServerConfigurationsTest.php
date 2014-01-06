@@ -230,5 +230,45 @@ class ServerConfigurationsTest extends \PHPUnit_Framework_TestCase
         $r = $this->ServerConfigurations->getServerClass();
         $this->assertEquals('someClass', $r);
     }
+
+
+
+    /**
+     * Tests ServerConfigurations->getVersion()
+     */
+    public function testGetVersion()
+    {
+        $r = $this->ServerConfigurations->getVersion(/* parameters */);
+        $this->assertNull($r);
+    }
+
+    /**
+     * Tests ServerConfigurations->setVersion()
+     */
+    public function testSetVersion()
+    {
+        $this->ServerConfigurations->setVersion('v1');
+        $r = $this->ServerConfigurations->getVersion();
+        $this->assertEquals('v1', $r);
+    }
+
+    /**
+     * Tests ServerConfigurations->getController()
+     */
+    public function testGetController()
+    {
+        $r = $this->ServerConfigurations->getController(/* parameters */);
+        $this->assertNull($r);
+    }
+
+    /**
+     * Tests ServerConfigurations->setVersion()
+     */
+    public function testSetController()
+    {
+        $this->ServerConfigurations->setController('someController');
+        $r = $this->ServerConfigurations->getController();
+        $this->assertEquals('someController', $r);
+    }
 }
 

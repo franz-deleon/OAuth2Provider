@@ -29,6 +29,7 @@ class ContainerAbstractFactory implements ServiceManager\AbstractFactoryInterfac
         'scope_type'   => 'OAuth2Provider/Containers/ScopeTypeContainer',
         'storage'      => 'OAuth2Provider/Containers/StorageContainer',
         'token_type'   => 'OAuth2Provider/Containers/TokenTypeContainer',
+        'client_assertion_type' => 'OAuth2Provider/Containers/ClientAssertionContainer',
     );
 
     /**

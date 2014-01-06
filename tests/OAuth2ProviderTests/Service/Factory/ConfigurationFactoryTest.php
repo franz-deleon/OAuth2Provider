@@ -46,7 +46,7 @@ class ConfigurationFactoryTest extends \PHPUnit_Framework_TestCase
         $config = array(
             'oauth2provider' => array(
                 'servers' => array('OauthServer'),
-                'controller' => 'OauthController',
+                'default_controller' => 'OauthController',
                 'main_server' => 'client',
             ),
         );
@@ -56,7 +56,7 @@ class ConfigurationFactoryTest extends \PHPUnit_Framework_TestCase
 
         $configOption = $this->ConfigurationFactory->createService($mainSm);
         $this->assertEquals(array('OauthServer'), $configOption->getServers());
-        $this->assertEquals('OauthController', $configOption->getController());
+        $this->assertEquals('OauthController', $configOption->getDefaultController());
         $this->assertEquals('client', $configOption->getMainServer());
     }
 

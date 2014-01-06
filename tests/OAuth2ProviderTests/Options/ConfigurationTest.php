@@ -107,31 +107,52 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Configuration->getController()
+     * Tests Configuration->getDefaultController()
      */
-    public function testGetController()
+    public function testGetDefaultController()
     {
-        $r = $this->Configuration->getController(/* parameters */);
+        $r = $this->Configuration->getDefaultController(/* parameters */);
         $this->assertNull($r);
     }
 
     /**
-     * Tests Configuration->setController()
+     * Tests Configuration->setDefaultController()
      */
-    public function testSetController()
+    public function testSetDefaultController()
     {
-        $r = $this->Configuration->setController('con');
+        $r = $this->Configuration->setDefaultController('con');
         $this->assertSame($this->Configuration, $r);
     }
 
     /**
      * Tests Configuration->setController()
      */
-    public function testSetControllerReturnsExpected()
+    public function testSetDefaultControllerReturnsExpected()
     {
-        $this->Configuration->setController('con');
-        $r = $this->Configuration->getController();
+        $this->Configuration->setDefaultController('con');
+        $r = $this->Configuration->getDefaultController();
         $this->assertEquals('con', $r);
+    }
+
+    /**
+     * Tests Configuration->getMainVersion()
+     */
+    public function testGetMainVersion()
+    {
+        $r = $this->Configuration->getMainVersion();
+        $this->assertNull($r);
+    }
+
+    /**
+     * Tests Configuration->setMainVersion()
+     */
+    public function testSetMainVersion()
+    {
+        $r = $this->Configuration->setMainVersion('v1');
+        $this->assertSame($this->Configuration, $r);
+
+        $r = $this->Configuration->getMainVersion();
+        $this->assertEquals('v1', $r);
     }
 }
 
