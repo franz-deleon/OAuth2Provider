@@ -5,10 +5,10 @@
  *
  * Installation of this config file:
  * 
- * 1. Create your own server custom key by replacing 'my_custom_server_key' with your own
- * 2. Populate the server key with your custom configs (refer to oauth2provider.config.php)
+ * 1. Create your own server custom key by replacing 'default' with your own
+ * 2. Populate the server key with your custom configs (refer to oauth2provider.config.php or README->Configuration Options)
  * 3. Copy the oauth2provider key/data to module.config.php (there needs to be an own 'oauth2provider' config key)
-      or use this as your module.config.php if you dont have any
+      or use this as your module.config.php if you dont have any.
  */
 return array(
     'oauth2provider' => array(
@@ -16,18 +16,48 @@ return array(
             'default' => array(
                 'storages'              => array(), // required. Define at least 1 storage
                 'configs'               => array(), // optional
-                'server_class'          => array(), // optional
-                'version'               => array(), // optional
-                'controller'            => array(), // optional
+                'server_class'          => '',      // optional
+                'version'               => '',      // optional
+                'controller'            => '',      // optional
                 'grant_types'           => array(), // optional
                 'response_types'        => array(), // optional
                 'token_type'            => array(), // optional
                 'scope_util'            => array(), // optional
                 'client_assertion_type' => array(), // optional
             ),
+            /**
+             * Multiple server versions
+             * To create multiple server versions for 'default':
+            'default' => array(
+                array(
+                    'storages'              => array(), // required. Define at least 1 storage
+                    'configs'               => array(), // optional
+                    'server_class'          => '',      // optional
+                    'version'               => 'v1',    // required
+                    'controller'            => '',      // optional
+                    'grant_types'           => array(), // optional
+                    'response_types'        => array(), // optional
+                    'token_type'            => array(), // optional
+                    'scope_util'            => array(), // optional
+                    'client_assertion_type' => array(), // optional
+                ),
+                array(
+                    'storages'              => array(), // required. Define at least 1 storage
+                    'configs'               => array(), // optional
+                    'server_class'          => '',      // optional
+                    'version'               => 'v2',    // required
+                    'controller'            => '',      // optional
+                    'grant_types'           => array(), // optional
+                    'response_types'        => array(), // optional
+                    'token_type'            => array(), // optional
+                    'scope_util'            => array(), // optional
+                    'client_assertion_type' => array(), // optional
+                ),
+            ),
+            */
         ),
-        'main_server'  => '', // optional. Defaults to 'default' server key
-        'main_version' => '', // optional
+        'main_server'        => '', // optional. Defaults to 'default' server key
+        'main_version'       => '', // optional. Refer to Multiple Server Version example above
         'default_controller' => '', // required
     ),
 );
