@@ -19,7 +19,7 @@ OAuth2Provider module integrates Brent Shaffer's [OAuth2 Server](https://github.
 2. Setup your configuration
     - Create 'oauth2provider' config key in your application's module.config.php
     - Copy the contents from OAuth2Provider/config/module.config.php.dist or rename this file to module.config.php if you dont have an existing module.config.php. If copying, make sure to copy only the data inside the 'oauth2provider' config key.
-    - Fill up the configuration with your own settings. Refer to oauth2provider.config.php for documentation.
+    - Fill up the configuration with your own settings. Refer to Configuration Options for documentation below.
 3. Define the main_server
     - Under the `oauth2provider` config key should be a `main_server` configuration.
     - Fill the `main_server` key with the custom server name you defined from step 2. The main_server will use the name `default` as the default name for a server key.
@@ -51,21 +51,8 @@ return array(
      * In addition, refer to https://github.com/bshaffer/oauth2-server-php
      * if you have no idea what an OAuth 'server' is :)
      *
-     * In a nutshell, all you have to do is define your storages in the 'storages' configuration.
+     * In a nutshell, all you have to do is define your storages in the 'storages' configuration of your server.
      * (Please look at module.config.php.dist for a template example)
-     *
-     * The available configuration keys provided for 'servers' are:
-     *
-     * a. storages
-     * b. configs
-     * c. server_class
-     * d. version
-     * e. controller
-     * f. grant_types
-     * g. response_types
-     * h. token_type
-     * i. scope_util
-     * j. client_assertion_type
      *
      * You can view the list of configurations in: OAuth2Provider\Options\ServerConfigurations
      * You can also define multiple server keys for different configurations.
@@ -90,6 +77,19 @@ return array(
         // <code>
         // $sm->get('oauth2provider.server.my_custom_server_key');
         // </code>
+        //
+        // The available configuration keys provided for 'servers' are:
+        //
+        // a. storages
+        // b. configs
+        // c. server_class
+        // d. version
+        // e. controller
+        // f. grant_types
+        // g. response_types
+        // h. token_type
+        // i. scope_util
+        // j. client_assertion_type
         //
         'my_custom_server_key' => array(
 
@@ -148,7 +148,7 @@ return array(
             //    You can override this by providing an fqns classname.
             //
             //    Defaults to: OAuth2Provider\Server
-            'server_class' => 'OAuth2Provider\Server',
+            'server_class' => '',
 
             // d. Version - The server version tag
             //    Version should always start with a 'v'
@@ -456,6 +456,9 @@ return array(
     - Request end point: `http://[domain]/oauth2/request`
     - Resource end point: `http://[domain]/oauth2/resource`
     - Authorize end point: `http://[domain]/oauth2/authorize`
+    
+#### Multiple Server Versions
+
 - You can define specific and multiple version for your server:
 
     ```php
@@ -482,6 +485,7 @@ return array(
     - You should still be able to access version1 (v1) by specifying the version in the url as such:  
     `http://[domain]/oauth2/v1/request` 
 
+## Controllers
 - Currently only a 2 legged with grant_type 'user_credentials' controller is available but you can apply your own controller by implementing interface `OAuth2Provider\Controller\ControllerInterface` and defining the controler in:
 
     ```php
@@ -492,4 +496,4 @@ return array(
         )
     )
     ```
-    * the endpoints above will still be valid
+    * the endpoints/routing above will still be valid
