@@ -4,8 +4,15 @@ php:
   - 5.3
   - 5.4
   - 5.5
+  
+branches:
+  only:
+    - master
+    - develop
 
 before_install:
+  - curl -s https://getcomposer.org/installer | php
+  - php composer.phar install
   - cd tests
 
 script:
