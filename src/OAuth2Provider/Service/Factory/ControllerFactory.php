@@ -25,7 +25,7 @@ class ControllerFactory implements ServiceManager\FactoryInterface
             $controller = $servers[$serverKey]['controller'];
         } else {
             $mvcEvent = $serviceLocator->getServiceLocator()->get('Application')->getMvcEvent();
-            if (!empty($mvcEvent)) {
+            if (!empty($mvcEvent) && null !== $mvcEvent->getRouteMatch()) {
                 $version = $mvcEvent->getRouteMatch()->getParam('version');
             }
             if (empty($version)) {
