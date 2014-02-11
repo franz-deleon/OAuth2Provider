@@ -64,7 +64,7 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
 	 */
     public function testCreateClassReturnsObjectFromCallable()
     {
-        $r = Utilities::createClass('OAuth2ProviderTests\Assets\foo::bar');
+        $r = Utilities::createClass('OAuth2ProviderTests\Assets\Foo::bar');
         $this->assertInstanceOf('stdClass', $r);
     }
 

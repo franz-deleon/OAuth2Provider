@@ -13,8 +13,9 @@ before_install:
   - cd ..
   - git clone git://github.com/zendframework/ZendSkeletonApplication.git
   - cd ZendSkeletonApplication
-  - php composer.phar self-update
-  - php composer.phar require franz-deleon/fdl-oauth2-provider:dev-develop
+  - rm composer.json
+  - cp ../OAuth2Provider/travis.composer.json ./composer.json
+  - php composer.phar install --dev
   - cd vendor/franz-deleon/fdl-oauth2-provider/tests
 
 script:
