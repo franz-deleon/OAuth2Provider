@@ -39,6 +39,7 @@ class ControllerFactory implements ServiceManager\FactoryInterface
                         && (isset($server['version']) && $server['version'] === $version)
                     ) {
                         $controller = $server['controller'];
+                        break;
                     }
                 }
             }
