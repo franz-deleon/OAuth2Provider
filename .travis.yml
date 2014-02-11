@@ -7,16 +7,18 @@ php:
   
 branches:
   only:
-    - master
     - develop
 
 before_install:
-  - curl -s https://getcomposer.org/installer | php
-  - php composer.phar install
-  - cd tests
+  - cd ..
+  - git clone git://github.com/zendframework/ZendSkeletonApplication.git
+  - cd ZendSkeletonApplication
+  - php composer.phar self-update
+  - php composer.phar require franz-deleon/fdl-oauth2-provider:dev-develop
+  - cd vendor/franz-deleon/fdl-oauth2-provider/tests
 
 script:
-  - phpunit -c phpunit-simple.xml
+  - phpunit -c phpunit-travis.xml
   
 notifications:
   email:
