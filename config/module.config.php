@@ -81,7 +81,7 @@ return array(
             'OAuth2Provider\Service\AbstractFactory\ContainerAbstractFactory',
         ),
         'aliases' => array(
-            'oauth2provider.server.main' => 'OAuth2Provider/Service/MainServerFactory',
+            'oauth2provider.server.main' => 'OAuth2Provider/Service/Factory/MainServerFactory',
         ),
         'shared' => array(
             /** We do not share options as it is unique to each object **/
