@@ -52,7 +52,7 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
 
                 // checks for a version. If no version exists use the first server found
                 $mvcEvent = $serviceLocator->get('Application')->getMvcEvent();
-                if (!empty($mvcEvent) && null !== $mvcEvent->getRouteMatch()) {
+                if (isset($mvcEvent) && null !== $mvcEvent->getRouteMatch()) {
                     $version = $mvcEvent->getRouteMatch()->getParam('version');
                 }
                 if (empty($version)) {
@@ -60,12 +60,12 @@ class ServerAbstractFactory implements ServiceManager\AbstractFactoryInterface
                 }
 
                 if (null !== $version) {
-                    if (isset($serverConfigs[$serverKey]['version']) && $version === $serverConfigs[$serverKey]['version']) {
+                    if (!empty($serverConfigs[$serverKey]['version']) && $version === $serverConfigs[$serverKey]['version']) {
                         $this->serverConfig = $serverConfigs[$serverKey];
                         return true;
                     } else {
                         foreach ($serverConfigs[$serverKey] as $storage) {
-                            if (isset($storage['version']) && $storage['version'] === $version) {
+                            if (!empty($storage['version']) && $storage['version'] === $version) {
                                 $this->serverConfig = $storage;
                                 return true;
                             }
