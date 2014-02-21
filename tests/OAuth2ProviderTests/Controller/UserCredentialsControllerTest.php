@@ -81,7 +81,8 @@ class UserCredentialsControllerTest extends AbstractHttpControllerTestCase
             ->will($this->returnValue(new OAuth2Response($result)));
 
         $mainSm = $this->getApplicationServiceLocator()->setAllowOverride(true);
-        $mainSm->setService('oauth2provider.server.main', $serverMock);
+        // having set to server.default provides some sort if integration test
+        $mainSm->setService('oauth2provider.server.default', $serverMock);
 
         $this->dispatch('/oauth2/' . Version::API_VERSION . '/request', 'POST');
 
@@ -109,7 +110,8 @@ class UserCredentialsControllerTest extends AbstractHttpControllerTestCase
             ))));
 
         $mainSm = $this->getApplicationServiceLocator()->setAllowOverride(true);
-        $mainSm->setService('oauth2provider.server.main', $serverMock);
+        // having set to server.default provides some sort if integration test
+        $mainSm->setService('oauth2provider.server.default', $serverMock);
 
         $this->dispatch('/oauth2/' . Version::API_VERSION . '/resource', 'POST');
 
@@ -138,7 +140,7 @@ class UserCredentialsControllerTest extends AbstractHttpControllerTestCase
             ))));
 
         $mainSm = $this->getApplicationServiceLocator()->setAllowOverride(true);
-        $mainSm->setService('oauth2provider.server.main', $serverMock);
+        $mainSm->setService('oauth2provider.server.default', $serverMock);
 
         $this->dispatch('/oauth2/' . Version::API_VERSION . '/resource', 'POST');
 
@@ -168,7 +170,7 @@ class UserCredentialsControllerTest extends AbstractHttpControllerTestCase
             ))));
 
         $mainSm = $this->getApplicationServiceLocator()->setAllowOverride(true);
-        $mainSm->setService('oauth2provider.server.main', $serverMock);
+        $mainSm->setService('oauth2provider.server.default', $serverMock);
 
         $this->dispatch('/oauth2/' . Version::API_VERSION . '/resource', 'POST');
 
