@@ -460,14 +460,14 @@ return array(
     
 #### Multiple Server Versions
 
-- You can define specific and multiple version for your server:
+- You can define specific and multiple versions for your server:
 
     ```php
     <?php
     array(
         'oauth2provider' => array(
             'servers' => array(
-                'custom_server_1' => array(
+                'default' => array(
                     array(
                         [...]
                         'version' => 'v1'
@@ -493,7 +493,7 @@ return array(
     <?php
     array(
         'oauth2provider' => array(
-            'controller' => 'SomeModule\Controller\SomeCustomController'
+            'default_controller' => 'SomeModule\Controller\SomeCustomController'
         )
     )
     ```
