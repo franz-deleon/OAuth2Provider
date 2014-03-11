@@ -57,4 +57,15 @@ class ClientCredentialsStorage implements ClientCredentialsInterface
     {
 
     }
+
+    /**
+     * Get the scope associated with this client
+     *
+     * @return
+     * STRING the space-delineated scope list for the specified client_id
+     */
+    public function getClientScope($client_id)
+    {
+
+    }
 }

@@ -8,6 +8,7 @@ php:
 branches:
   only:
     - develop
+    - master
 
 before_install:
   - cd ..
@@ -15,7 +16,7 @@ before_install:
   - cd ZendSkeletonApplication
   - rm composer.json
   - cp ../OAuth2Provider/travis.composer.json ./composer.json
-  - php composer.phar install --dev
+  - php composer.phar install --dev --prefer-dist
   - cd vendor/franz-deleon/fdl-oauth2-provider/tests
 
 script:

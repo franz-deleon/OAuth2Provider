@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.org/franz-deleon/OAuth2Provider.png?branch=develop)](https://travis-ci.org/franz-deleon/OAuth2Provider)
 # OAuth 2 Provider Module for Zend Framework 2
+[![Build Status](https://travis-ci.org/franz-deleon/OAuth2Provider.png?branch=master)](https://travis-ci.org/franz-deleon/OAuth2Provider)
+[![Build Status](https://travis-ci.org/franz-deleon/OAuth2Provider.png?branch=develop)](https://travis-ci.org/franz-deleon/OAuth2Provider)  
 
 OAuth2Provider module integrates Brent Shaffer's [OAuth2 Server](https://github.com/bshaffer/oauth2-server-php) with Zend Framework 2 easily.
 
