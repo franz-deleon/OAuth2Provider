@@ -11,12 +11,13 @@ branches:
     - master
 
 before_install:
+  - .travis/git_switch_branch.sh
   - cd ..
   - git clone git://github.com/zendframework/ZendSkeletonApplication.git
   - cd ZendSkeletonApplication
   - rm composer.json
-  - cp ../OAuth2Provider/travis.composer.json ./composer.json
-  - php composer.phar install --dev --prefer-dist
+  - cp ../OAuth2Provider/.travis/travis.composer.json ./composer.json
+  - composer install --dev --prefer-source
   - cd vendor/franz-deleon/fdl-oauth2-provider/tests
 
 script:

@@ -10,6 +10,6 @@
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.2.*",
-        "franz-deleon/fdl-oauth2-provider": "dev-develop"
+        "franz-deleon/fdl-oauth2-provider": "dev-%branch%"
     }
 }
