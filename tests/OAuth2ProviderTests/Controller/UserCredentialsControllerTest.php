@@ -40,13 +40,6 @@ class UserCredentialsControllerTest extends AbstractHttpControllerTestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests UserCredentialsController->authorizeAction()
      * @group test1
      */
