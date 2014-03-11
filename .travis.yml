@@ -11,10 +11,8 @@ branches:
     - master
 
 before_install:
-  - env
   - chmod 777 .travis/travis.composer.json
   - sed -i "s/%branch%/${TRAVIS_BRANCH}/g" .travis/travis.composer.json
-  - cat .travis/travis.composer.json
   - cd ..
   - git clone git://github.com/zendframework/ZendSkeletonApplication.git
   - cd ZendSkeletonApplication
