@@ -24,7 +24,19 @@ OAuth2Provider module integrates Brent Shaffer's [OAuth2 Server](https://github.
     - Fill up the configuration with your own settings. Refer to Configuration Options for documentation below.
 3. Define the main_server
     - Under the `oauth2provider` config key should be a `main_server` configuration.
-    - Fill the `main_server` key with the custom server name you defined from step 2. The main_server will use the name `default` as the default name for a server key.
+    - Fill the `main_server` key with the custom server name you defined from step 2. The main_server will use the name `default` as the default name for a server key.  
+
+        Example:  
+        ```php
+        array(
+            'oauth2provider' => array(
+                'servers' => array(
+                    'MyUniqueServerName' => array([...])
+                ),
+                'main_server' => 'MyUniqueServerName', // <-- unique key should be defined here
+            )
+        )
+        ```
 
 3. Enable the OAuth2Provider module in your `application.config.php`
     ```php
@@ -115,10 +127,10 @@ return array(
                 // ** Bellow are variances on how you can define a storage
                 // *********************************************************
 
-                // a. Initializing using a ServiceManager element.
-                //    Example of how you can initialize a storage using a Servicemanager
-                //    where hash has a combination of storage key 'access_token' and sm key 'SomeStorageServiceManagerFactory'
-                'authorization_code' => 'SomeStorageServiceManagerFactory',
+                // a. Initializing using a ZF2 ServiceManager service.
+                //    Example of how you can initialize a storage using a service
+                //    where hash has a combination of storage key 'access_token' and zf2 service key 'SomeStorageServiceManagerFactoryService'
+                'authorization_code' => 'SomeStorageServiceManagerFactoryService',
                 // b. Initializing using a FQNS (Fully Qualified Namespace) string
                 'user_credentials' => 'OAuth2ProviderTests\Assets\Storage\UserCredentialsStorage',
                 // c. Initializing using a PHP object instance
@@ -203,8 +215,8 @@ return array(
                 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
                 // f. Same as above but using a 'user_credentials' key for faster mapping
                 'user_credentials' => 'OAuth2ProviderTests\Assets\GrantTypeWithParentUserCredentials',
-                // g. An existing Service Manager element that may be defined in getServiceConfig() or module.config.php under 'services'
-                'user_credentials' => 'AServiceManagerElementFactory',
+                // g. An existing ZF2 Service Manager service that you have defined in getServiceConfig() or module.config.php under 'services'
+                'user_credentials' => 'AServiceManagerServiceFactory',
                 // h. For the lazy, You can just add, 'user_credentials' as an array value.
                 //    The module will map/reuse the user_credentials storage that you defined in 'storages'
                 //    and inject it to the default concrete class automatically.
