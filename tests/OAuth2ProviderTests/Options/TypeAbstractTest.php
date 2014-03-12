@@ -39,14 +39,6 @@ class TypeAbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
      * Tests TypeAbstract->getStorage()
      */
     public function testGetStorage()

@@ -34,13 +34,6 @@ class ServerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests ServerAbstractFactory->canCreateServiceWithName()
      * @group test1
      */

@@ -9,35 +9,29 @@ use OAuth2Provider\Options\ResponseType\AccessTokenConfigurations;
 class AccessTokenConfigurationsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var AccessTokenConfigurations
-	 */
+     * @var AccessTokenConfigurations
+     */
     private $AccessTokenConfigurations;
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
         $this->AccessTokenConfigurations = new AccessTokenConfigurations(/* parameters */);
     }
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->AccessTokenConfigurations = null;
         parent::tearDown();
     }
-    /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
 
     /**
-	 * Tests AccessTokenConfigurations->getTokenStorage()
-	 */
+     * Tests AccessTokenConfigurations->getTokenStorage()
+     */
     public function testGetTokenStorage()
     {
         $r = $this->AccessTokenConfigurations->getTokenStorage(/* parameters */);
@@ -45,8 +39,8 @@ class AccessTokenConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenConfigurations->setTokenStorage()
-	 */
+     * Tests AccessTokenConfigurations->setTokenStorage()
+     */
     public function testSetTokenStorage()
     {
 
@@ -58,8 +52,8 @@ class AccessTokenConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenConfigurations->getRefreshStorage()
-	 */
+     * Tests AccessTokenConfigurations->getRefreshStorage()
+     */
     public function testGetRefreshStorage()
     {
         $r = $this->AccessTokenConfigurations->getRefreshStorage(/* parameters */);
@@ -67,8 +61,8 @@ class AccessTokenConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenConfigurations->setRefreshStorage()
-	 */
+     * Tests AccessTokenConfigurations->setRefreshStorage()
+     */
     public function testSetRefreshStorage()
     {
         $s = $this->AccessTokenConfigurations->setRefreshStorage('refresh_token');
@@ -79,8 +73,8 @@ class AccessTokenConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenConfigurations->getConfigs()
-	 */
+     * Tests AccessTokenConfigurations->getConfigs()
+     */
     public function testGetConfigs()
     {
         $r = $this->AccessTokenConfigurations->getConfigs(/* parameters */);
@@ -88,8 +82,8 @@ class AccessTokenConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenConfigurations->setConfig()
-	 */
+     * Tests AccessTokenConfigurations->setConfig()
+     */
     public function testSetConfigs()
     {
         $d = array('key' => 'val');

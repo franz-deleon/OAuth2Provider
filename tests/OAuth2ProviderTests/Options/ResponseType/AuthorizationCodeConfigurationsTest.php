@@ -9,13 +9,13 @@ use OAuth2Provider\Options\ResponseType\AuthorizationCodeConfigurations;
 class AuthorizationCodeConfigurationsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var AuthorizationCodeConfigurations
-	 */
+     * @var AuthorizationCodeConfigurations
+     */
     private $AuthorizationCodeConfigurations;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -23,8 +23,8 @@ class AuthorizationCodeConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->AuthorizationCodeConfigurations = null;
@@ -32,16 +32,8 @@ class AuthorizationCodeConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
-	 * Tests AuthorizationCodeConfigurations->getAuthorizationCodeStorage()
-	 */
+     * Tests AuthorizationCodeConfigurations->getAuthorizationCodeStorage()
+     */
     public function testGetAuthorizationCodeStorage()
     {
         $r = $this->AuthorizationCodeConfigurations->getAuthorizationCodeStorage(/* parameters */);
@@ -49,8 +41,8 @@ class AuthorizationCodeConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AuthorizationCodeConfigurations->setAuthorizationCodeStorage()
-	 */
+     * Tests AuthorizationCodeConfigurations->setAuthorizationCodeStorage()
+     */
     public function testSetAuthorizationCodeStorage()
     {
         $s = $this->AuthorizationCodeConfigurations->setAuthorizationCodeStorage('authorization_code');
@@ -61,8 +53,8 @@ class AuthorizationCodeConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AuthorizationCodeConfigurations->getConfig()
-	 */
+     * Tests AuthorizationCodeConfigurations->getConfig()
+     */
     public function testGetConfigs()
     {
         $r = $this->AuthorizationCodeConfigurations->getConfigs(/* parameters */);
@@ -70,8 +62,8 @@ class AuthorizationCodeConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AuthorizationCodeConfigurations->setConfig()
-	 */
+     * Tests AuthorizationCodeConfigurations->setConfig()
+     */
     public function testSetConfigs()
     {
         $s = $this->AuthorizationCodeConfigurations->setConfigs(array('config'));

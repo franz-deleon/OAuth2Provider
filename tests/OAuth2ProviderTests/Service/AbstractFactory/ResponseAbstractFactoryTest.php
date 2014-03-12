@@ -35,13 +35,6 @@ class ResponseAbstractFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests ResponseAbstractFactory->canCreateServiceWithName()
      */
     public function testCanCreateServiceWithNameReturnsFalseOnMalformedRname()

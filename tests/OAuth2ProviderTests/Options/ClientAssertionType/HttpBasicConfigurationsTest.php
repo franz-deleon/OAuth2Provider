@@ -9,13 +9,13 @@ use OAuth2Provider\Options\ClientAssertionType\HttpBasicConfigurations;
 class HttpBasicConfigurationsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var HttpBasicConfigurations
-	 */
+     * @var HttpBasicConfigurations
+     */
     private $HttpBasicConfigurations;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -23,8 +23,8 @@ class HttpBasicConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->HttpBasicConfigurations = null;
@@ -32,15 +32,8 @@ class HttpBasicConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
-	 * Tests HttpBasicConfigurations->getClientCredentialsStorage()
-	 */
+     * Tests HttpBasicConfigurations->getClientCredentialsStorage()
+     */
     public function testGetClientCredentialsStorage()
     {
         $r = $this->HttpBasicConfigurations->getClientCredentialsStorage(/* parameters */);
@@ -48,8 +41,8 @@ class HttpBasicConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests HttpBasicConfigurations->setClientCredentialsStorage()
-	 */
+     * Tests HttpBasicConfigurations->setClientCredentialsStorage()
+     */
     public function testSetClientCredentialsStorage()
     {
         $s = $this->HttpBasicConfigurations->setClientCredentialsStorage(new Assets\Storage\ClientCredentialsStorage());
@@ -60,8 +53,8 @@ class HttpBasicConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests HttpBasicConfigurations->getConfigs()
-	 */
+     * Tests HttpBasicConfigurations->getConfigs()
+     */
     public function testGetConfigs()
     {
         $r = $this->HttpBasicConfigurations->getConfigs(/* parameters */);
@@ -70,8 +63,8 @@ class HttpBasicConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests HttpBasicConfigurations->setConfigs()
-	 */
+     * Tests HttpBasicConfigurations->setConfigs()
+     */
     public function testSetConfigs()
     {
         $s = $this->HttpBasicConfigurations->setConfigs(array('foo' => 'bar'));

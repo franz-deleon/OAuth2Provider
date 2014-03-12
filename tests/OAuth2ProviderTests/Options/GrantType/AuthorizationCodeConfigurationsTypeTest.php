@@ -33,13 +33,6 @@ class AuthorizationCodeConfigurationsTypeTest extends \PHPUnit_Framework_TestCas
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests AuthorizationCodeConfigurations->getAuthorizationCodeStorage()
      */
     public function testGetAuthorizationCodeStorage()

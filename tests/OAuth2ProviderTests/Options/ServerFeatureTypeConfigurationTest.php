@@ -35,13 +35,6 @@ class ServerFeatureTypeConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests ServerFeatureTypeConfiguration->getName()
      */
     public function testGetName()

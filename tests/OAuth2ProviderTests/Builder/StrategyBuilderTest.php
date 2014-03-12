@@ -25,13 +25,6 @@ class StrategyBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests new StrategyBuilder->__construct()
      * @group test1a
      */

@@ -9,38 +9,33 @@ use OAuth2Provider\Service\Factory\ServerFeature\StorageFactory;
 class StorageFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var GrantTypeFactory
-	 */
+     * @var GrantTypeFactory
+     */
     private $storageFactory;
+
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
         // TODO Auto-generated GrantTypeFactoryTest::setUp()
         $this->storageFactory = new StorageFactory(/* parameters */);
     }
+
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         // TODO Auto-generated GrantTypeFactoryTest::tearDown()
         $this->storageFactory = null;
         parent::tearDown();
     }
-    /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
 
     /**
-	 * Tests GrantTypeFactory->createService()
-	 */
+     * Tests GrantTypeFactory->createService()
+     */
     public function testCreateService()
     {
         $storages = array(
@@ -54,9 +49,9 @@ class StorageFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests GrantTypeFactory->createService()
-	 * @expectedException OAuth2Provider\Exception\InvalidConfigException
-	 */
+     * Tests GrantTypeFactory->createService()
+     * @expectedException OAuth2Provider\Exception\InvalidConfigException
+     */
     public function testCreateServiceReturnsException()
     {
         $storages = array(

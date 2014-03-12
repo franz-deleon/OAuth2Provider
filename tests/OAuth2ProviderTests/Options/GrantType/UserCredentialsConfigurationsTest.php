@@ -9,13 +9,13 @@ use OAuth2Provider\Options\GrantType\UserCredentialsConfigurations;
 class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var UserCredentialsConfigurations
-	 */
+     * @var UserCredentialsConfigurations
+     */
     private $UserCredentialsConfigurations;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -23,8 +23,8 @@ class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->UserCredentialsConfigurations = null;
@@ -32,16 +32,8 @@ class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
-	 * Tests UserCredentialsConfigurations->getStorage()
-	 */
+     * Tests UserCredentialsConfigurations->getStorage()
+     */
     public function testGetUserCredentialsStorage()
     {
         $r = $this->UserCredentialsConfigurations->getUserCredentialsStorage(/* parameters */);
@@ -49,8 +41,8 @@ class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests UserCredentialsConfigurations->setStorage()
-	 */
+     * Tests UserCredentialsConfigurations->setStorage()
+     */
     public function testSetStorage()
     {
         $r = $this->UserCredentialsConfigurations->setUserCredentialsStorage('user_credentials');
@@ -58,8 +50,8 @@ class UserCredentialsConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests UserCredentialsConfigurations->setStorage()
-	 */
+     * Tests UserCredentialsConfigurations->setStorage()
+     */
     public function testSetStorageReturnsExpected()
     {
         $this->UserCredentialsConfigurations->setUserCredentialsStorage('user_credentials');

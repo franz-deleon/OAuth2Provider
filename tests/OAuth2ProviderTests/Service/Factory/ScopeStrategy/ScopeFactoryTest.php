@@ -33,13 +33,6 @@ class ScopeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests ScopeFactory->createService()
      * @group test1
      */

@@ -9,13 +9,13 @@ use OAuth2Provider\Options\TokenType\BearerConfigurations;
 class BearerConfigurationsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var BearerConfigurations
-	 */
+     * @var BearerConfigurations
+     */
     private $BearerConfigurations;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -23,8 +23,8 @@ class BearerConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->BearerConfigurations = null;
@@ -32,15 +32,8 @@ class BearerConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
-	 * Tests BearerConfigurations->getConfigs()
-	 */
+     * Tests BearerConfigurations->getConfigs()
+     */
     public function testGetConfigs()
     {
         $r = $this->BearerConfigurations->getConfigs(/* parameters */);
@@ -48,8 +41,8 @@ class BearerConfigurationsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests BearerConfigurations->setConfigs()
-	 */
+     * Tests BearerConfigurations->setConfigs()
+     */
     public function testSetConfigs()
     {
         $s = $this->BearerConfigurations->setConfigs(array('options'));

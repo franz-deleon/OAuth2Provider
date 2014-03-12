@@ -9,12 +9,12 @@ use OAuth2Provider\Lib\Utilities;
 class UtilitiesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var Utilities
-	 */
+     * @var Utilities
+     */
     private $Utilities;
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -22,25 +22,18 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
         $this->Utilities = new Utilities(/* parameters */);
     }
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         // TODO Auto-generated UtilitiesTest::tearDown()
         $this->Utilities = null;
         parent::tearDown();
     }
-    /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
 
     /**
-	 * Tests Utilities::createClass()
-	 */
+     * Tests Utilities::createClass()
+     */
     public function testCreateClassReturnsSmObject()
     {
         $sm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -51,8 +44,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::createClass()
-	 */
+     * Tests Utilities::createClass()
+     */
     public function testCreateClassReturnsObjectFromFQNS()
     {
         $r = Utilities::createClass('\stdClass');
@@ -60,8 +53,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::createClass()
-	 */
+     * Tests Utilities::createClass()
+     */
     public function testCreateClassReturnsObjectFromCallable()
     {
         $r = Utilities::createClass('OAuth2ProviderTests\Assets\Foo::bar');
@@ -69,8 +62,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::createClass()
-	 */
+     * Tests Utilities::createClass()
+     */
     public function testCreateClassReturnsObjectFromObject()
     {
         $r = Utilities::createClass(new \stdClass);
@@ -78,17 +71,17 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::createClass()
-	 * @expectedException OAuth2Provider\Exception\ClassNotExistException
-	 */
+     * Tests Utilities::createClass()
+     * @expectedException OAuth2Provider\Exception\ClassNotExistException
+     */
     public function testCreateClassReturnsException()
     {
         $r = Utilities::createClass('franz');
     }
 
     /**
-	 * Tests Utilities::createClass()
-	 */
+     * Tests Utilities::createClass()
+     */
     public function testExtractClassnameFromFQNS()
     {
         $r = Utilities::extractClassnameFromFQNS('OAuth2ProviderTests\Assets\Foo');
@@ -96,8 +89,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
 /**
-	 * Tests Utilities::createClass()
-	 */
+     * Tests Utilities::createClass()
+     */
     public function testExtractClassnameFromFQNSIsOBject()
     {
         $foo = new \OAuth2ProviderTests\Assets\Foo();
@@ -106,8 +99,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::storageLookup()
-	 */
+     * Tests Utilities::storageLookup()
+     */
     public function testStorageLookupWhereSubjectInExistingContainer()
     {
         $sm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -121,8 +114,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::storageLookup()
-	 */
+     * Tests Utilities::storageLookup()
+     */
     public function testStorageLookupWhereSubjectInDefaultIdentifier()
     {
         $sm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -136,8 +129,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::storageLookup()
-	 */
+     * Tests Utilities::storageLookup()
+     */
     public function testStorageLookupWhereSubjectIsSMElement()
     {
         $sm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -152,8 +145,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::storageLookup()
-	 */
+     * Tests Utilities::storageLookup()
+     */
     public function testStorageLookupWhereSubjectIsAnObject()
     {
         $sm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -168,8 +161,8 @@ class UtilitiesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests Utilities::storageLookup()
-	 */
+     * Tests Utilities::storageLookup()
+     */
     public function testStorageLookupReturnsDefault()
     {
         $sm = Bootstrap::getServiceManager()->setAllowOverride(true);

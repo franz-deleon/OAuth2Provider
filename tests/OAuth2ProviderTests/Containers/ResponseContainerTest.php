@@ -32,14 +32,6 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
      * Tests ResponseContainer->getServerContentsFromKey()
      * @expectedException OAuth2Provider\Exception\ErrorException
      */

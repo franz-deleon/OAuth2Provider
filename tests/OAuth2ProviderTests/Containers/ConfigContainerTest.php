@@ -28,12 +28,6 @@ class ConfigContainerTest extends \PHPUnit_Framework_TestCase
         $this->ConfigContainer = null;
         parent::tearDown();
     }
-    /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Tests ConfigContainer->getServerContentsFromKey()

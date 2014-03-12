@@ -9,13 +9,13 @@ use OAuth2Provider\Service\Factory\ResponseTypeStrategy\AuthorizationCodeFactory
 class AuthorizationCodeFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var AuthorizationCodeFactory
-	 */
+     * @var AuthorizationCodeFactory
+     */
     private $AuthorizationCodeFactory;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -23,8 +23,8 @@ class AuthorizationCodeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->AuthorizationCodeFactory = null;
@@ -32,16 +32,8 @@ class AuthorizationCodeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
-	 * Tests UserCredentialsFactory->createService()
-	 */
+     * Tests UserCredentialsFactory->createService()
+     */
     public function testCreateService()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -58,9 +50,9 @@ class AuthorizationCodeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests UserCredentialsFactory->createService()
-	 * @expectedException OAuth2Provider\Exception\InvalidServerException
-	 */
+     * Tests UserCredentialsFactory->createService()
+     * @expectedException OAuth2Provider\Exception\InvalidServerException
+     */
     public function testCreateServiceReturnsException()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);

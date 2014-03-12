@@ -32,13 +32,6 @@ class UserCredentialsFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
 	 * Tests UserCredentialsFactory->createService()
 	 */
     public function testCreateService()

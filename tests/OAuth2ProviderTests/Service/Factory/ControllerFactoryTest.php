@@ -30,13 +30,6 @@ class ControllerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->ControllerFactory = null;
         parent::tearDown();
     }
-    /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
 
     /**
      * Tests ControllerFactory->createService()

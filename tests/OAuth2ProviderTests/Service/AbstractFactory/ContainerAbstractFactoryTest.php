@@ -34,13 +34,6 @@ class ContainerAbstractFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests ContainerAbstractFactory->canCreateServiceWithName()
      */
     public function testCanCreateServiceWithNameReturnsFalseOnNonMatches()

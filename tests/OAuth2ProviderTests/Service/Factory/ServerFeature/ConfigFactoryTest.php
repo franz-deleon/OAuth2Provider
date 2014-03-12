@@ -9,20 +9,20 @@ use OAuth2Provider\Service\Factory\ServerFeature\ConfigFactory;
 class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var ConfigFactory
-	 */
+     * @var ConfigFactory
+     */
     private $ConfigFactory;
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
         $this->ConfigFactory = new ConfigFactory(/* parameters */);
     }
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->ConfigFactory = null;
@@ -30,15 +30,8 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
-	 * Tests ConfigFactory->createService()
-	 */
+     * Tests ConfigFactory->createService()
+     */
     public function testCreateService()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);

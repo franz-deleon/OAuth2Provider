@@ -9,13 +9,13 @@ use OAuth2Provider\Service\Factory\TokenTypeStrategy\BearerFactory;
 class BearerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var BearerFactory
-	 */
+     * @var BearerFactory
+     */
     private $BearerFactory;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -23,8 +23,8 @@ class BearerFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->BearerFactory = null;
@@ -32,15 +32,8 @@ class BearerFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
-	 * Tests BearerFactory->createService()
-	 */
+     * Tests BearerFactory->createService()
+     */
     public function testCreateService()
     {
         $mainSm = Bootstrap::getServiceManager();
@@ -57,9 +50,9 @@ class BearerFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests BearerFactory->createService()
-	 * @expectedException OAuth2Provider\Exception\InvalidServerException
-	 */
+     * Tests BearerFactory->createService()
+     * @expectedException OAuth2Provider\Exception\InvalidServerException
+     */
     public function testCreateServiceReturnsException()
     {
         $mainSm = Bootstrap::getServiceManager();

@@ -32,13 +32,6 @@ class HttpBasicFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests HttpBasicFactory->createService()
      */
     public function testCreateService()

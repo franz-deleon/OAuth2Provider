@@ -9,13 +9,13 @@ use OAuth2Provider\Service\Factory\ServerFeature\TokenTypeFactory;
 class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var TokenTypeFactory
-	 */
+     * @var TokenTypeFactory
+     */
     private $TokenTypeFactory;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -23,8 +23,8 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->TokenTypeFactory = null;
@@ -32,16 +32,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test1
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test1
+     */
     public function testCreateServiceWithConfigAsDirectName()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -53,9 +46,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test2
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test2
+     */
     public function testCreateServiceWithConfigAsDirectInsideArray()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -67,9 +60,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test3
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test3
+     */
     public function testCreateServiceWithConfigAsDirectWithNameInsideArray()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -83,9 +76,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test4
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test4
+     */
     public function testCreateServiceWithConfigAsArrayWithNameAndOptions()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -106,9 +99,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test5
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test5
+     */
     public function testCreateServiceWithConfigAsDirectWithNameAndOptions()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -127,9 +120,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test6
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test6
+     */
     public function testCreateServiceWithConfigAsWithNameArrayInsideArray()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -145,9 +138,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test7
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test7
+     */
     public function testCreateServiceWithConfigAsWithNameArrayInsideArrayWithMultipleInputs()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -166,9 +159,9 @@ class TokenTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests TokenTypeFactory->createService()
-	 * @group test8
-	 */
+     * Tests TokenTypeFactory->createService()
+     * @group test8
+     */
     public function testCreateServiceWithConfigIsNull()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);

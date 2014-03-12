@@ -9,13 +9,13 @@ use OAuth2Provider\Service\Factory\ResponseTypeStrategy\AccessTokenFactory;
 class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var AccessTokenFactory
-	 */
+     * @var AccessTokenFactory
+     */
     private $AccessTokenFactory;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -24,8 +24,8 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         // TODO Auto-generated AccessTokenFactoryTest::tearDown()
@@ -34,15 +34,8 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
-	 * Tests AccessTokenFactory->createService()
-	 */
+     * Tests AccessTokenFactory->createService()
+     */
     public function testCreateService()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -60,8 +53,8 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenFactory->createService()
-	 */
+     * Tests AccessTokenFactory->createService()
+     */
     public function testCreateServiceDoesNotHaveOptionalRefreshTokenStorage()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);
@@ -79,9 +72,9 @@ class AccessTokenFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Tests AccessTokenFactory->createService()
-	 * @expectedException OAuth2Provider\Exception\InvalidServerException
-	 */
+     * Tests AccessTokenFactory->createService()
+     * @expectedException OAuth2Provider\Exception\InvalidServerException
+     */
     public function testCreateServiceReturnsException()
     {
         $mainSm = Bootstrap::getServiceManager()->setAllowOverride(true);

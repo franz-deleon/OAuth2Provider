@@ -9,35 +9,32 @@ use OAuth2Provider\Service\Factory\ServerFeature\ResponseTypeFactory;
 class ResponseTypeFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var ResponseTypeFactory
-	 */
+     * @var ResponseTypeFactory
+     */
     private $ResponseTypeFactory;
+
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         parent::setUp();
         $this->ResponseTypeFactory = new ResponseTypeFactory(/* parameters */);
     }
+
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->ResponseTypeFactory = null;
         parent::tearDown();
     }
+
+
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-    /**
-	 * Tests ResponseTypeFactory->createService()
-	 */
+     * Tests ResponseTypeFactory->createService()
+     */
     public function testCreateService()
     {
         $storage = new \OAuth2\ResponseType\AccessToken(new Assets\Storage\AccessTokenStorage);

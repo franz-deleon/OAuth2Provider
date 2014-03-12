@@ -9,21 +9,21 @@ use OAuth2Provider\Service\Factory\ServerFeature\GrantTypeFactory;
 class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
-	 * @var GrantTypeFactory
-	 */
+     * @var GrantTypeFactory
+     */
     private $GrantTypeFactory;
 
     /**
-	 * Prepares the environment before running a test.
-	 */
+     * Prepares the environment before running a test.
+     */
     protected function setUp()
     {
         $this->GrantTypeFactory = new GrantTypeFactory(/* parameters */);
     }
 
     /**
-	 * Cleans up the environment after running a test.
-	 */
+     * Cleans up the environment after running a test.
+     */
     protected function tearDown()
     {
         $this->GrantTypeFactory = null;
@@ -31,15 +31,8 @@ class GrantTypeFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Constructs the test case.
-	 */
-    public function __construct()
-    {
-    }
-
-    /**
-	 * Tests GrantTypeFactory->createService()
-	 */
+     * Tests GrantTypeFactory->createService()
+     */
     public function testCreateService()
     {
         $storage = new \OAuth2\GrantType\UserCredentials(new Assets\StorageUserCredentials());

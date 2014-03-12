@@ -39,14 +39,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
      * Tests Configuration->getMainServer()
      * @group test1
      */
