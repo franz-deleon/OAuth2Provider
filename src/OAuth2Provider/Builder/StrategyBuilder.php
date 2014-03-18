@@ -121,11 +121,16 @@ class StrategyBuilder
 
                     /** look at the parent as our last check **/
                     } else {
-                        $parentClass = get_parent_class($strategyName);
-                        if (in_array($parentClass, $this->concreteClasses)) {
-                            $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
-                            $strategy     = $this->availableStrategies[$strategyContainerKey];
-                            $strategyName = $strategyName ?: $this->concreteClasses[$strategyContainerKey];
+                        $parentClasses = class_exists($strategyName) ? class_parents($strategyName) : null;
+                        if (!empty($parentClasses)) {
+                            foreach ($parentClasses as $parentClass) {
+                                if (in_array($parentClass, $this->concreteClasses)) {
+                                    $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
+                                    $strategy     = $this->availableStrategies[$strategyContainerKey];
+                                    $strategyName = $strategyName ?: $this->concreteClasses[$strategyContainerKey];
+                                    break;
+                                }
+                            }
                         }
                     }
 
@@ -168,8 +173,15 @@ class StrategyBuilder
                 $strategyContainerKey = array_search($objClassname, $this->concreteClasses);
                 if (false === $strategyContainerKey) {
                     // try the parent class if it can be mapped
-                    $parentClass = get_parent_class($strategyObj);
-                    $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
+                    $parentClasses = class_exists($objClassname) ? class_parents($strategyObj) : null;
+                    if (!empty($parentClasses)) {
+                        foreach ($parentClasses as $parentClass) {
+                            $strategyContainerKey = array_search($parentClass, $this->concreteClasses);
+                            if (false !== $strategyContainerKey) {
+                                break;
+                            }
+                        }
+                    }
 
                     // if still no mapping, try to extract from the classname
                     // note: we need a key in any case even if nothing matches
