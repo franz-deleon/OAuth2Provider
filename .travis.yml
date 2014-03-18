@@ -20,8 +20,7 @@ before_install:
   - cd ZendSkeletonApplication
   - rm composer.json
   - cp ../OAuth2Provider/.travis/travis.composer.json ./composer.json
-  - php composer.phar self-update
-  - php composer.phar install --dev
+  - composer install --dev --prefer-source
   - cd vendor/franz-deleon/fdl-oauth2-provider/tests
 
 script:
