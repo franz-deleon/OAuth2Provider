@@ -8,6 +8,10 @@ use OAuth2\ResponseInterface;
 
 class GrantTypeCustomUserCredentials implements GrantTypeInterface
 {
+    public function getQuerystringIdentifier()
+    {
+    }
+
     public function validateRequest(RequestInterface $request, ResponseInterface $response)
     {
     }

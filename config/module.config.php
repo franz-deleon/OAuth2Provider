@@ -112,6 +112,8 @@ return array(
             'ViewJsonStrategy',
         ),
     ),
-    'oauth2provider' => include __DIR__ . '/oauth2provider.config.php',
+    'oauth2provider' => array(
+        'default_controller' => 'OAuth2Provider\Controller\UserCredentialsController',
+    ),
     'router'         => include __DIR__ . '/routes.config.php',
 );
