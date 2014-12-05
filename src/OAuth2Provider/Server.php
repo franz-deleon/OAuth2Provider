@@ -2,16 +2,29 @@
 namespace OAuth2Provider;
 
 use Zend\ServiceManager;
-
 use OAuth2\Server as OAuth2Server;
-
 use ReflectionClass;
 
 class Server implements ServiceManager\ServiceManagerAwareInterface, ServerInterface
 {
+    /**
+     * @var \OAuth2\Server
+     */
     protected $server;
+
+    /**
+     * @var ServiceManager\ServiceManager
+     */
     protected $serviceManager;
+
+    /**
+     * @var \OAuth2\Request
+     */
     protected $request;
+
+    /**
+     * @var \OAuth2\Response
+     */
     protected $response;
 
     /**
